@@ -61,12 +61,16 @@ class DetailsLayer extends Component {
     this.props.dispatch({type: 'SET_LAYER_DATA', payload: myPayload});
   }
 
+  clickClose = ()=> {
+    this.props.dispatch({type: 'SET_LAYER_SELECT', payload: -1})
+  }
+
   render() {
     
 
     return (
       <div id="details-layer" className="details-widget">
-        <button>Close</button>
+        <button onClick={this.clickClose}>Close</button>
         <table id="details-layer-main">
           <tbody>
             <tr>
@@ -103,7 +107,14 @@ class DetailsLayer extends Component {
             </tr>
             <tr>
               <td>Strength:</td>
-              <td><input type="number"/></td>
+              <td>
+                <input 
+                  type="number"
+                  value={this.state.layer_str} 
+                  onChange={(event)=>this.handleChange(event,'layer_str')}  
+                  onBlur={this.handleBlur}
+                />
+              </td>
             </tr>
           </tbody>
         </table>

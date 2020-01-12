@@ -7,6 +7,13 @@ class LayerWidget extends Component {
     this.props.dispatch({type: 'SET_LAYER_SELECT', payload: this.props.index})
   }
 
+  clickDelete = ()=> {
+    let q = window.confirm(`Are you sure you wish to delete this layer?`);
+    if (q) {
+      this.props.dispatch({type: 'REMOVE_LAYER', payload: this.props.index})
+    }
+  }
+
   render() {
     return (
       <div className="layer-widget">
@@ -19,7 +26,7 @@ class LayerWidget extends Component {
           <p className="layer-widget-content">{this.props.layer.layer_name}</p>
         </div>
         <div className="layer-widget-delete-box">
-          <button className="layer-widget-content">X</button>
+          <button className="layer-widget-content" onClick={this.clickDelete}>X</button>
         </div>
       </div>
     )

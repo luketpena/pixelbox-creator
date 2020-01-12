@@ -13,10 +13,17 @@ class EditWindowLayers extends Component {
     })
   }
 
+  addLayer = ()=> {
+    this.props.dispatch({type: 'ADD_NEW_LAYER'})
+  }
+
   render() {
     return (
       <div id="edit-window-layers">
         {this.renderLayerWidgets()}
+        <div>
+          <button onClick={this.addLayer}>Add Layer</button>
+        </div>
       </div>
     )
   }

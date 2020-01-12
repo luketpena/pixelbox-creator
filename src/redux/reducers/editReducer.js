@@ -33,6 +33,13 @@ const editReducer = (state = {
       let setLayerDataProp = [...state.layerData];
       setLayerDataProp[action.payload.index][action.payload.prop] = action.payload.value;
       return {...state, layerData: setLayerDataProp}
+    case 'ADD_NEW_LAYER':
+      let newLayer = {layer_name: 'Untitled', layer_url: '', layer_str: 1, blendmode: 'normal'};
+      return {...state, layerData: [...state.layerData, newLayer]}
+    case 'REMOVE_LAYER':
+      let removedLayerData = [...state.layerData];
+      removedLayerData.splice(action.payload,1);
+      return {...state, layerData: removedLayerData}
     default: return state;
   }
 };
