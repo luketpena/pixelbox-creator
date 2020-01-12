@@ -1,0 +1,53 @@
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+
+class SizeInputRow extends Component {
+
+  state = {
+    width: this.props.frame[this.props.sizeType][0],
+    height: this.props.frame[this.props.sizeType][1]
+  }
+
+  handleChange = (event, prop)=> {
+    this.setState({
+      [prop]: event.target.value
+    })
+    console.log('Attribute:',this.props.sizeType,'Value:',event.target.value,'Index:',prop);
+  }
+
+  handleBlur = ()=> {
+    console.log('INPUT RECEIVED!');
+    this.props.dispatch({type: 'SET_FRAME_DISPLAY', payload: [Number(this.state.width),Number(this.state.height)]});
+  }
+
+  render() {
+    return (
+      <tr>
+        <td>{this.props.title}</td>
+        <td>
+          <input 
+            type="number" 
+            className="input-with-unit" 
+            value={this.state.width}
+            onChange={(event)=>this.handleChange(event,'width')}
+            onBlur={this.handleBlur}
+          />
+          <span className="input-unit">px</span>
+          </td>
+        <td>X</td>
+        <td>
+          <input 
+            type="number" 
+            className="input-with-unit" 
+            value={this.state.height}
+            onChange={(event)=>this.handleChange(event,'height')}
+            onBlur={this.handleBlur}
+          />
+          <span className="input-unit">px</span>
+        </td>
+      </tr>
+    )
+  }
+}
+
+export default connect(state=>({frame: state.edit}))(SizeInputRow);

@@ -7,12 +7,17 @@ import EditWindowDetails from '../EditWindowDetails/EditWindowDetails'
 import EditWindowPreview from '../EditWindowPreview/EditWindowPreview';
 
 class EditorPage extends Component {
+
+  state = {
+    select: -1
+  }
+
   render() {
     return (
       <div id="edit-page">
         <EditWindowPreview />
         <EditWindowLayers />
-        <EditWindowDetails />
+        <EditWindowDetails select={this.state.select}/>
       </div>
     )
   }
