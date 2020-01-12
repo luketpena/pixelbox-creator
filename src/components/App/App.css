@@ -17,7 +17,7 @@ body {
     "preview layers"
     "details layers";
   grid-template-columns: 1fr 256px;
-  grid-template-rows: 1fr 128px;
+  grid-template-rows: 1fr 150px;
 }
 
 #edit-window-preview {
@@ -27,6 +27,7 @@ body {
   position: relative;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 #edit-window-layers {
@@ -57,6 +58,12 @@ body {
 #preview-bar-main {
   display: flex;
   justify-content: flex-start;
+}
+
+#preview-extend {
+  border: 4px dashed rgba(0,255,100,.2);
+  background-color: rgba(0,255,100,.1);
+  position: absolute;
 }
 
 .layer-widget {
@@ -113,12 +120,15 @@ body {
 .details-widget {
   background-color: #BBB;
   height: 100%;
+  padding: 8px;
+  box-sizing : border-box;
 }
 
 #details-frame {
   display: grid;
   grid-template-areas: "size main";
   grid-template-columns: 1fr 1fr;
+  align-items: flex-start;
 }
 
 #details-frame-main {
@@ -127,6 +137,11 @@ body {
 
 #details-frame-size {
   grid-area: size;
+}
+
+#in-background-url {
+  width: 100%;
+  box-sizing : border-box;
 }
 
 .input-with-unit {

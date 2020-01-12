@@ -17,7 +17,12 @@ class SizeInputRow extends Component {
 
   handleBlur = ()=> {
     console.log('INPUT RECEIVED!');
-    this.props.dispatch({type: 'SET_FRAME_DISPLAY', payload: [Number(this.state.width),Number(this.state.height)]});
+    switch(this.props.sizeType) {
+      case 'size': this.props.dispatch({type: 'SET_FRAME_SIZE', payload: [Number(this.state.width),Number(this.state.height)]}); break;
+      case 'extend': this.props.dispatch({type: 'SET_FRAME_EXTEND', payload: [Number(this.state.width),Number(this.state.height)]}); break;
+      case 'display': this.props.dispatch({type: 'SET_FRAME_DISPLAY', payload: [Number(this.state.width),Number(this.state.height)]}); break;
+    }
+    
   }
 
   render() {

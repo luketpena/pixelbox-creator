@@ -9,11 +9,19 @@ const editReducer = (state = {
     ],
     size: [256,128],
     extend: [32,8],
-    display: [512,256]
+    display: [512,256],
+    framerate: 5,
+    smoothing: .2,
+    pixelsnap: true
   }, action) => {
   switch (action.type) {
     case 'SET_FRAME_SIZE': return {...state, size: action.payload}
+    case 'SET_FRAME_EXTEND': return {...state, extend: action.payload}
     case 'SET_FRAME_DISPLAY': return {...state, display: action.payload}
+    case 'SET_FRAME_BKG': return {...state, bkg_url: action.payload}
+    case 'SET_FRAME_FRAMERATE': return {...state, framerate: action.payload}
+    case 'SET_FRAME_SMOOTHING': return {...state, smoothing: action.payload}
+    case 'SET_FRAME_PIXELSNAP': return {...state, pixelsnap: action.payload}
     default: return state;
   }
 };

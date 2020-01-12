@@ -23,7 +23,7 @@ body {
 
 
 .pb-layer {
-  image-rendering: pixelated;
+  image-rendering: crisp-edges;
   isolation: isolate;
   position: absolute;
   left: 0;

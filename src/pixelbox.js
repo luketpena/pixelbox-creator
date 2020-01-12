@@ -10,7 +10,7 @@ let mousePos = [0,0]; //actual coordinates
 let mouseMov = [0,0]; //movement from -1 to 1
 let frameList = [];
 
-let smoothing = 1;
+let smoothing = .5;
 let smoothingActive = false;
 let framerate = 10;
 let pixelSnap = true;
@@ -118,7 +118,13 @@ function pbSmoothMove () {
 class pixelbox extends Component {
   static test() {
     console.log('pixelbox test');
-  }  
+  }
+
+  static setGlobals (setSmoothing, setFramerate, setPixelSnap) {
+    smoothing = setSmoothing;
+    framerate = setFramerate;
+    pixelSnap = setPixelSnap;
+  }
 
   static createFrame (target,bkg,layerData,size,extend,display) {
     if (verbose) console.log('Creating Pixelbox frame...');
@@ -162,8 +168,12 @@ class pixelbox extends Component {
     $(target).data('attr',attr);
     //Save the frame attributes to the list of frames
     frameList.push(attr);
+
+    pbUpdate();
     return target;
   }
+
+  
 
   static recalculateFrame (index,newData) {
     //-----< Setting the New Numbers >-----\\
