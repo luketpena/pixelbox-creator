@@ -99,6 +99,16 @@ class DetailsFrame extends Component {
                     />
                   </td>
                 </tr>
+                <tr>
+                  <td>Hide overflow:</td>
+                  <td>
+                    <input 
+                      type="checkbox"
+                      checked={this.state.pixelsnap}
+                      onChange={this.togglePixelsnap}
+                    />
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>

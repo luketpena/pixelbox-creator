@@ -144,6 +144,24 @@ body {
   box-sizing : border-box;
 }
 
+#details-layer {
+  display: grid;
+  grid-template-areas: "main filters"
+}
+
+#details-layer-main {
+  grid-area: main;
+}
+
+#details-layer-filters {
+  grid-area: filters;
+}
+
+#details-layer-filters-table {
+  background-color: white;
+  width: 100%;
+}
+
 .input-with-unit {
   padding-right: 20px;
   text-align: right;

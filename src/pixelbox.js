@@ -156,6 +156,7 @@ class pixelbox extends Component {
         newLayer.css('height',layerSize[1]);
         newLayer.css('left',-(extend[0]*ratio[0]));
         newLayer.css('top',-(extend[1]*ratio[1]))
+        newLayer.css('mix-blend-mode',layerData[i].blendmode);
       //Add the layers to the array and the frame
       layerList.push(newLayer);
       $(target).append(newLayer);

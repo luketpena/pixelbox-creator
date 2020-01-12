@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 
 class LayerWidget extends Component {
 
   selectLayer = ()=> {
-    console.log('Selecting layer...');
+    this.props.dispatch({type: 'SET_LAYER_SELECT', payload: this.props.index})
   }
 
   render() {
@@ -25,4 +26,4 @@ class LayerWidget extends Component {
   }
 }
 
-export default LayerWidget
+export default connect()(LayerWidget)
