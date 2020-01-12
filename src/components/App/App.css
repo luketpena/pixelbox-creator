@@ -1,49 +1,89 @@
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0px;
+  margin: 0;
+  padding: 0;
 }
 
-.alert {
-    background-color: #ff4545;
-    margin: 50px;
+#edit-page {
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  grid-template-areas:
+    "preview layers"
+    "details layers";
+  grid-template-columns: 1fr 256px;
+  grid-template-rows: 1fr 128px;
 }
 
-form {
-    background-color: #dbd5d5;
-    width: 30%;
-    height: 250px;
-    margin: 20px auto;
-    padding: 25px;
-    border-radius: 2px;
+#edit-window-preview {
+  background-color: #333;
+  grid-area: preview;
+
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
-input {
-    margin: 5px;
-    margin-bottom: 10px;
+#edit-window-layers {
+  background-color: #777;
+  grid-area: layers;
 }
 
-.log-in, .log-out, .register {
-  background-color: #00acb0;
-  border-radius: 4px;
-  color: #f8f8f8;
-  min-height: 50px;
-  min-width: 100px;
-  outline:0;
-  cursor: pointer;
+#edit-window-details {
+  background-color: #888;
+  grid-area: details;
+
+  padding: 4px;
 }
 
-.log-in:hover, .log-out:hover, .register:hover {
-  background-color: #008183;
+#preview-bar {
+  width: 100%;
+  height: 48px;
+  background-color: rgba(0,0,0,.25);
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: grid;
+  grid-template-areas: "main return";
+  grid-template-columns: 1fr 150px;
+  align-items: center;
 }
 
-/* This line makes the "Register" and "Login" buttons look like links */
-.link-button {
-    background:none;
-    color:inherit;
-    border:none;
-    padding:0;
-    font: inherit;
-    outline:0;
-    border-bottom:1px solid #444; 
-    cursor: pointer;
+#preview-bar-main {
+  display: flex;
+  justify-content: flex-start;
 }
+
+.layer-widget {
+  background-color: #BBB;
+  height: 64px;
+  margin: 4px 0;
+  display: grid;
+  grid-template-areas: "move main delete";
+  text-align: center;
+  align-items: center;
+}
+
+.layer-widget-move-box {
+  grid-area: move;
+}
+.layer-widget-move-box button {
+  display: block;
+  margin: 0 auto;
+}
+
+.layer-widget-main-box {
+  grid-area: main;
+}
+.layer-widget-main-box p {
+  margin: 0;
+}
+
+.layer-widget-delete-box {
+  grid-area: delete;
+}
+
+.details-widget {
+  background-color: #BBB;
+  height: 100%;
+}
+

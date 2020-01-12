@@ -1,0 +1,48 @@
+body {
+  text-align: center;
+}
+
+#big-box {
+  height: 200vh;
+  padding: 128px;
+}
+
+.pb-frame {
+  background-size: cover;
+  margin: 0 auto;
+  overflow: hidden;
+  transform: scale(1);
+  image-rendering: pixelated;
+  position: relative;
+  background-color: purple;
+}
+
+.pb-glow {
+  mix-blend-mode: lighten;
+}
+
+
+.pb-layer {
+  image-rendering: pixelated;
+  isolation: isolate;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.pb-l0 {
+  background: url('https://i.ibb.co/wWHn1gj/layer2.png');
+  background-size: cover;
+}
+.pb-l1 {
+  background: url('https://i.ibb.co/j61b2c3/layer3.png');
+  background-size: cover;
+}
+.pb-l2 {
+  background: url('https://i.ibb.co/f8R94JB/layer4.png');
+  background-size: cover;
+}
+.pb-l3 {
+  background: url('https://i.ibb.co/y4dmZt2/layer5.png');
+  background-size: cover;
+}
