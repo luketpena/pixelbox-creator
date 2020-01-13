@@ -77,11 +77,24 @@ class DetailsLayer extends Component {
   }
 
   addFilter = ()=> {
+    let newFilter = [...this.state.filter, {name: 'none', unit: '', value: ''}];
     this.setState({
-      filter: [
-        ...this.state.filter,
-        {name: 'none', unit: '', value: ''}
-      ]
+      filter: newFilter
+    });
+    this.props.dispatch({
+      type: 'SET_LAYER_FILTER',
+      payload: {
+        index: this.props.select,
+        newFilter: newFilter
+      }
+    })
+  }
+
+  removeFilter = (index)=> {
+    let filterCopy = [...this.state.filter];
+    filterCopy.splice(index,1);
+    this.setState({
+      filter: filterCopy
     })
   }
 
@@ -119,7 +132,7 @@ class DetailsLayer extends Component {
             />
             <span className="input-unit">{item.unit}</span>
           </td>
-          <td><button>Remove</button></td>
+          <td><button onClick={()=>this.removeFilter(i)}>Remove</button></td>
         </tr>
       )
     })

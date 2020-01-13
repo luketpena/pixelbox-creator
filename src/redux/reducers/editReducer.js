@@ -2,11 +2,11 @@ const editReducer = (state = {
     select: -1,
     bkg_url: 'https://i.ibb.co/BB16CGL/layer1.png',
     layerData: [
-      {layer_name: 'Forest Back', layer_url: 'https://i.ibb.co/wWHn1gj/layer2.png', layer_str: .1, blendmode: 'normal'},
-      {layer_name: 'Sphere', layer_url: 'https://i.ibb.co/j61b2c3/layer3.png', layer_str: .3, blendmode: 'luminosity'},
-      {layer_name: 'Forest Mid', layer_url: 'https://i.ibb.co/f8R94JB/layer4.png', layer_str: .6, blendmode: 'lighten'},
-      {layer_name: 'Fog', layer_url: 'http://www.transparentpng.com/thumb/fog/heroes-and-icons-fog-png-35.png', layer_str:.8, blendmode: 'normal'},
-      {layer_name: 'Forest Front', layer_url: 'https://i.ibb.co/y4dmZt2/layer5.png', layer_str: 1, blendmode: 'normal'}
+      {layer_name: 'Forest Back', layer_url: 'https://i.ibb.co/wWHn1gj/layer2.png', layer_str: .1, blendmode: 'normal', filter: []},
+      {layer_name: 'Sphere', layer_url: 'https://i.ibb.co/j61b2c3/layer3.png', layer_str: .3, blendmode: 'luminosity', filter: []},
+      {layer_name: 'Forest Mid', layer_url: 'https://i.ibb.co/f8R94JB/layer4.png', layer_str: .6, blendmode: 'lighten', filter: []},
+      {layer_name: 'Fog', layer_url: 'http://www.transparentpng.com/thumb/fog/heroes-and-icons-fog-png-35.png', layer_str:.8, blendmode: 'normal', filter: []},
+      {layer_name: 'Forest Front', layer_url: 'https://i.ibb.co/y4dmZt2/layer5.png', layer_str: 1, blendmode: 'normal', filter: []}
     ],
     size: [256,128],
     extend: [32,8],
@@ -46,6 +46,12 @@ const editReducer = (state = {
       let movedLayer = layerData_move.splice(index,1)[0];
       layerData_move.splice(newPos,0,movedLayer);
       return {...state, layerData: layerData_move}
+    case 'SET_LAYER_FILTER':
+      let layerData_filter = [...state.layerData];
+      console.log('SET_LAYER_FILTER data:',layerData_filter);
+      
+      //layerData_filter.layerData.filter[action.payload.index] = action.payload.newFilter;
+      return {...state, layerData: layerData_filter}
     default: return state;
   }
 };
