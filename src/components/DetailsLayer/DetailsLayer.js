@@ -42,6 +42,14 @@ class DetailsLayer extends Component {
     this.setState({[prop]: event.target.value})
   }
 
+  updateFilterValue = (event,index)=> {
+    let filterCopy = [...this.state.filter];
+    filterCopy[index].value = event.target.value;
+    this.setState({
+      filter: filterCopy
+    })
+  }
+
   handleBlur = ()=> {
     this.triggerChange();
   }
@@ -102,7 +110,15 @@ class DetailsLayer extends Component {
               })}
             </select>
           </td>
-          <td><input type="number" className="input-with-unit" value={this.state.filter[i].value}/><span className="input-unit">{item.unit}</span></td>
+          <td>
+            <input 
+              type="number" 
+              className="input-with-unit" 
+              value={this.state.filter[i].value}
+              onChange={(event)=>this.updateFilterValue(event,i)}
+            />
+            <span className="input-unit">{item.unit}</span>
+          </td>
           <td><button>Remove</button></td>
         </tr>
       )
