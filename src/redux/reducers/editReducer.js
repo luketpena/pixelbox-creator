@@ -1,5 +1,5 @@
 const editReducer = (state = {
-    select: -1,
+    select: 0,
     bkg_url: 'https://i.ibb.co/BB16CGL/layer1.png',
     layerData: [
       {layer_name: 'Forest Back', layer_url: 'https://i.ibb.co/wWHn1gj/layer2.png', layer_str: .1, blendmode: 'normal', filter: []},
@@ -15,7 +15,10 @@ const editReducer = (state = {
     smoothing: .2,
     pixelsnap: true
   }, action) => {
+  
+  const layerDataCopy = [...state.layerData];
   switch (action.type) {
+    //-----< Frame Setters >-----\\
     case 'SET_FRAME_SIZE': return {...state, size: action.payload};
     case 'SET_FRAME_EXTEND': return {...state, extend: action.payload};
     case 'SET_FRAME_DISPLAY': return {...state, display: action.payload};
@@ -24,11 +27,14 @@ const editReducer = (state = {
     case 'SET_FRAME_SMOOTHING': return {...state, smoothing: action.payload};
     case 'SET_FRAME_PIXELSNAP': return {...state, pixelsnap: action.payload};
 
+    //-----< Layer Setters >-----\\
     case 'SET_LAYER_SELECT': return {...state, select: action.payload};
-    case 'SET_LAYER_DATA': 
-      let setLayerData = [...state.layerData];
-      setLayerData[action.payload.index] = action.payload.value;
-      return {...state, layerData: setLayerData}
+
+    case 'SET_LAYER_DATA':
+      layerDataCopy[action.payload.index][action.payload.prop] = action.payload.value;
+      return {...state, layerData: layerDataCopy}
+
+
     case 'SET_LAYER_DATA_PROP':
       let setLayerDataProp = [...state.layerData];
       setLayerDataProp[action.payload.index][action.payload.prop] = action.payload.value;

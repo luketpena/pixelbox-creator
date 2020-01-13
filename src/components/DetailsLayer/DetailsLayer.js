@@ -1,22 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
-const blendmodes = [
-  'normal',
-  'multiply',
-  'screen',
-  'overlay',
-  'darken',
-  'lighten',
-  'color-dodge',
-  'color-burn',
-  'difference',
-  'exclusion',
-  'hue',
-  'saturation',
-  'color',
-  'luminosity',
-]
+//-----< Component Imports >-----\\
+import DetailsLayerMain from './DetailsLayerMain';
+
+
 
 const filterNameList = [
   'blur',
@@ -24,14 +12,9 @@ const filterNameList = [
   'contrast',
 ]
 
-
 class DetailsLayer extends Component {
 
   state = {
-    layer_name: this.props.layerData[this.props.select].layer_name,
-    layer_url: this.props.layerData[this.props.select].layer_url,
-    layer_str: this.props.layerData[this.props.select].layer_str,
-    blendmode: this.props.layerData[this.props.select].blendmode,
     filter: [],
     filterList: {
       blur: {unit: 'px', default: 0, selected: false}
@@ -144,54 +127,9 @@ class DetailsLayer extends Component {
     return (
       <div id="details-layer" className="details-widget">
         <button onClick={this.clickClose}>Close</button>
-        <table id="details-layer-main">
-          <tbody>
-            <tr>
-              <td>Layer Name:</td>
-              <td>
-                <input 
-                  value={this.state.layer_name} 
-                  onChange={(event)=>this.handleChange(event,'layer_name')}  
-                  onBlur={this.handleBlur}
-                  type="text"
-                />
-              </td>
-            </tr>
-            <tr>
-              <td>Image url:</td>
-              <td>
-                <input 
-                  value={this.state.layer_url} 
-                  onChange={(event)=>this.handleChange(event,'layer_url')} 
-                  onBlur={this.handleBlur}
-                  type="text"
-                />
-              </td>
-            </tr>
-            <tr>
-              <td>Blendmode:</td>
-              <td>
-                <select value={this.state.blendmode} onChange={(event)=>this.handleReducerChange(event,'blendmode')}>
-                  {blendmodes.map( (item,i)=>{
-                    return <option key={i}>{item}</option>
-                  })}
-                </select>
-              </td>
-            </tr>
-            <tr>
-              <td>Strength:</td>
-              <td>
-                <input 
-                  type="number"
-                  value={this.state.layer_str} 
-                  onChange={(event)=>this.handleChange(event,'layer_str')}  
-                  onBlur={this.handleBlur}
-                />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div id="details-layer-filters">
+        <DetailsLayerMain select={this.props.select}/>
+        
+        {/* <div id="details-layer-filters">
           <label>Filters</label>
           <table id="details-layer-filters-table">
             <tbody>
@@ -203,13 +141,10 @@ class DetailsLayer extends Component {
               </tr>
             </tbody>
           </table>
-        </div>
+        </div> */}
       </div>
     )
   }
 }
 
-export default connect(state=>({
-  layerData: state.edit.layerData,
-  select: state.edit.select
-}))(DetailsLayer);
+export default connect(state=>({ select: state.edit.select }))(DetailsLayer);

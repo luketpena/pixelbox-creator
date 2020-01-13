@@ -27,7 +27,7 @@ class LayerWidget extends Component {
           <button className="layer-widget-content" onClick={()=>this.moveLayer(this.props.index,this.props.index+1)}>v</button>
         </div>
         <div className="layer-widget-main-box">
-          <p className="layer-widget-content">{this.props.layer.layer_name}</p>
+          <p className="layer-widget-content">{this.props.layerData[this.props.index].layer_name}</p>
         </div>
         <div className="layer-widget-delete-box">
           <button className="layer-widget-content" onClick={this.clickDelete}>X</button>
@@ -37,4 +37,4 @@ class LayerWidget extends Component {
   }
 }
 
-export default connect()(LayerWidget)
+export default connect(state=>({layerData: state.edit.layerData}))(LayerWidget)

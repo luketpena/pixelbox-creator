@@ -22,8 +22,6 @@ class PreviewFrame extends Component {
     );
   }
 
-  
-
   render() {
     return (
       <div id="preview-frame"></div>

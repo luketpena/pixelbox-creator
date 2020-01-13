@@ -7,9 +7,10 @@ import LayerWidget from '../LayerWidget/LayerWidget';
 class EditWindowLayers extends Component {
 
   renderLayerWidgets = ()=> {
+    console.log('Rendering layer widgets...');
     
     return this.props.layers.map( (layer,i)=> {
-      return <LayerWidget key={i} layer={layer} index={i}/>
+      return <LayerWidget key={i} index={i}/>
     })
   }
 
