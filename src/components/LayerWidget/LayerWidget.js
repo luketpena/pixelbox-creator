@@ -14,13 +14,17 @@ class LayerWidget extends Component {
     }
   }
 
+  moveLayer = (index,newPos)=> {
+    this.props.dispatch({type: 'MOVE_LAYER', payload: {index,newPos}})
+  }
+
   render() {
     return (
       <div className="layer-widget">
         <div className="layer-widget-select" onClick={this.selectLayer}></div>
         <div className="layer-widget-move-box">
-          <button className="layer-widget-content">^</button>
-          <button className="layer-widget-content">v</button>
+          <button className="layer-widget-content" onClick={()=>this.moveLayer(this.props.index,this.props.index-1)}>^</button>
+          <button className="layer-widget-content" onClick={()=>this.moveLayer(this.props.index,this.props.index+1)}>v</button>
         </div>
         <div className="layer-widget-main-box">
           <p className="layer-widget-content">{this.props.layer.layer_name}</p>

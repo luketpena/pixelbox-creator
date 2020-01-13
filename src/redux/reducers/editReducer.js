@@ -40,6 +40,12 @@ const editReducer = (state = {
       let removedLayerData = [...state.layerData];
       removedLayerData.splice(action.payload,1);
       return {...state, layerData: removedLayerData}
+    case 'MOVE_LAYER':
+      const {index, newPos} = action.payload;
+      let layerData_move = [...state.layerData];
+      let movedLayer = layerData_move.splice(index,1)[0];
+      layerData_move.splice(newPos,0,movedLayer);
+      return {...state, layerData: layerData_move}
     default: return state;
   }
 };

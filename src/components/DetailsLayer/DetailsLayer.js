@@ -18,13 +18,12 @@ const blendmodes = [
   'luminosity',
 ]
 
-const filters = [
-  {name: 'none', unit: '', default: ''},
-  {name: 'blur', unit: 'px', default: 0},
-  {name: 'brightness', unit: '%', default: 100},
-  {name: 'contrast', unit: '%', default: 100},
-  {name: 'grayscale', unit: '%', default: 0}
+const filterNameList = [
+  'blur',
+  'brightness',
+  'contrast',
 ]
+
 
 class DetailsLayer extends Component {
 
@@ -32,7 +31,11 @@ class DetailsLayer extends Component {
     layer_name: this.props.layerData[this.props.select].layer_name,
     layer_url: this.props.layerData[this.props.select].layer_url,
     layer_str: this.props.layerData[this.props.select].layer_str,
-    blendmode: this.props.layerData[this.props.select].blendmode
+    blendmode: this.props.layerData[this.props.select].blendmode,
+    filter: [],
+    filterList: {
+      blur: {unit: 'px', default: 0, selected: false}
+    }
   }
 
   handleChange = (event,prop)=> {
@@ -63,6 +66,47 @@ class DetailsLayer extends Component {
 
   clickClose = ()=> {
     this.props.dispatch({type: 'SET_LAYER_SELECT', payload: -1})
+  }
+
+  addFilter = ()=> {
+    this.setState({
+      filter: [
+        ...this.state.filter,
+        {name: 'none', unit: '', value: ''}
+      ]
+    })
+  }
+
+  selectFilter = (event, index)=> {
+    const selectedFilter = event.target.value;
+    let filterCopy = this.state.filter;
+    filterCopy[index].name = selectedFilter;
+    filterCopy[index].unit = this.state.filterList[selectedFilter].unit;
+    filterCopy[index].value = this.state.filterList[selectedFilter].default;
+    this.setState({
+      filters: filterCopy
+    })
+    console.log('New filter state:',filterCopy[index]);
+    
+  }
+
+  renderFilters = ()=> {
+    return this.state.filter.map( (item,i)=>{
+      return (
+        <tr key={i}>
+          <td>
+            <select onChange={(event)=>this.selectFilter(event,i)}>
+              <option value={'none'}>none</option>
+              {filterNameList.map( (filter,i)=> {
+              return <option key={i} value={filter}>{filter}</option>
+              })}
+            </select>
+          </td>
+          <td><input type="number" className="input-with-unit" value={this.state.filter[i].value}/><span className="input-unit">{item.unit}</span></td>
+          <td><button>Remove</button></td>
+        </tr>
+      )
+    })
   }
 
   render() {
@@ -122,9 +166,10 @@ class DetailsLayer extends Component {
           <label>Filters</label>
           <table id="details-layer-filters-table">
             <tbody>
+              {this.renderFilters()}
               <tr>
                 <td>&nbsp;</td>
-                <td><button>Add Filter</button></td>
+                <td><button onClick={this.addFilter}>Add Filter</button></td>
                 <td>&nbsp;</td>
               </tr>
             </tbody>
