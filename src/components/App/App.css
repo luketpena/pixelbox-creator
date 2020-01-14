@@ -133,10 +133,24 @@ body {
 
 #details-frame-main {
   grid-area: main;
+  margin-left: 8px;
+}
+
+#details-frame-main table {
+  width: 100%;
+}
+#details-frame-main table tr td:first-child {
+  width: 100px;
+  text-align: right;
+}
+#details-frame-main table input {
+  width: 64px;
+  box-sizing : border-box;
 }
 
 #details-frame-size {
   grid-area: size;
+  margin-right: 8px;
 }
 
 #in-background-url {
@@ -146,17 +160,30 @@ body {
 
 #details-layer {
   display: grid;
-  grid-template-areas: "main filters"
+  grid-template-areas: "main filters";
+  grid-template-columns: 1fr 1fr
 }
 
 #details-layer-main {
   grid-area: main;
+  margin-right: 8px;
+}
+#details-layer-main table {
+  width: 100%;
+}
+#details-layer-main table input,
+#details-layer-main table select {
+  width: 100%;
+}
+#details-layer-main tr td:first-child {
+  width: 96px;
 }
 
 #details-layer-filters {
   position: relative;
   height: 126px;
   grid-area: filters;
+  margin-left: 8px;
 }
 
 #details-layer-filters-table {

@@ -1,5 +1,5 @@
 const editReducer = (state = {
-    select: 0,
+    select: -1,
     bkg_url: 'https://i.ibb.co/BB16CGL/layer1.png',
     layerData: [
       {layer_name: 'Forest Back', layer_url: 'https://i.ibb.co/wWHn1gj/layer2.png', layer_str: .1, blendmode: 'normal', 
