@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 
-class SizeInputRow extends Component {
+default export SizeInputRow extends Component {
 
   state = {
     width: this.props.frame[this.props.sizeType][0],

@@ -13,12 +13,13 @@ const Container = styled.div`
   align-items: flex-start;  
 `;
 
-export default function DetailsFrame () {
+//-----< Component Function >-----\\
+export default function DetailsFrame() {
   //>> Render
   return (
     <Container className="details-widget">
       <DetailsFrameSize />
       <DetailsFrameMain />
     </Container>
-  )
+  );
 }

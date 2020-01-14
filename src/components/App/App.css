@@ -141,10 +141,7 @@ body {
   box-sizing : border-box;
 }
 
-#details-frame-size {
-  grid-area: size;
-  margin-right: 8px;
-}
+
 
 #in-background-url {
   width: 100%;
