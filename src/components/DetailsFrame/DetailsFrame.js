@@ -1,15 +1,24 @@
 import React from 'react';
+import styled from 'styled-components';
 
 //-----< Component Imports >-----\\
 import DetailsFrameSize from './DetailsFrameSize';
 import DetailsFrameMain from './DetailsFrameMain';
 
+//-----< Styling >-----\\
+const Container = styled.div`
+  display: grid;
+  grid-template-areas: "size main";
+  grid-template-columns: 1fr 1fr;
+  align-items: flex-start;  
+`;
+
 export default function DetailsFrame () {
   //>> Render
   return (
-    <div id="details-frame" className="details-widget">
+    <Container className="details-widget">
       <DetailsFrameSize />
       <DetailsFrameMain />
-    </div>
+    </Container>
   )
 }

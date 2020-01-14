@@ -124,13 +124,6 @@ body {
   box-sizing : border-box;
 }
 
-#details-frame {
-  display: grid;
-  grid-template-areas: "size main";
-  grid-template-columns: 1fr 1fr;
-  align-items: flex-start;
-}
-
 #details-frame-main {
   grid-area: main;
   margin-left: 8px;
