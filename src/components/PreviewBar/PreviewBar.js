@@ -3,9 +3,11 @@ import {useDispatch, useSelector} from 'react-redux';
 
 export default function PreviewBar () {
 
+  //>> Setup hooks
   let dispatch = useDispatch();
   let frame = useSelector(state=>state.edit);
  
+  //>> Handle input changes
   function handleChange (event) {
     dispatch({
       type: 'SET_FRAME_NAME',
@@ -13,6 +15,7 @@ export default function PreviewBar () {
     })
   }
 
+  //>> Render
   return (
     <div id="preview-bar">
       <div id="preview-bar-main">
