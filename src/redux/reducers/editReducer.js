@@ -2,7 +2,11 @@ const editReducer = (state = {
     select: 0,
     bkg_url: 'https://i.ibb.co/BB16CGL/layer1.png',
     layerData: [
-      {layer_name: 'Forest Back', layer_url: 'https://i.ibb.co/wWHn1gj/layer2.png', layer_str: .1, blendmode: 'normal', filter: []},
+      {layer_name: 'Forest Back', layer_url: 'https://i.ibb.co/wWHn1gj/layer2.png', layer_str: .1, blendmode: 'normal', 
+      filter: [
+        {name: 'blur', value: 16, unit: 'px'},
+        {name: 'brightness', value: 100, unit: '%'}
+      ]},
       {layer_name: 'Sphere', layer_url: 'https://i.ibb.co/j61b2c3/layer3.png', layer_str: .3, blendmode: 'luminosity', filter: []},
       {layer_name: 'Forest Mid', layer_url: 'https://i.ibb.co/f8R94JB/layer4.png', layer_str: .6, blendmode: 'lighten', filter: []},
       {layer_name: 'Fog', layer_url: 'http://www.transparentpng.com/thumb/fog/heroes-and-icons-fog-png-35.png', layer_str:.8, blendmode: 'normal', filter: []},
@@ -32,8 +36,47 @@ const editReducer = (state = {
 
     case 'SET_LAYER_DATA':
       layerDataCopy[action.payload.index][action.payload.prop] = action.payload.value;
+      return {...state, layerData: layerDataCopy};
+    case 'ADD_NEW_FILTER':
+      layerDataCopy[action.payload].filter.push(
+        {name: 'none', value: ''}
+      )
       return {...state, layerData: layerDataCopy}
+    case 'SET_FILTER_VALUE':
+      layerDataCopy[action.payload.select].filter[action.payload.index].value = action.payload.value;
+      return {...state, layerData: layerDataCopy};
+    case 'SET_FILTER_TYPE':
+      
+      let filterDefaultValue;
+      let filterUnit;
+      switch(action.payload.value) {
+        case 'blur': 
+          filterDefaultValue = 0; 
+          filterUnit = 'px';
+          break;
+        case 'brightness': 
+          filterDefaultValue = 100; 
+          filterUnit = '%';
+          break;
+        case 'contrast': 
+          filterDefaultValue = 100; 
+          filterUnit = '%';
+          break;
+        default: 
+          filterDefaultValue = 0; 
+          filterUnit = '';
+          break;
+      }
 
+      //Set the name of the filter
+      layerDataCopy[action.payload.select].filter[action.payload.index].name = action.payload.value;
+      layerDataCopy[action.payload.select].filter[action.payload.index].value = filterDefaultValue;
+      layerDataCopy[action.payload.select].filter[action.payload.index].unit = filterUnit;
+
+      return {...state, layerData: layerDataCopy};
+    case 'REMOVE_FILTER':
+      layerDataCopy[action.payload.select].filter.splice(action.payload.index,1);
+      return {...state, layerData: layerDataCopy};
 
     case 'SET_LAYER_DATA_PROP':
       let setLayerDataProp = [...state.layerData];
@@ -52,12 +95,6 @@ const editReducer = (state = {
       let movedLayer = layerData_move.splice(index,1)[0];
       layerData_move.splice(newPos,0,movedLayer);
       return {...state, layerData: layerData_move}
-    case 'SET_LAYER_FILTER':
-      let layerData_filter = [...state.layerData];
-      console.log('SET_LAYER_FILTER data:',layerData_filter);
-      
-      //layerData_filter.layerData.filter[action.payload.index] = action.payload.newFilter;
-      return {...state, layerData: layerData_filter}
     default: return state;
   }
 };

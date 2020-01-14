@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import SizeInputRow from './SizeInputRow';
 
 //-----< Component Imports >-----\\
 import DetailsFrameSize from './DetailsFrameSize';

@@ -157,6 +157,18 @@ class pixelbox extends Component {
         newLayer.css('left',-(extend[0]*ratio[0]));
         newLayer.css('top',-(extend[1]*ratio[1]))
         newLayer.css('mix-blend-mode',layerData[i].blendmode);
+        console.log(layerData[i].filter);
+        
+        let filtersInput = '';
+        for (let j=0; j<layerData[i].filter.length; j++) {
+          let filter = layerData[i].filter[j];
+          if (filter.name!=='none' && filter.value!='') {
+            let filterString = `${filter.name}(${filter.value}${filter.unit}) `;
+            filtersInput += filterString;
+          }
+        }
+
+        newLayer.css('filter',filtersInput);
       //Add the layers to the array and the frame
       layerList.push(newLayer);
       $(target).append(newLayer);
@@ -176,26 +188,26 @@ class pixelbox extends Component {
 
   
 
-  static recalculateFrame (index,newData) {
-    //-----< Setting the New Numbers >-----\\
-    frameList[index].bkg = newData.bkg_url;
-    frameList[index].layerData = newData.layerData;
-    frameList[index].display = [newData.display[0],newData.display[1]];
-    frameList[index].size = [newData.size[0],newData.size[1]];
-    frameList[index].extend = [newData.extend[0],newData.extend[1]];
-    frameList[index].ratio = [display[0]/size[0],display[1]/size[1]];
+  // static recalculateFrame (index,newData) {
+  //   //-----< Setting the New Numbers >-----\\
+  //   frameList[index].bkg = newData.bkg_url;
+  //   frameList[index].layerData = newData.layerData;
+  //   frameList[index].display = [newData.display[0],newData.display[1]];
+  //   frameList[index].size = [newData.size[0],newData.size[1]];
+  //   frameList[index].extend = [newData.extend[0],newData.extend[1]];
+  //   frameList[index].ratio = [display[0]/size[0],display[1]/size[1]];
 
 
-    //...target the element and get the updated display values...
-    const {target, display, size, extend} = frameList[index];
+  //   //...target the element and get the updated display values...
+  //   const {target, display, size, extend} = frameList[index];
 
 
     
-    //...and apply that CSS to the frame element.
-    $(target).css('background-size',`${display[0]}px ${display[1]}px`);
-    $(target).css('width',display[0]);
-    $(target).css('height',display[1]);
-  } 
+  //   //...and apply that CSS to the frame element.
+  //   $(target).css('background-size',`${display[0]}px ${display[1]}px`);
+  //   $(target).css('width',display[0]);
+  //   $(target).css('height',display[1]);
+  // } 
 }
 
 export default pixelbox;

@@ -36,7 +36,7 @@ class EditWindowPreview extends Component {
           key={this.generateKey()}
         />
         <PreviewFrame key={this.generateKey()}/>
-        <div id="edit-reducer-info">{JSON.stringify(this.props.frame)}</div>
+        <div id="edit-reducer-info">{JSON.stringify(this.props.frame.layerData[0].filter)}</div>
       </div>
     )
   }

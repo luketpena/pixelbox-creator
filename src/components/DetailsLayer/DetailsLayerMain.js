@@ -67,64 +67,72 @@ class DetailsLayerMain extends Component {
     }
   }
 
+  clickClose = ()=> {
+    this.props.dispatch({type: 'SET_LAYER_SELECT', payload: -1})
+  }
+
   render() {
     return (
-      <table id="details-layer-main">
-          <tbody>
-            {/* -----< Layer Name Input >----- */}
-            <tr>
-              <td>Layer Name:</td>
-              <td>
-                <input 
-                  value={this.state.layer_name} 
-                  onChange={(event)=>this.handleChange(event,'layer_name')}  
-                  onBlur={()=>this.handleBlur('layer_name')}
-                  onKeyPress={this.handleKeyPress}
-                  type="text"
-                />
-              </td>
-            </tr>
-            {/* -----< Layer URL Input >----- */}
-            <tr>
-              <td>Image url:</td>
-              <td>
-                <input 
-                  value={this.state.layer_url} 
-                  onChange={(event)=>this.handleChange(event,'layer_url')} 
-                  onBlur={()=>this.handleBlur('layer_url')}
-                  onKeyPress={this.handleKeyPress}
-                  type="text"
-                />
-              </td>
-            </tr>
-            {/* -----< Blendmode Select >----- */}
-            <tr>
-              <td>Blendmode:</td>
-              <td>
-                <select 
-                  value={this.state.blendmode} 
-                  onChange={(event)=>this.triggerChangeEvent(event,'blendmode')}
-                >
-                  {blendmodes.map( (item,i)=>{
-                    return <option key={i} value={item}>{item}</option>
-                  })}
-                </select>
-              </td>
-            </tr>
-            <tr>
-              <td>Strength:</td>
-              <td>
-                <input 
-                  value={this.state.layer_str} 
-                  onChange={(event)=>this.handleChange(event,'layer_str')}  
-                  onBlur={()=>this.handleBlur('layer_str')}
-                  onKeyPress={this.handleKeyPress}
-                  type="number"
-                />
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div id="details-layer-main">
+        <table >
+            <tbody>
+              {/* -----< Layer Name Input >----- */}
+              <tr>
+                <td>Layer Name:</td>
+                <td>
+                  <input 
+                    value={this.state.layer_name} 
+                    onChange={(event)=>this.handleChange(event,'layer_name')}  
+                    onBlur={()=>this.handleBlur('layer_name')}
+                    onKeyPress={this.handleKeyPress}
+                    type="text"
+                  />
+                </td>
+              </tr>
+              {/* -----< Layer URL Input >----- */}
+              <tr>
+                <td>Image url:</td>
+                <td>
+                  <input 
+                    value={this.state.layer_url} 
+                    onChange={(event)=>this.handleChange(event,'layer_url')} 
+                    onBlur={()=>this.handleBlur('layer_url')}
+                    onKeyPress={this.handleKeyPress}
+                    type="text"
+                  />
+                </td>
+              </tr>
+              {/* -----< Blendmode Select >----- */}
+              <tr>
+                <td>Blendmode:</td>
+                <td>
+                  <select 
+                    value={this.state.blendmode} 
+                    onChange={(event)=>this.triggerChangeEvent(event,'blendmode')}
+                  >
+                    {blendmodes.map( (item,i)=>{
+                      return <option key={i} value={item}>{item}</option>
+                    })}
+                  </select>
+                </td>
+              </tr>
+              {/* -----< Strength Input >----- */}
+              <tr>
+                <td>Strength:</td>
+                <td>
+                  <input 
+                    value={this.state.layer_str} 
+                    onChange={(event)=>this.handleChange(event,'layer_str')}  
+                    onBlur={()=>this.handleBlur('layer_str')}
+                    onKeyPress={this.handleKeyPress}
+                    type="number"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <button onClick={this.clickClose}>Close</button>
+        </div>
     )
   }
 }
