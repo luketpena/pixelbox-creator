@@ -15,7 +15,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 });
 
 router.post('/', (req, res) => {
-
+  
 });
 
 module.exports = router;
