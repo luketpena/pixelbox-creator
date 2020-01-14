@@ -10,7 +10,6 @@ class PreviewFrame extends Component {
   }
 
   pixelboxInit = ()=> {
-    console.log('INIT PIXELBOX');
     
     pb.createFrame(
       '#preview-frame',

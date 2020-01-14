@@ -3,7 +3,7 @@ import './pixelbox.css';
 
 import {Component} from 'react';
 
-const verbose = true;
+const verbose = false;
 
 let pageSize = [$(window).width(),$(window).height()];
 let mousePos = [0,0]; //actual coordinates
@@ -116,9 +116,6 @@ function pbSmoothMove () {
 }
 
 class pixelbox extends Component {
-  static test() {
-    console.log('pixelbox test');
-  }
 
   static setGlobals (setSmoothing, setFramerate, setPixelSnap) {
     smoothing = setSmoothing;
@@ -157,7 +154,6 @@ class pixelbox extends Component {
         newLayer.css('left',-(extend[0]*ratio[0]));
         newLayer.css('top',-(extend[1]*ratio[1]))
         newLayer.css('mix-blend-mode',layerData[i].blendmode);
-        console.log(layerData[i].filter);
         
         let filtersInput = '';
         for (let j=0; j<layerData[i].filter.length; j++) {
@@ -176,7 +172,6 @@ class pixelbox extends Component {
   
     //Create the attributes object
     const attr = {target,bkg,layerData,size,display,extend,layerList,layerCount,ratio};
-    console.log('Attributes:',attr)
     //Save the attributes to the frame's data
     $(target).data('attr',attr);
     //Save the frame attributes to the list of frames

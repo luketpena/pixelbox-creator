@@ -15,7 +15,6 @@ class DetailsLayerFilter extends Component {
     for (let i=0; i<filterList.length; i++) {
       currentFilters.push(filterList[i].name)
     }
-    console.log('Filters added:',currentFilters);
     
     return filterList.map( (item,i)=>{
       return <DetailsFilterRow key={i} index={i} select={this.props.select} filter={item} currentFilters={currentFilters}/>

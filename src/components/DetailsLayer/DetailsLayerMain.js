@@ -48,13 +48,15 @@ class DetailsLayerMain extends Component {
 
   //Uses the event value to both dispatch to the reducer AND update the state
   triggerChangeEvent = (event,prop)=> {
-    const myPayload = {
-      index: this.props.select,
-      prop: prop,
-      value: event.target.value
-    }
     this.setState({[prop]: event.target.value});
-    this.props.dispatch({type: 'SET_LAYER_DATA', payload: myPayload});
+    this.props.dispatch({
+      type: 'SET_LAYER_DATA', 
+      payload: {
+        index: this.props.select,
+        prop: prop,
+        value: event.target.value
+      }
+    });
   }
 
   //Used for making inputs responsive to keystrokes
@@ -138,5 +140,6 @@ class DetailsLayerMain extends Component {
 }
 
 export default connect(state=>({
+  select: state.edit.select,
   layerData: state.edit.layerData[state.edit.select]
 })) (DetailsLayerMain);

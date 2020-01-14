@@ -2,11 +2,6 @@ import React, {Component} from 'react';
 
 class PreviewBar extends Component {
 
-  componentDidMount () {
-    console.log('Preview bar mount');
-    
-  }
-
   render() {
     return (
       <div id="preview-bar">

@@ -30,21 +30,25 @@ class DetailsLayer extends Component {
   }
 
   handleReducerChange = (event,prop)=> {
-    this.setState({[prop]: event.target.value})
-    const myPayload = {
-      index: this.props.select,
-      prop: prop,
-      value: event.target.value
-    }
-    this.props.dispatch({type: 'SET_LAYER_DATA_PROP', payload: myPayload});
+    this.setState({[prop]: event.target.value})    
+    this.props.dispatch({
+      type: 'SET_LAYER_DATA', 
+      payload: {
+        index: this.props.select,
+        prop: prop,
+        value: event.target.value
+      }
+    });
   }
 
   triggerChange = ()=> {
-    const myPayload = {
-      index: this.props.select,
-      value: this.state
-    }
-    this.props.dispatch({type: 'SET_LAYER_DATA', payload: myPayload});
+    this.props.dispatch({
+      type: 'SET_LAYER_DATA', 
+      payload: {
+        index: this.props.select,
+        value: this.state
+      }
+    });
   }  
 
   render() {
