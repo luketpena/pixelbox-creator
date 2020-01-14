@@ -9,7 +9,6 @@ const RowTitle = styled.td`
 `;
 const RowInput = styled.input`
   width: 48px;
-  text-align: center;
 `;
 const RowX = styled.td`
   font-family: monospace;

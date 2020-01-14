@@ -125,6 +125,7 @@ body {
 }
 
 .details-input {
+  text-align: center;
   font-family: monospace;
   background: none;
   outline: none;
@@ -155,11 +156,6 @@ body {
 }
 
 
-
-#in-background-url {
-  width: 100%;
-  box-sizing : border-box;
-}
 
 #details-layer {
   display: grid;
@@ -213,6 +209,7 @@ body {
   text-align: right;
 }
 .input-unit {
+  color: #888;
   margin-left: -20px;
   font-family: monospace;
   font-size: 12px;

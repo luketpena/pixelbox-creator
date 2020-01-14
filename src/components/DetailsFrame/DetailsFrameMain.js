@@ -1,32 +1,37 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, {useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import styled from 'styled-components';
 
-class DetailsFrameMain extends Component {
+const InBkg = styled.input`
+  width: 100%;
+  box-sizing : border-box;
+`;
 
-  state = {
-    bkg_url: this.props.frame.bkg_url,
-    framerate: this.props.frame.framerate,
-    smoothing: this.props.frame.smoothing,
-    pixelsnap: this.props.frame.pixelsnap
-  }
+//-----< Component Function >-----\\
+export default function DetailsFrameMain() {
 
-  //Submits a change to the state
-  handleChange = (event,prop)=> {
-    this.setState({[prop]: event.target.value})
-  }
+  //>> Set up hooks
+  const dispatch = useDispatch();
+  const frame = useSelector(state=>state.edit);
 
-  //Submits acknowledges changes to the reducer
-  handleBlur = (prop)=> {
+  //>> Set up state
+  const [bkg_url, setBkg_url] = useState(frame.bkg_url);
+  const [framerate, setFramerate] = useState(frame.framerate);
+  const [smoothing, setSmoothing] = useState(frame.smoothing);
+  const [pixelsnap, setPixelsnap] = useState(frame.pixelsnap);
+
+  //>> Pushes input changes to reducer on blur
+  function handleBlur(prop) {
     switch(prop) {
-      case 'bkg_url': this.props.dispatch({type: 'SET_FRAME_BKG', payload: this.state.bkg_url}); break;
-      case 'framerate': this.props.dispatch({type: 'SET_FRAME_FRAMERATE', payload: Number(this.state.framerate) }); break;
-      case 'smoothing': this.props.dispatch({type: 'SET_FRAME_SMOOTHING', payload: Number(this.state.smoothing) }); break;
+      case 'bkg_url': dispatch({type: 'SET_FRAME_BKG', payload: bkg_url}); break;
+      case 'framerate': dispatch({type: 'SET_FRAME_FRAMERATE', payload: Number(framerate) }); break;
+      case 'smoothing': dispatch({type: 'SET_FRAME_SMOOTHING', payload: Number(smoothing) }); break;
       default: break;
     }  
   }
 
-  //Used for making inputs responsive to keystrokes
-  handleKeyPress = (event)=> {
+  //>> Toggles blur on pressing enter
+  function handleKeyPress(event) {
     switch(event.key) {
       case 'Enter': 
         document.activeElement.blur();
@@ -35,90 +40,84 @@ class DetailsFrameMain extends Component {
     }
   }
 
-  //Submits a call to the reducer to toggle the Pixelsnap property
-  togglePixelsnap = ()=> {
-    this.setState({
-      pixelsnap: !this.state.pixelsnap
-    })
-    this.props.dispatch({type: 'SET_FRAME_PIXELSNAP', payload: !this.state.pixelsnap });
+  //>> Toggles pixelsnap and sends it to both state and the reducer
+  function togglePixelsnap() {
+    setPixelsnap(!pixelsnap)
+    dispatch({type: 'SET_FRAME_PIXELSNAP', payload: !pixelsnap });
   }
 
-  render() {
-    return (
-      <div id="details-frame-main">
-          {/* -----< Background Input >----- */}
-          <label>
-            Background url: 
-            <input 
-              id="in-background-url" 
-              type="text" 
-              value={this.state.bkg_url}
-              onChange={(event)=>this.handleChange(event,'bkg_url')}
-              onBlur={()=>this.handleBlur('bkg_url')}
-              onKeyPress={this.handleKeyPress}
-            />
-          </label>
-
-          <div id="details-frame-main-inputs">
-            <table>
-              <tbody>
-                {/* -----< Framerate Input >----- */}
-                <tr>
-                  <td>Framerate:</td>
-                  <td>
-                    <input 
-                      type="number" 
-                      className="input-with-unit"
-                      value={this.state.framerate}
-                      onChange={(event)=>this.handleChange(event,'framerate')}
-                      onBlur={()=>this.handleBlur('framerate')}
-                      onKeyPress={this.handleKeyPress}
-                    />
-                    <span className="input-unit">fps</span>
-                    </td>
-                </tr>
-                {/* -----< Smoothing Input >----- */}
-                <tr>
-                  <td>Smoothing:</td>
-                  <td>
-                    <input 
-                      type="number" 
-                      className="input-with-unit"
-                      value={this.state.smoothing}
-                      onChange={(event)=>this.handleChange(event,'smoothing')}
-                      onBlur={()=>this.handleBlur('smoothing')}
-                      onKeyPress={this.handleKeyPress}
-                    />
-                  </td>
-                </tr>
-                {/* -----< Pixelsnap Toggle >----- */}
-                <tr>
-                  <td>Pixelsnap:</td>
-                  <td>
-                    <input 
-                      type="checkbox"
-                      checked={this.state.pixelsnap}
-                      onChange={this.togglePixelsnap}
-                    />
-                  </td>
-                </tr>
-                {/* -----< Overflow Toggle >----- */}
-                <tr>
-                  <td>Hide overflow:</td>
-                  <td>
-                    <input 
-                      type="checkbox"
-                      checked={this.state.pixelsnap}
-                      onChange={this.togglePixelsnap}
-                    />
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-    )
-  }
+  //>> Render
+  return (
+    <div id="details-frame-main">
+      <label>
+        Background url: 
+        <InBkg 
+          className="details-input"
+          type="text" 
+          value={bkg_url}
+          onChange={(event)=>setBkg_url(event.target.value)}
+          onBlur={()=>handleBlur('bkg_url')}
+          onKeyPress={handleKeyPress}
+        />
+      </label>
+          
+      <div id="details-frame-main-inputs">
+        <table>
+          <tbody>
+            <tr>
+              <td>Framerate:</td>
+              <td>
+                <input 
+                  type="number" 
+                  className="input-with-unit details-input"
+                  value={framerate}
+                  onChange={(event)=>setFramerate(event.target.value)}
+                  onBlur={()=>handleBlur('framerate')}
+                  onKeyPress={handleKeyPress}
+                />
+                <span className="input-unit">fps</span>
+                </td>
+            </tr>
+            
+            <tr>
+              <td>Smoothing:</td>
+              <td>
+                <input 
+                  type="number" 
+                  className="input-with-unit details-input"
+                  value={smoothing}
+                  onChange={(event)=>setSmoothing(event.target.value)}
+                  onBlur={()=>handleBlur('smoothing')}
+                  onKeyPress={handleKeyPress}
+                />
+              </td>
+            </tr>
+            
+            <tr>
+              <td>Pixelsnap:</td>
+              <td>
+                <input 
+                  type="checkbox"
+                  checked={pixelsnap}
+                  onChange={togglePixelsnap}
+                />
+              </td>
+            </tr>
+            
+            <tr>
+              <td>Hide overflow:</td>
+              <td>
+                <input 
+                  type="checkbox"
+                  checked={pixelsnap}
+                  onChange={togglePixelsnap}
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )
 }
 
-export default connect(state=>({frame: state.edit}))(DetailsFrameMain);
