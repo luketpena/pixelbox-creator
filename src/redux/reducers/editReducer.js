@@ -1,4 +1,5 @@
 const editReducer = (state = {
+    frame_name: 'Untitled Frame',
     select: -1,
     bkg_url: 'https://i.ibb.co/BB16CGL/layer1.png',
     layerData: [
@@ -23,6 +24,7 @@ const editReducer = (state = {
   const layerDataCopy = [...state.layerData];
   switch (action.type) {
     //-----< Frame Setters >-----\\
+    case 'SET_FRAME_NAME': return {...state, frame_name: action.payload};
     case 'SET_FRAME_SIZE': return {...state, size: action.payload};
     case 'SET_FRAME_EXTEND': return {...state, extend: action.payload};
     case 'SET_FRAME_DISPLAY': return {...state, display: action.payload};

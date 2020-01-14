@@ -1,21 +1,33 @@
-import React, {Component} from 'react';
+import React from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 
-class PreviewBar extends Component {
+export default function PreviewBar () {
 
-  render() {
-    return (
-      <div id="preview-bar">
-        <div id="preview-bar-main">
-          <input type="text" placeholder="Frame Name"/>
-          <button>Save</button>
-          <button>Export</button>
-        </div>
-        <div id="preview-bar-return">
-          <button>Return to Control Panel</button>
-        </div> 
-      </div>
-    )
+  let dispatch = useDispatch();
+  let frame = useSelector(state=>state.edit);
+ 
+  function handleChange (event) {
+    dispatch({
+      type: 'SET_FRAME_NAME',
+      payload: event.target.value
+    })
   }
-}
 
-export default PreviewBar;
+  return (
+    <div id="preview-bar">
+      <div id="preview-bar-main">
+        <input 
+          type="text" 
+          placeholder="Frame Name"
+          value={frame.frame_name}
+          onChange={(event)=>handleChange(event)}
+        />
+        <button>Save</button>
+        <button>Export</button>
+      </div>
+      <div id="preview-bar-return">
+        <button>Return to Control Panel</button>
+      </div> 
+    </div>
+  )
+}
