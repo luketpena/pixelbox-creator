@@ -8,7 +8,20 @@ router.get('/', rejectUnauthenticated, (req, res) => {
     SELECT * FROM layer WHERE frame_id=$1;
   `;
   pool.query(queryString,[3]).then(result=>{
-    res.send(result.rows);
+    //>> The working copy of the query results
+    let copy = result.rows;
+    //>> Replace the filter arrays as objects with properties
+    for (let i=0; i<copy.length; i++) {
+      copy[i].filter = copy[i].filter.map( item=>{
+        return {
+          name: item[0],
+          value: Number(item[1]),
+          unit: item[2]
+        }
+      })
+    }
+    //>> Send the modified copy
+    res.send(copy);
   }).catch(error=>{
     console.log('Router error getting layers:',error);
   })
