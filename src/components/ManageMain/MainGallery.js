@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import {useSelector} from 'react-redux';
 
 //-----< Component Imports >-----\\
 import GalleryCard from './GalleryCard';
@@ -13,14 +14,18 @@ const Container = styled.div`
   justify-content: center;  
 `;
 export default function MainGallery() {
+
+  const frameList = useSelector(state=>state.frame);
+
+  function renderCards() {
+    return frameList.map( (frame,i)=> {
+      return <GalleryCard key={i} frame={frame} />
+    })
+  }
   
   return (
     <Container>
-      <GalleryCard /> 
-      <GalleryCard />
-      <GalleryCard />
-      <GalleryCard />
-      <GalleryCard />
+      {renderCards()}
     </Container>
   )
 }

@@ -158,7 +158,7 @@ class pixelbox extends Component {
         let filtersInput = '';
         for (let j=0; j<layerData[i].filter.length; j++) {
           let filter = layerData[i].filter[j];
-          if (filter.name!=='none' && filter.value!='') {
+          if (filter.name!=='none' && filter.value!=='') {
             let filterString = `${filter.name}(${filter.value}${filter.unit}) `;
             filtersInput += filterString;
           }

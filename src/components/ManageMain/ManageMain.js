@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styled from 'styled-components';
+import {useSelector, useDispatch} from 'react-redux';
 
 //-----< Component Imports >-----\\
 import MainHeader from './MainHeader';
@@ -17,6 +18,14 @@ const Main = styled.div`
 `;
 
 export default function ManageMain() {
+
+  const dispatch = useDispatch();
+  const user = useSelector(state=>state.user);
+
+  useEffect(()=>{
+    console.log('Manager mounted.');
+    dispatch({type: 'GET_USER_FRAMES', payload: user.id})
+  });
 
   return (
     <Main>

@@ -29,13 +29,14 @@ const DetailsButton = styled.button`
 export default function ManageSidebar() {
 
   let user = useSelector(state=>state.user);
+  let frame = useSelector(state=>state.frame);
 
   return (
     <Container>
       {JSON.stringify(user)}
       <Avatar src={avatarUrl}/>
       <Username>{user.username}</Username>
-      <FrameNumber># of frames</FrameNumber>
+      <FrameNumber>{frame.length} {(frame.length===1)? 'frame' : 'frames'}</FrameNumber>
       <DetailsButton>Account Details</DetailsButton>
     </Container>
   )

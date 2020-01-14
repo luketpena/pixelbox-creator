@@ -25,12 +25,12 @@ const Title = styled.h3`
   margin: 0;
 `;
 
-export default function GalleryCard() {
+export default function GalleryCard(props) {
 
   return(
     <Card>
       <CardImg src={testImage} />
-      <Title>Frame Name</Title>
+      <Title>{props.frame.frame_name}</Title>
       <CardButton>Edit</CardButton>
       <CardButton>Duplicate</CardButton>
       <CardButton>Export</CardButton>
