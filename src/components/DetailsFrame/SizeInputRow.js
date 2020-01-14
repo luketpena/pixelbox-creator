@@ -1,32 +1,43 @@
-import React from 'react';
-import {connect} from 'react-redux';
+import React, {useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import styled from 'styled-components';
 
-default export SizeInputRow extends Component {
+//-----< Styling >-----\\
+const RowTitle = styled.td`
+  font-family: monospace;
+  text-align: right;
+`;
+const RowInput = styled.input`
+  width: 48px;
+  text-align: center;
+`;
+const RowX = styled.td`
+  font-family: monospace;
+`;
 
-  state = {
-    width: this.props.frame[this.props.sizeType][0],
-    height: this.props.frame[this.props.sizeType][1]
-  }
+//-----< Component Function >-----\\
+export default function SizeInputRow(props) {
 
-  //Submits changes to state from inputs
-  handleChange = (event, prop)=> {
-    this.setState({[prop]: event.target.value});
-    console.log('Attribute:',this.props.sizeType,'Value:',event.target.value,'Index:',prop);
-  }
+  //>> Set up hooks
+  const dispatch = useDispatch();
+  let frame = useSelector(state=>state.edit);
 
-  //Submits changes to the reducer once an input leaves focus
-  handleBlur = ()=> {
-    console.log('INPUT RECEIVED!');
-    switch(this.props.sizeType) {
-      case 'size': this.props.dispatch({type: 'SET_FRAME_SIZE', payload: [Number(this.state.width),Number(this.state.height)]}); break;
-      case 'extend': this.props.dispatch({type: 'SET_FRAME_EXTEND', payload: [Number(this.state.width),Number(this.state.height)]}); break;
-      case 'display': this.props.dispatch({type: 'SET_FRAME_DISPLAY', payload: [Number(this.state.width),Number(this.state.height)]}); break;
+  //>> Set up state
+  const [width, setWidth] = useState(frame[props.sizeType][0]);
+  const [height, setHeight] = useState(frame[props.sizeType][1]);
+
+  //>> On input blur, send the local input values to the reducer
+  function handleBlur () {
+    switch(props.sizeType) {
+      case 'size': dispatch({type: 'SET_FRAME_SIZE', payload: [Number(width),Number(height)]}); break;
+      case 'extend': dispatch({type: 'SET_FRAME_EXTEND', payload: [Number(width),Number(height)]}); break;
+      case 'display': dispatch({type: 'SET_FRAME_DISPLAY', payload: [Number(width),Number(height)]}); break;
       default: break;
     }
   }
 
-  //Used for making inputs responsive to keystrokes
-  handleKeyPress = (event)=> {
+  //>> On pressing enter, blur the currently selected input
+  function handleKeyPress (event) {
     switch(event.key) {
       case 'Enter': 
         document.activeElement.blur();
@@ -35,38 +46,36 @@ default export SizeInputRow extends Component {
     }
   }
 
-  render() {
-    return (
-      <tr>
-        <td>{this.props.title}</td>
-        {/* -----< Input Width Property >----- */}
-        <td>
-          <input 
-            type="number" 
-            className="input-with-unit" 
-            value={this.state.width}
-            onChange={(event)=>this.handleChange(event,'width')}
-            onBlur={this.handleBlur}
-            onKeyPress={this.handleKeyPress}
-          />
-          <span className="input-unit">px</span>
-          </td>
-        <td>X</td>
-        {/* -----< Input Height Property >----- */}
-        <td>
-          <input 
-            type="number" 
-            className="input-with-unit" 
-            value={this.state.height}
-            onChange={(event)=>this.handleChange(event,'height')}
-            onBlur={this.handleBlur}
-            onKeyPress={this.handleKeyPress}
-          />
-          <span className="input-unit">px</span>
-        </td>
-      </tr>
-    )
-  }
-}
+  //>> Render
+  return (
+    <tr>
+      <RowTitle>{props.title}:</RowTitle>
 
-export default connect(state=>({frame: state.edit}))(SizeInputRow);
+      <td>
+        <RowInput 
+          type="number" 
+          className="input-with-unit details-input" 
+          value={width}
+          onChange={(event)=>setWidth(event.target.value)}
+          onBlur={handleBlur}
+          onKeyPress={handleKeyPress}
+        />
+        <span className="input-unit">px</span>
+        </td>
+
+      <RowX>X</RowX>
+
+      <td>
+        <RowInput 
+          type="number" 
+          className="input-with-unit details-input" 
+          value={height}
+          onChange={(event)=>setHeight(event.target.value)}
+          onBlur={handleBlur}
+          onKeyPress={handleKeyPress}
+        />
+        <span className="input-unit">px</span>
+      </td>
+    </tr>
+  )
+}

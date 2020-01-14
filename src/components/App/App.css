@@ -124,6 +124,19 @@ body {
   box-sizing : border-box;
 }
 
+.details-input {
+  font-family: monospace;
+  background: none;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid black;
+}
+
+.details-input:focus {
+  color: white;
+  border-bottom: 1px solid white;
+}
+
 #details-frame-main {
   grid-area: main;
   margin-left: 8px;
@@ -200,7 +213,9 @@ body {
   text-align: right;
 }
 .input-unit {
-  margin-left: -20px
+  margin-left: -20px;
+  font-family: monospace;
+  font-size: 12px;
 }
 
 input[type=number]::-webkit-inner-spin-button, 
