@@ -1,5 +1,6 @@
 const demoFrame = {
   saved: true,
+  frame_id: -1,
   frame_name: 'Untitled Frame',
   select: -1,
   bkg_url: 'https://i.ibb.co/BB16CGL/layer1.png',
@@ -39,6 +40,11 @@ const editReducer = (state = demoFrame, action) => {
   const layerDataCopy = [...state.layerData];
   switch (action.type) {
     case 'CONFIRM_SAVE': return {...state, saved: true};
+    case 'EDIT_FRAME': return {
+      ...state,
+      ...action.payload,
+      saved: true,
+    }
 
     //-----< Frame Setters >-----\\
     case 'SET_FRAME_NAME': return {...state, saved: false, frame_name: action.payload};

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
+import useReactRouter from 'use-react-router';
 
 const testImage = 'https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto/gigs/116770670/original/281f85ad141b056fc82fa8058134a86421c61817/paint-you-a-beautiful-pixel-art-landscape.png';
 
@@ -29,16 +30,21 @@ const Title = styled.h3`
 export default function GalleryCard(props) {
 
   const dispatch = useDispatch();
+  const {history} = useReactRouter();
 
   function deleteFrame() {
-    dispatch({type: 'DELETE_FRAME', payload: props.frame.id})
+    dispatch({type: 'DELETE_FRAME', payload: props.frame.id});
+  }
+  function editFrame() {
+    dispatch({type: 'EDIT_FRAME', payload: props.frame});
+    history.push('/edit')
   }
 
   return(
     <Card>
       <CardImg src={testImage} />
       <Title>{props.frame.frame_name}</Title>
-      <CardButton>Edit</CardButton>
+      <CardButton onClick={editFrame}>Edit</CardButton>
       <CardButton>Duplicate</CardButton>
       <CardButton>Export</CardButton>
       <CardButton onClick={deleteFrame}>Delete</CardButton>

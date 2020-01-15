@@ -72,7 +72,7 @@ router.post('/', async (req, res) => {
 router.delete('/:id', rejectUnauthenticated, async (req,res)=> {
   const client = await pool.connect();
   try {
-    const frameUserId = await client.query(`SELECT user_id FROM frame WHERE id = $1;`, [req.params.id])
+    const frameUserId = await client.query(`SELECT user_id FROM frame WHERE id = $1;`, [req.params.id]);
     if(req.user.id === frameUserId.rows[0]['user_id']){
 
       await client.query(`BEGIN`)
@@ -85,6 +85,70 @@ router.delete('/:id', rejectUnauthenticated, async (req,res)=> {
   } catch (error) {
     client.query('ROLLBACK');
     console.log('Error deleting frame and layers.', error)
+    res.sendStatus(500);
+  } finally {
+    client.release();
+  }
+});
+
+router.put('/', rejectUnauthenticated, async (req,res)=> {
+  //>> Deconstruct the req.body and prep into array
+  const {frame_id, frame_name,bkg_url,size,extend,display,smoothing,framerate,pixelsnap,layerData} = req.body;
+  const frameData = [frame_id, frame_name,bkg_url,size[0],size[1],extend[0],extend[1],display[0],display[1],smoothing,framerate,pixelsnap];
+
+  //>> Connecting to the DB
+  const client = await pool.connect();
+
+  try {
+    //>> Get the user_id of frame to see if we have the access to modify
+    const frameUserId = await client.query(`SELECT user_id FROM frame WHERE id = $1;`, [req.params.id]);
+    if(req.user.id === frameUserId.rows[0]['user_id']){
+
+    //>> Updates the frame of frame_id
+    const frameQuery = `
+      UPDATE frame 
+      SET frame_name=$2, bkg_url=$3, size_x=$4, size_y=$5, extend_x=$6, extend_y=$7, display_x=$8, display_y=$9, smoothing=$10, framerate=$11, pixelsnap=$12)
+      WHERE id = $1;
+    `;
+    
+    await client.query(`BEGIN`)
+
+      //>> Update the frame information
+      await client.query(frameQuery,frameData);
+      //>> Delete all layers
+      await client.query(`DELETE FROM layer WHERE frame_id=$1;`,[frame_id]);
+      //>> Set up layer query
+      const layerQuery = `
+        INSERT INTO layer (frame_id, layer_name, layer_url, layer_str, blendmode, filter)
+        VALUES ($1,$2,$3,$4,$5,$6);
+      `;
+      //>> Recreate the layers for the frame
+      for (let i=0; i<layerData.length; i++) {
+        const layerArray = [
+          result.rows[0].id, 
+          layerData[i].layer_name, 
+          layerData[i].layer_url, 
+          layerData[i].layer_str, 
+          layerData[i].blendmode,
+          layerData[i].filter.map( item=> {
+            return [item.name, item.value, item.unit];
+          })
+        ]
+        console.log('Layer query:',layerArray);
+        await client.query(layerQuery, layerArray);
+      }
+
+      //>> End the connection successfully
+      await client.query('COMMIT');
+      res.sendStatus(200);
+
+    } else {
+      //>> Current user is not authorize to modify the selected frame
+      res.sendStatus(403);
+    }
+  } catch(error) {
+    client.query('ROLLBACK');
+    console.log('Error modifying frame and layers.',error);
     res.sendStatus(500);
   } finally {
     client.release();

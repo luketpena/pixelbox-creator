@@ -19,7 +19,7 @@ export default function MainGallery() {
 
   function renderCards() {
     return frameList.map( (frame,i)=> {
-      return <GalleryCard key={i} frame={frame} />
+      return <GalleryCard key={i} frame={frame} index={i} />
     })
   }
   
