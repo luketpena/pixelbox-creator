@@ -69,15 +69,15 @@ router.post('/', async (req, res) => {
   }  
 });
 
-router.delete('/:id', rejectUnauthenticated, (req,res)=> {
+router.delete('/:id', rejectUnauthenticated, async (req,res)=> {
   const client = await pool.connect();
   try {
     const frameUserId = await client.query(`SELECT user_id FROM frame WHERE id = $1;`, [req.params.id])
     if(req.user.id === frameUserId.rows[0]['user_id']){
 
       await client.query(`BEGIN`)
-      await client.query(`DELETE FROM layer WHERE frame_id = $1;`,[req.params.id]);
-      await client.query(`DELETE FROM frame WHERE id = $1`, [req.params.id]);
+        await client.query(`DELETE FROM layer WHERE frame_id = $1;`,[req.params.id]);
+        await client.query(`DELETE FROM frame WHERE id = $1`, [req.params.id]);
       await client.query('COMMIT');
       res.sendStatus(200);
     }  

@@ -11,9 +11,15 @@ function * newFrame(action) {
   yield put({type: 'GET_USER_FRAMES'});
 }
 
+function * deleteFrame(action) {
+  yield axios.delete('/api/frame/'+action.payload);
+  yield put({type: 'GET_USER_FRAMES'});
+}
+
 function * frameSaga() {
   yield takeLatest('POST_NEW_FRAME', newFrame);
   yield takeLatest('GET_USER_FRAMES', getFrames);
+  yield takeLatest('DELETE_FRAME', deleteFrame);
 }
 
 export default frameSaga;
