@@ -1,25 +1,39 @@
-const editReducer = (state = {
-    frame_name: 'Untitled Frame',
-    select: -1,
-    bkg_url: 'https://i.ibb.co/BB16CGL/layer1.png',
-    layerData: [
-      {layer_name: 'Forest Back', layer_url: 'https://i.ibb.co/wWHn1gj/layer2.png', layer_str: .1, blendmode: 'normal', 
-      filter: [
-        {name: 'blur', value: 16, unit: 'px'},
-        {name: 'brightness', value: 100, unit: '%'}
-      ]},
-      {layer_name: 'Sphere', layer_url: 'https://i.ibb.co/j61b2c3/layer3.png', layer_str: .3, blendmode: 'luminosity', filter: []},
-      {layer_name: 'Forest Mid', layer_url: 'https://i.ibb.co/f8R94JB/layer4.png', layer_str: .6, blendmode: 'lighten', filter: []},
-      {layer_name: 'Fog', layer_url: 'http://www.transparentpng.com/thumb/fog/heroes-and-icons-fog-png-35.png', layer_str:.8, blendmode: 'normal', filter: []},
-      {layer_name: 'Forest Front', layer_url: 'https://i.ibb.co/y4dmZt2/layer5.png', layer_str: 1, blendmode: 'normal', filter: []}
-    ],
-    size: [256,128],
-    extend: [32,8],
-    display: [512,256],
-    framerate: 5,
-    smoothing: .2,
-    pixelsnap: true
-  }, action) => {
+const demoFrame = {
+  frame_name: 'Untitled Frame',
+  select: -1,
+  bkg_url: 'https://i.ibb.co/BB16CGL/layer1.png',
+  layerData: [
+    {layer_name: 'Forest Back', layer_url: 'https://i.ibb.co/wWHn1gj/layer2.png', layer_str: .1, blendmode: 'normal', 
+    filter: [
+      {name: 'blur', value: 16, unit: 'px'},
+      {name: 'brightness', value: 100, unit: '%'}
+    ]},
+    {layer_name: 'Sphere', layer_url: 'https://i.ibb.co/j61b2c3/layer3.png', layer_str: .3, blendmode: 'luminosity', filter: []},
+    {layer_name: 'Forest Mid', layer_url: 'https://i.ibb.co/f8R94JB/layer4.png', layer_str: .6, blendmode: 'lighten', filter: []},
+    {layer_name: 'Fog', layer_url: 'http://www.transparentpng.com/thumb/fog/heroes-and-icons-fog-png-35.png', layer_str:.8, blendmode: 'normal', filter: []},
+    {layer_name: 'Forest Front', layer_url: 'https://i.ibb.co/y4dmZt2/layer5.png', layer_str: 1, blendmode: 'normal', filter: []}
+  ],
+  size: [256,128],
+  extend: [32,8],
+  display: [512,256],
+  framerate: 5,
+  smoothing: .2,
+  pixelsnap: true
+};
+
+const emptyFrame = {
+  frame_name: 'Untitled',
+  select: -1,
+  bkg_url: '',
+  layerData: [],
+  size: [256,128],
+  extends: [32,8],
+  display: [512,256],
+  framerate: 15,
+  pixelsnap: true,
+}
+
+const editReducer = (state = demoFrame, action) => {
   
   const layerDataCopy = [...state.layerData];
   switch (action.type) {
