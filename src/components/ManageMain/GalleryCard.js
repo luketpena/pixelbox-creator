@@ -36,7 +36,7 @@ export default function GalleryCard(props) {
     dispatch({type: 'DELETE_FRAME', payload: props.frame.id});
   }
   function editFrame() {
-    dispatch({type: 'EDIT_FRAME', payload: props.frame});
+    dispatch({type: 'GET_SAVED_FRAME', payload: props.frame.id});
     history.push('/edit')
   }
 

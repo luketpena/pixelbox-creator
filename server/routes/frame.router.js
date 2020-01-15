@@ -15,6 +15,37 @@ router.get('/', rejectUnauthenticated, (req, res) => {
   })
 });
 
+router.get('/edit/:id', rejectUnauthenticated, async (req,res)=> {
+  const client = await pool.connect();
+
+  try {
+    await client.query('BEGIN');
+    let frameResult = await client.query(`SELECT * FROM frame WHERE id=$1`,[req.params.id]);
+    let layerResult = await client.query(`SELECT * FROM layer WHERE frame_id=$1;`,[req.params.id]);
+    //>> The working copy of the query results
+    let layerCopy = layerResult.rows;
+    //>> Replace the filter arrays as objects with properties
+    
+    for (let i=0; i<layerCopy.length; i++) {
+      layerCopy[i].filter = layerCopy[i].filter.map( item=>{
+        return {
+          name: item[0],
+          value: Number(item[1]),
+          unit: item[2]
+        }
+      })
+    }
+    let result = {...frameResult.rows[0], layerData: [...layerCopy]}
+    await client.query('COMMIT');
+    res.send(result);
+  } catch(error){
+    res.sendStatus(500);
+    console.log('Error getting complete frame:',error);
+  } finally {
+    client.release();
+  }
+});
+
 //Adding a single frame for a user to the database
 router.post('/', async (req, res) => {
   //>> Destructuring the req.body, stored in array for query data
@@ -31,7 +62,7 @@ router.post('/', async (req, res) => {
       RETURNING id;
     `;
     
-    await client.query(`BEGIN`)
+    await client.query(`BEGIN`);
 
       const result = await client.query(frameQuery,frameData);
       console.log('Frame ID:',result.rows[0].id);
