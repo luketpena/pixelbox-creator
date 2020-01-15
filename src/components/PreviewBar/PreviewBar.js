@@ -15,6 +15,13 @@ export default function PreviewBar() {
     })
   }
 
+  function saveFrame() {
+    dispatch({
+      type: 'POST_NEW_FRAME',
+      payload: frame
+    })
+  }
+
   //>> Render
   return (
     <div id="preview-bar">
@@ -25,7 +32,7 @@ export default function PreviewBar() {
           value={frame.frame_name}
           onChange={(event)=>handleChange(event)}
         />
-        <button>Save</button>
+        <button onClick={saveFrame}>Save</button>
         <button>Export</button>
       </div>
       <div id="preview-bar-return">

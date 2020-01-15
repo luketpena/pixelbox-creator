@@ -7,7 +7,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
   const queryString = `
     SELECT * FROM layer WHERE frame_id=$1;
   `;
-  pool.query(queryString,[3]).then(result=>{
+  pool.query(queryString,[18]).then(result=>{
     //>> The working copy of the query results
     let copy = result.rows;
     //>> Replace the filter arrays as objects with properties
