@@ -1,31 +1,29 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, {useEffect} from 'react';
+import { useSelector } from 'react-redux';
 import pb from '../../pixelbox';
 
-class PreviewFrame extends Component {
+export default function PreviewFrame() {
+  //>> Connecting to edit reducer
+  const frame = useSelector(state=>state.edit);
 
-  componentDidMount () {
-    pb.setGlobals(this.props.frame.smoothing,this.props.frame.framerate,this.props.frame.pixelsnap);
-    this.pixelboxInit();
-  }
+  //>> On change / mount creation of Pixelbox
+  useEffect (()=> {
+    pb.setGlobals(frame.smoothing,frame.framerate,frame.pixelsnap);
+    pixelboxInit();
+  });
 
-  pixelboxInit = ()=> {
-    
+  //>> Generating a new Pixelbox
+  function pixelboxInit() {
     pb.createFrame(
       '#preview-frame',
-      this.props.frame.bkg_url,
-      this.props.frame.layerData,
-      this.props.frame.size,
-      this.props.frame.extend,
-      this.props.frame.display,
+      frame.bkg_url,
+      frame.layerData,
+      frame.size,
+      frame.extend,
+      frame.display,
     );
   }
 
-  render() {
-    return (
-      <div id="preview-frame"></div>
-    )
-  }
+  //>> Render
+  return (<div id="preview-frame"></div>)
 }
-
-export default connect(state=>({frame: state.edit}))(PreviewFrame);
