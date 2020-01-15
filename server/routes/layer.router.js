@@ -3,11 +3,11 @@ const pool = require('../modules/pool');
 const router = express.Router();
 const { rejectUnauthenticated } = require('../modules/authentication-middleware');
 
-router.get('/', rejectUnauthenticated, (req, res) => {
+router.get('/:id', rejectUnauthenticated, (req, res) => {
   const queryString = `
     SELECT * FROM layer WHERE frame_id=$1;
   `;
-  pool.query(queryString,[18]).then(result=>{
+  pool.query(queryString,[req.params.id]).then(result=>{
     //>> The working copy of the query results
     let copy = result.rows;
     //>> Replace the filter arrays as objects with properties
