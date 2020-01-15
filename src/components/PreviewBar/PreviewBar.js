@@ -16,10 +16,18 @@ export default function PreviewBar() {
   }
 
   function saveFrame() {
-    dispatch({
-      type: 'POST_NEW_FRAME',
-      payload: frame
-    })
+    if (frame.id===-1) {
+      dispatch({
+        type: 'POST_NEW_FRAME',
+        payload: frame
+      });
+    } else {
+      dispatch({
+        type: 'SAVE_FRAME',
+        payload: frame
+      })
+    }
+    
   }
 
   //>> Render
@@ -34,7 +42,9 @@ export default function PreviewBar() {
         />
         <button onClick={saveFrame}>Save</button>
         <button>Export</button>
+        {JSON.stringify(frame.saved)}
       </div>
+      
       <div id="preview-bar-return">
         <button>Return to Control Panel</button>
       </div> 

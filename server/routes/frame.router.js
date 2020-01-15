@@ -93,21 +93,25 @@ router.delete('/:id', rejectUnauthenticated, async (req,res)=> {
 
 router.put('/', rejectUnauthenticated, async (req,res)=> {
   //>> Deconstruct the req.body and prep into array
-  const {frame_id, frame_name,bkg_url,size,extend,display,smoothing,framerate,pixelsnap,layerData} = req.body;
-  const frameData = [frame_id, frame_name,bkg_url,size[0],size[1],extend[0],extend[1],display[0],display[1],smoothing,framerate,pixelsnap];
+  const {id, frame_name,bkg_url,size,extend,display,smoothing,framerate,pixelsnap,layerData} = req.body;
+  const frameData = [id, frame_name,bkg_url,size[0],size[1],extend[0],extend[1],display[0],display[1],smoothing,framerate,pixelsnap];
 
+  console.log('Attempting to Edit...');
+  
   //>> Connecting to the DB
   const client = await pool.connect();
 
   try {
     //>> Get the user_id of frame to see if we have the access to modify
-    const frameUserId = await client.query(`SELECT user_id FROM frame WHERE id = $1;`, [req.params.id]);
+    const frameUserId = await client.query(`SELECT user_id FROM frame WHERE id = $1;`, [id]);
+    console.log(frameUserId);
+    
     if(req.user.id === frameUserId.rows[0]['user_id']){
 
     //>> Updates the frame of frame_id
     const frameQuery = `
       UPDATE frame 
-      SET frame_name=$2, bkg_url=$3, size_x=$4, size_y=$5, extend_x=$6, extend_y=$7, display_x=$8, display_y=$9, smoothing=$10, framerate=$11, pixelsnap=$12)
+      SET frame_name=$2, bkg_url=$3, size_x=$4, size_y=$5, extend_x=$6, extend_y=$7, display_x=$8, display_y=$9, smoothing=$10, framerate=$11, pixelsnap=$12
       WHERE id = $1;
     `;
     
@@ -116,7 +120,8 @@ router.put('/', rejectUnauthenticated, async (req,res)=> {
       //>> Update the frame information
       await client.query(frameQuery,frameData);
       //>> Delete all layers
-      await client.query(`DELETE FROM layer WHERE frame_id=$1;`,[frame_id]);
+      
+      await client.query(`DELETE FROM layer WHERE frame_id=$1;`,[id]);
       //>> Set up layer query
       const layerQuery = `
         INSERT INTO layer (frame_id, layer_name, layer_url, layer_str, blendmode, filter)
@@ -125,7 +130,7 @@ router.put('/', rejectUnauthenticated, async (req,res)=> {
       //>> Recreate the layers for the frame
       for (let i=0; i<layerData.length; i++) {
         const layerArray = [
-          result.rows[0].id, 
+          id, 
           layerData[i].layer_name, 
           layerData[i].layer_url, 
           layerData[i].layer_str, 

@@ -43,7 +43,7 @@ export default function GalleryCard(props) {
   return(
     <Card>
       <CardImg src={testImage} />
-      <Title>{props.frame.frame_name}</Title>
+      <Title>{props.frame.frame_name}{JSON.stringify(props.frame.id)}</Title>
       <CardButton onClick={editFrame}>Edit</CardButton>
       <CardButton>Duplicate</CardButton>
       <CardButton>Export</CardButton>

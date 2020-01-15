@@ -1,6 +1,6 @@
 const demoFrame = {
   saved: true,
-  frame_id: -1,
+  id: -1,
   frame_name: 'Untitled Frame',
   select: -1,
   bkg_url: 'https://i.ibb.co/BB16CGL/layer1.png',
@@ -108,7 +108,7 @@ const editReducer = (state = demoFrame, action) => {
       setLayerDataProp[action.payload.index][action.payload.prop] = action.payload.value;
       return {...state, layerData: setLayerDataProp}
     case 'ADD_NEW_LAYER':
-      let newLayer = {layer_name: 'Untitled', layer_url: '', layer_str: 1, blendmode: 'normal'};
+      let newLayer = {layer_name: 'Untitled', layer_url: '', layer_str: 1, blendmode: 'normal', filter:[]};
       return {...state, layerData: [...state.layerData, newLayer]}
     case 'REMOVE_LAYER':
       let removedLayerData = [...state.layerData];
