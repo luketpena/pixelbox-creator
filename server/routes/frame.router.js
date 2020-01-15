@@ -31,16 +31,6 @@ router.post('/', async (req, res) => {
       RETURNING id;
     `;
     
-    /*
-      Currently creating the query to add frames and their layers to the DB.
-
-      The filter arrays on the layers need to be formated before query to fit
-      the syntax for a SQL array data type. Aka {{'thing1','thing2'}{'thing3,'thing4'}}
-
-      It will loop through it after a succesful frame query, format the information for
-      the filters, then await an individual query for each layer in the loop.
-    */
-
     await client.query(`BEGIN`)
 
       const result = await client.query(frameQuery,frameData);
@@ -72,26 +62,33 @@ router.post('/', async (req, res) => {
     
   } catch (error) {
     client.query('ROLLBACK');
-    console.log('error deleting', error)
+    console.log('Error posting frame', error)
+    res.sendStatus(500);
+  } finally {
+    client.release();
+  }  
+});
+
+router.delete('/:id', rejectUnauthenticated, (req,res)=> {
+  const client = await pool.connect();
+  try {
+    const frameUserId = await client.query(`SELECT user_id FROM frame WHERE id = $1;`, [req.params.id])
+    if(req.user.id === frameUserId.rows[0]['user_id']){
+
+      await client.query(`BEGIN`)
+      await client.query(`DELETE FROM layer WHERE frame_id = $1;`,[req.params.id]);
+      await client.query(`DELETE FROM frame WHERE id = $1`, [req.params.id]);
+      await client.query('COMMIT');
+      res.sendStatus(200);
+    }  
+    res.sendStatus(403);
+  } catch (error) {
+    client.query('ROLLBACK');
+    console.log('Error deleting frame and layers.', error)
     res.sendStatus(500);
   } finally {
     client.release();
   }
-  /*
-  
-  
-  
-  pool.query(frameQuery,frameData).then(result=>{
-    console.log('Query response:',result.rows);
-    res.sendStatus(200);
-  }).catch(error=>{
-    console.log('Query error:',error);
-    
-    res.sendStatus(400);
-  });
-  */
-
-  
 });
 
 module.exports = router;

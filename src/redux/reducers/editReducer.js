@@ -1,4 +1,5 @@
 const demoFrame = {
+  saved: true,
   frame_name: 'Untitled Frame',
   select: -1,
   bkg_url: 'https://i.ibb.co/BB16CGL/layer1.png',
@@ -37,15 +38,17 @@ const editReducer = (state = demoFrame, action) => {
   
   const layerDataCopy = [...state.layerData];
   switch (action.type) {
+    case 'CONFIRM_SAVE': return {...state, saved: true};
+
     //-----< Frame Setters >-----\\
-    case 'SET_FRAME_NAME': return {...state, frame_name: action.payload};
-    case 'SET_FRAME_SIZE': return {...state, size: action.payload};
-    case 'SET_FRAME_EXTEND': return {...state, extend: action.payload};
-    case 'SET_FRAME_DISPLAY': return {...state, display: action.payload};
-    case 'SET_FRAME_BKG': return {...state, bkg_url: action.payload};
-    case 'SET_FRAME_FRAMERATE': return {...state, framerate: action.payload};
-    case 'SET_FRAME_SMOOTHING': return {...state, smoothing: action.payload};
-    case 'SET_FRAME_PIXELSNAP': return {...state, pixelsnap: action.payload};
+    case 'SET_FRAME_NAME': return {...state, saved: false, frame_name: action.payload};
+    case 'SET_FRAME_SIZE': return {...state, saved: false, size: action.payload};
+    case 'SET_FRAME_EXTEND': return {...state, saved: false, extend: action.payload};
+    case 'SET_FRAME_DISPLAY': return {...state, saved: false, display: action.payload};
+    case 'SET_FRAME_BKG': return {...state, saved: false, bkg_url: action.payload};
+    case 'SET_FRAME_FRAMERATE': return {...state, saved: false, framerate: action.payload};
+    case 'SET_FRAME_SMOOTHING': return {...state, saved: false, smoothing: action.payload};
+    case 'SET_FRAME_PIXELSNAP': return {...state, saved: false, pixelsnap: action.payload};
 
     //-----< Layer Setters >-----\\
     case 'SET_LAYER_SELECT': return {...state, select: action.payload};
