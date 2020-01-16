@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {DragDropContext} from 'react-beautiful-dnd';
 
 
@@ -21,28 +21,33 @@ const initialData = {
 }
 
 
-class EditWindowLayers extends Component {
+export default function EditWindowLayers() {
 
-  state = initialData;
+  const dispatch = useDispatch();
 
-  renderDndColumns = ()=> {
-    const column = this.state.columnData;
-    const tasks = column.taskIds.map(taskId => this.state.tasks[taskId]);
+  const layerData = (state=>state.edit.layerData);
+
+  const [columnData, setColumnData] = useState(initialData.columnData);
+  const [taskList, setTasks] = useState(initialData.tasks);
+
+  function renderDndColumns() {
+    const column = columnData;
+    const tasks = column.taskIds.map(taskId => taskList[taskId]);
     
     return <LayerColumn key={column.id} column={column} tasks={tasks}/>
   }
 
-  renderLayerWidgets = ()=> {    
-    return this.props.layers.map( (layer,i)=> {
+  function renderLayerWidgets() {    
+    return layerData.map( (layer,i)=> {
       return <LayerWidget key={i} index={i}/>
     })
   }
 
-  addLayer = ()=> {
-    this.props.dispatch({type: 'ADD_NEW_LAYER'})
+  function addLayer() {
+    dispatch({type: 'ADD_NEW_LAYER'})
   }
 
-  onDragEnd = (result)=> {
+  function onDragEnd(result) {
     const {destination, source, draggableId} = result;
 
     //If not dropped in a viable place, exit function and do nothing
@@ -55,7 +60,7 @@ class EditWindowLayers extends Component {
     ) { return; }
 
     //Reorder array
-    const column = this.state.columnData;
+    const column = columnData;
     const newTaskIds = Array.from(column.taskIds);
 
     //Remove item from original place and splice into new home
@@ -69,27 +74,18 @@ class EditWindowLayers extends Component {
     };
 
     //Generate a new state for our app and set it
-    const newState = {
-      ...this.state,
-      columnData: newColumn
-    };
-    this.setState(newState);
+    setColumnData(newColumn)
   }
 
-  render() {
-
-    return (
-      <div id="edit-window-layers">
-        {/* {this.renderLayerWidgets()}
-        <div>
-          <button onClick={this.addLayer}>Add Layer</button>
-        </div> */}
-        <DragDropContext onDragEnd={this.onDragEnd}>
-          {this.renderDndColumns()}
-        </DragDropContext>
-      </div>
-    )
-  }
+  return (
+    <div id="edit-window-layers">
+      {/* {this.renderLayerWidgets()}
+      <div>
+        <button onClick={this.addLayer}>Add Layer</button>
+      </div> */}
+      <DragDropContext onDragEnd={onDragEnd}>
+        {renderDndColumns()}
+      </DragDropContext>
+    </div>
+  )
 }
-
-export default connect(state=>({layers: state.edit.layerData}))(EditWindowLayers);

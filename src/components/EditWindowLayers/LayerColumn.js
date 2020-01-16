@@ -5,11 +5,7 @@ import LayerTab from './LayerTab';
 
 const Container = styled.div`
   margin: 8px;
-  border: 1px solid lightgrey;
-  border-radius: 2px;
-`;
-const Title = styled.h3`
-  padding: 8px
+  background-color: white;
 `;
 
 const TaskList = styled.div`
@@ -20,7 +16,6 @@ export default class Column extends React.Component {
   render() {
     return (
       <Container>
-        <Title>{this.props.column.title}</Title>
         <Droppable droppableId={this.props.column.id}>
           {(provided)=> (
             <TaskList

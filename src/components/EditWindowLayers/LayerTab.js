@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import {Draggable} from 'react-beautiful-dnd';
 
 const Container = styled.div`
-  border: 1px solid lightgrey;
-  border-radius: 2px;
+  border-radius: 8px;
   padding: 8px;
   margin-bottom: 8px;
   background-color: white;
+  box-shadow: 0 2px 4px 2px var(--color-shadow-main);
 `;
 
 export default class Task extends React.Component {
