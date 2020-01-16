@@ -19,6 +19,10 @@
   --font-button: 'Karla', sans-serif;
 }
 
+.layer-drag-path {
+  fill: var(--color-shadow-main);
+}
+
 
 body {
   margin: 0;

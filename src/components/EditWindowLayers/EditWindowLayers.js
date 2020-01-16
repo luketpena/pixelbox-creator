@@ -16,7 +16,7 @@ const initialData = {
   columnData: {
     id: 'layerColumn',
     title: 'Layers',
-    taskIds: ['l0','l1','l2'],
+    taskIds: [0,1,2,3,4],
   }
 }
 
@@ -25,16 +25,15 @@ export default function EditWindowLayers() {
 
   const dispatch = useDispatch();
 
-  const layerData = (state=>state.edit.layerData);
+  const layerData = useSelector(state=>state.edit.layerData);
 
   const [columnData, setColumnData] = useState(initialData.columnData);
-  const [taskList, setTasks] = useState(initialData.tasks);
+  const [taskList, setTasks] = useState(layerData);
 
   function renderDndColumns() {
-    const column = columnData;
-    const tasks = column.taskIds.map(taskId => taskList[taskId]);
+    console.log('Rendering DND columns');
     
-    return <LayerColumn key={column.id} column={column} tasks={tasks}/>
+    return <LayerColumn key={columnData.id} column={columnData} layerData={layerData}/>
   }
 
   function renderLayerWidgets() {    
@@ -60,20 +59,23 @@ export default function EditWindowLayers() {
     ) { return; }
 
     //Reorder array
-    const column = columnData;
-    const newTaskIds = Array.from(column.taskIds);
+    let newLayerData = [...layerData];
 
     //Remove item from original place and splice into new home
-    newTaskIds.splice(source.index,1);
-    newTaskIds.splice(destination.index, 0, draggableId);
+    newLayerData.splice(source.index,1);
+    newLayerData.splice(destination.index, 0, layerData[source.index]);
 
     //Recreate the target column, but with new taskIds
-    const newColumn = {
-      ...column,
-      taskIds: newTaskIds,
-    };
+    console.log('New layer data:',newLayerData);
+    
+    dispatch({type: 'SET_LAYER_DATA', payload: newLayerData});
 
     //Generate a new state for our app and set it
+    //console.log(newColumn);
+    const newColumn = {
+      ...columnData,
+      taskIds: [0,1,2,3,4]
+    };
     setColumnData(newColumn)
   }
 

@@ -4,8 +4,7 @@ import {Droppable} from 'react-beautiful-dnd';
 import LayerTab from './LayerTab';
 
 const Container = styled.div`
-  margin: 8px;
-  background-color: white;
+
 `;
 
 const TaskList = styled.div`
@@ -13,7 +12,15 @@ const TaskList = styled.div`
 `;
 
 export default class Column extends React.Component {
+
+  componentDidMount() {
+    console.log('Column mount!');
+    
+  }
+
   render() {
+    console.log(this.props.layerData);
+    
     return (
       <Container>
         <Droppable droppableId={this.props.column.id}>
@@ -23,7 +30,7 @@ export default class Column extends React.Component {
               //Applies the properties that a droppable area needs
               {...provided.droppableProps}
             >
-              {this.props.tasks.map( (task,i)=> <LayerTab key={task.id} task={task} index={i}/>)}
+              {this.props.layerData.map( (layer,i)=> <LayerTab key={i} layer={layer} index={i}/>)}
               {/* 
                 The placeholder is a child of a droppable element. It takes
                 up space on the list while an item is being reordered.

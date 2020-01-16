@@ -5,15 +5,15 @@ const demoFrame = {
   frame_name: 'Untitled Frame',
   bkg_url: 'https://i.ibb.co/BB16CGL/layer1.png',
   layerData: [
-    {layer_name: 'Forest Back', layer_url: 'https://i.ibb.co/wWHn1gj/layer2.png', layer_str: .1, blendmode: 'normal', 
+    {id: 'l0', layer_name: 'Forest Back', layer_url: 'https://i.ibb.co/wWHn1gj/layer2.png', layer_str: .1, blendmode: 'normal', 
     filter: [
       {name: 'blur', value: 16, unit: 'px'},
       {name: 'brightness', value: 100, unit: '%'}
     ]},
-    {layer_name: 'Sphere', layer_url: 'https://i.ibb.co/j61b2c3/layer3.png', layer_str: .3, blendmode: 'luminosity', filter: []},
-    {layer_name: 'Forest Mid', layer_url: 'https://i.ibb.co/f8R94JB/layer4.png', layer_str: .6, blendmode: 'lighten', filter: []},
-    {layer_name: 'Fog', layer_url: 'http://www.transparentpng.com/thumb/fog/heroes-and-icons-fog-png-35.png', layer_str:.8, blendmode: 'normal', filter: []},
-    {layer_name: 'Forest Front', layer_url: 'https://i.ibb.co/y4dmZt2/layer5.png', layer_str: 1, blendmode: 'normal', filter: []}
+    {id: 'l1', layer_name: 'Sphere', layer_url: 'https://i.ibb.co/j61b2c3/layer3.png', layer_str: .3, blendmode: 'luminosity', filter: []},
+    {id: 'l2', layer_name: 'Forest Mid', layer_url: 'https://i.ibb.co/f8R94JB/layer4.png', layer_str: .6, blendmode: 'lighten', filter: []},
+    {id: 'l3', layer_name: 'Fog', layer_url: 'http://www.transparentpng.com/thumb/fog/heroes-and-icons-fog-png-35.png', layer_str:.8, blendmode: 'normal', filter: []},
+    {id: 'l4', layer_name: 'Forest Front', layer_url: 'https://i.ibb.co/y4dmZt2/layer5.png', layer_str: 1, blendmode: 'normal', filter: []}
   ],
   size: [256,128],
   extend: [32,8],
@@ -68,9 +68,10 @@ const editReducer = (state = demoFrame, action) => {
     //-----< Layer Setters >-----\\
     case 'SET_LAYER_SELECT': return {...state, select: action.payload};
 
-    case 'SET_LAYER_DATA':
-      layerDataCopy[action.payload.index][action.payload.prop] = action.payload.value;
-      return {...state, layerData: layerDataCopy};
+    // case 'SET_LAYER_DATA':
+    //   layerDataCopy[action.payload.index][action.payload.prop] = action.payload.value;
+    //   return {...state, layerData: layerDataCopy};
+    case 'SET_LAYER_DATA': return {...state, layerData: action.payload};
     case 'ADD_NEW_FILTER':
       layerDataCopy[action.payload].filter.push(
         {name: 'none', value: ''}
