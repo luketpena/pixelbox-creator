@@ -24,7 +24,6 @@ const initialData = {
   columnData: {
     id: 'layerColumn',
     title: 'Layers',
-    taskIds: [0,1,2,3,4],
   }
 }
 
@@ -77,14 +76,18 @@ export default function EditWindowLayers() {
     console.log('New layer data:',newLayerData);
     
     dispatch({type: 'SET_LAYER_DATA', payload: newLayerData});
+    dispatch({type: 'SET_LAYER_SELECT', payload: destination.index})
 
     //Generate a new state for our app and set it
     //console.log(newColumn);
     const newColumn = {
       ...columnData,
-      taskIds: [0,1,2,3,4]
     };
     setColumnData(newColumn)
+  }
+
+  function addLayer() {
+    dispatch({type: 'ADD_NEW_LAYER'});
   }
 
   return (
@@ -96,6 +99,7 @@ export default function EditWindowLayers() {
       <DragDropContext onDragEnd={onDragEnd}>
         {renderDndColumns()}
       </DragDropContext>
+      <button className="button-confirm" onClick={addLayer}>+</button>
     </Container>
   )
 }

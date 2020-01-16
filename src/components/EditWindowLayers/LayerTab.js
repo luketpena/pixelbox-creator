@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import {Draggable} from 'react-beautiful-dnd';
 import { SvgIcon } from '@material-ui/core';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 const Container = styled.div`
   border-radius: 8px;
@@ -11,21 +11,18 @@ const Container = styled.div`
   box-shadow: ${props=> (props.isDragging ? '0 2px 4px -2px var(--color-shadow-faded)' : '0 2px 4px 2px var(--color-shadow-main)' )};
   display: flex;
   align-content: center;
-  background-color: ${props=> (props.isDragging ? 'var(--color-primary)' : 'white')};
+  background-color: ${props=> (props.isDragging ? 'var(--color-primary)' : (props.select===props.index? 'var(--color-primary)' : 'white') )};
+  color: ${props=> (props.isDragging ? 'white' : (props.select===props.index? 'var(--color-shadow-main)' : 'var(--color-text-dark)') )};
   &:hover {
-    background-color: var(--color-primary-dark);
-    color: white;
-  }
-  &:hover p {
-    color: white;
+    cursor: pointer;
+    color: ${props=> (props.select===props.index? 'white' : 'var(--color-text-light)')};
   }
 `;
 
 const Title = styled.p`
   font-family: var(--font-button);
-  color: ${props=> (props.isDragging ? 'white' : 'var(--color-text-dark)')};
-  padding: 0;
   margin: 0;
+  line-height: 24px;
 `;
 
 export default function Task(props) {
@@ -39,6 +36,8 @@ export default function Task(props) {
       </SvgIcon>
     );
   }
+
+  const select = useSelector(state=>state.edit.select);
 
   function selectLayer() {
     console.log('SelectedLayer!',props.index);
@@ -54,12 +53,13 @@ export default function Task(props) {
           // Applies the props for the handle of a draggable element
           // This can also be applied to a child of the element if the handle
           // is smaller than the entire body of the element.
-          {...provided.dragHandleProps}
           ref={provided.innerRef}
           isDragging={snapshot.isDragging}
           onClick={selectLayer}
+          select={select}
+          index={props.index}
         >
-          <DragIcon  />
+          <div {...provided.dragHandleProps}><DragIcon/></div>
           <Title isDragging={snapshot.isDragging} >{props.layer.layer_name}</Title>
         </Container>
       )}
