@@ -1,20 +1,36 @@
 import React from 'react';
 import styled from 'styled-components';
 import {Draggable} from 'react-beautiful-dnd';
-import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 import { SvgIcon } from '@material-ui/core';
+import {useDispatch} from 'react-redux';
 
 const Container = styled.div`
   border-radius: 8px;
   padding: 8px;
   margin-bottom: 8px;
-  background-color: white;
-  box-shadow: 0 2px 4px 2px var(--color-shadow-main);
+  box-shadow: ${props=> (props.isDragging ? '0 2px 4px -2px var(--color-shadow-faded)' : '0 2px 4px 2px var(--color-shadow-main)' )};
   display: flex;
   align-content: center;
+  background-color: ${props=> (props.isDragging ? 'var(--color-primary)' : 'white')};
+  &:hover {
+    background-color: var(--color-primary-dark);
+    color: white;
+  }
+  &:hover p {
+    color: white;
+  }
+`;
+
+const Title = styled.p`
+  font-family: var(--font-button);
+  color: ${props=> (props.isDragging ? 'white' : 'var(--color-text-dark)')};
+  padding: 0;
+  margin: 0;
 `;
 
 export default function Task(props) {
+
+  const dispatch = useDispatch();
 
   function DragIcon(props) {
     return (
@@ -24,9 +40,14 @@ export default function Task(props) {
     );
   }
 
+  function selectLayer() {
+    console.log('SelectedLayer!',props.index);
+    dispatch({type: 'SET_LAYER_SELECT', payload: props.index})
+  }
+
   return (
     <Draggable draggableId={String(props.index)} index={props.index}>
-      {(provided)=> (
+      {(provided, snapshot)=> (
         <Container
           // Applies the props required by a draggable element
           {...provided.draggableProps}
@@ -35,10 +56,11 @@ export default function Task(props) {
           // is smaller than the entire body of the element.
           {...provided.dragHandleProps}
           ref={provided.innerRef}
+          isDragging={snapshot.isDragging}
+          onClick={selectLayer}
         >
           <DragIcon  />
-          {props.layer.layer_name}
-          {props.index}
+          <Title isDragging={snapshot.isDragging} >{props.layer.layer_name}</Title>
         </Container>
       )}
     </Draggable>

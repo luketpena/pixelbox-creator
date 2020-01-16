@@ -1,11 +1,19 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {DragDropContext} from 'react-beautiful-dnd';
+import styled from 'styled-components';
 
 
 //-----< Component Imports -----\\
 import LayerWidget from './LayerWidget';
 import LayerColumn from './LayerColumn';
+
+//-----< Stylings >-----\\
+const Container = styled.div`
+  z-index: 10;
+  background-color: white;
+  grid-area: layers;
+`;
 
 const initialData = {
   tasks: {
@@ -80,7 +88,7 @@ export default function EditWindowLayers() {
   }
 
   return (
-    <div id="edit-window-layers">
+    <Container>
       {/* {this.renderLayerWidgets()}
       <div>
         <button onClick={this.addLayer}>Add Layer</button>
@@ -88,6 +96,6 @@ export default function EditWindowLayers() {
       <DragDropContext onDragEnd={onDragEnd}>
         {renderDndColumns()}
       </DragDropContext>
-    </div>
+    </Container>
   )
 }
