@@ -32,10 +32,27 @@ const registrationMessage = (state = '', action) => {
   }
 };
 
+const emptyAlert = {
+  title: '',
+  message: '',
+  confirm: '',
+  reject: '',
+  neutral: ''
+}
+
+const appMessage = (state = emptyAlert, action)=> {
+  switch(action.type) {
+    case 'SET_APP_ALERT': return action.payload;
+    case 'RESET_APP_ALERT': return emptyAlert;
+    default: return state;
+  }
+}
+
 // make one object that has keys loginMessage, registrationMessage
 // these will be on the redux state at:
 // state.errors.loginMessage and state.errors.registrationMessage
 export default combineReducers({
   loginMessage,
   registrationMessage,
+  appMessage,
 });

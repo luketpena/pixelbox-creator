@@ -20,6 +20,7 @@ function * saveFrame(action) {
   console.log('Saving existing frame...');
   yield axios.put('/api/frame',action.payload);
   yield put({type: 'GET_USER_FRAMES'});
+  yield put({type: 'CONFIRM_SAVE'});
 }
 
 function * getSavedFrame(action) {

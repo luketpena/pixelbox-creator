@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 
-
 //-----< Component Imports >-----\\
 import EditWindowLayers from '../EditWindowLayers/EditWindowLayers';
 import EditWindowDetails from '../EditWindowDetails/EditWindowDetails'
@@ -15,6 +14,7 @@ class EditorPage extends Component {
   render() {
     return (
       <div id="edit-page">
+
         <EditWindowPreview />
         <EditWindowLayers />
         <EditWindowDetails select={this.state.select}/>

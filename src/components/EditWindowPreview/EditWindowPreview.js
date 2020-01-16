@@ -7,14 +7,13 @@ import PreviewBar from './PreviewBar';
 import PreviewFrame from './PreviewFrame';
 
 const ExtendPreview = styled.div`
-  background-color: var(--color-shadow-faded);
+  background-color: var(--color-primary-faded);
   border-radius: 16px;
   position: absolute;
 `;
 const PreviewArea = styled.div`
   background-color: var(--color-bkg-main);
   box-shadow: inset 0 0 100px 50px var(--color-shadow-faded);
-  
   grid-area: preview;
   position: relative;
   display: flex;

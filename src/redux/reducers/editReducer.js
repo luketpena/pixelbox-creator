@@ -24,18 +24,22 @@ const demoFrame = {
 };
 
 const emptyFrame = {
+  saved: true,
   frame_name: 'Untitled',
   select: -1,
+  id: -1,
   bkg_url: '',
-  layerData: [],
+  layerData: [
+    {layer_name: 'Layer 1', layer_url: '', layer_str: 1, blendmode: 'normal', filter: []}
+  ],
   size: [256,128],
   extend: [32,8],
   display: [512,256],
   framerate: 15,
-  pixelsnap: true,
+  pixelsnap: false,
 }
 
-const editReducer = (state = demoFrame, action) => {
+const editReducer = (state = emptyFrame, action) => {
   
   const layerDataCopy = [...state.layerData];
   switch (action.type) {

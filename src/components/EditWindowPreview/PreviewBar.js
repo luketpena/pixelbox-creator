@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import useReactRouter from 'use-react-router';
 import styled from 'styled-components';
+import Alert from '../Alert/Alert';
 
 const NameInput = styled.input`
   background: none;
@@ -51,7 +53,10 @@ export default function PreviewBar() {
 
   //>> Setup hooks
   let dispatch = useDispatch();
+  const {history} = useReactRouter();
+
   let frame = useSelector(state=>state.edit);
+  const [alertActive, setAlertActive] = useState(false);
  
   //>> Handle input changes
   function handleChange (event) {
@@ -76,12 +81,42 @@ export default function PreviewBar() {
   }
 
   function returnToControlPanel() {
-    
+    if (frame.saved) {
+      goToControlPanel();
+    } else {
+      setAlertActive(true);
+      dispatch({
+        type: 'SET_APP_ALERT',
+        payload: {
+          title: `Exit with unsaved work?`,
+          message: 'All unsaved changes will be discarded.',
+          neutral: 'Back to Editor',
+          reject: 'Exit'
+        }
+      })
+    }
+  }
+
+  function renderAlert() {
+    if (alertActive) {
+      return <Alert neutral={alertCancel} reject={goToControlPanel}/>
+    }
+  }
+
+
+  function alertCancel() {
+    setAlertActive(false);
+    dispatch({type: 'RESET_APP_ALERT'});
+  }
+
+  function goToControlPanel() {
+    history.push('/manage');
   }
 
   //>> Render
   return (
     <BarContainer>
+      {renderAlert()}
       <BarSecMain>
         <NameInput 
           type="text" 
@@ -89,7 +124,7 @@ export default function PreviewBar() {
           value={frame.frame_name}
           onChange={(event)=>handleChange(event)}
         />
-        <BarButton onClick={saveFrame} className={(!frame.saved)? "button-confirm" : ""}>Save</BarButton>
+        <BarButton onClick={saveFrame} className={(!frame.saved)? "button-confirm" : "button-default"}>Save</BarButton>
         <BarButton>Export</BarButton>
       </BarSecMain>
       

@@ -5,6 +5,7 @@
   --color-bkg-main: rgb(69,77,84);
   --color-bkg-light: #737D82;
   --color-bkg-bright: #ACBDBF;
+  --color-bkg-highlight: #D8E1EA;
   --color-shadow-main: rgba(16,25,34,.75);
   --color-shadow-faded: rgba(16,25,34,.1);
   --color-background: #FFFFFF;
@@ -46,10 +47,12 @@ button {
   font-size: 16px;
   font-weight: lighter;
   color: var(--color-text-dark);
+  background-color: var(--color-bkg-bright);
 }
 
 button:hover {
   cursor: pointer;
+  background-color: var(--color-bkg-highlight);
   box-shadow: 0 6px 8px -4px var(--color-shadow-main);
 }
 
