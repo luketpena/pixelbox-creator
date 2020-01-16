@@ -1,8 +1,27 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import styled from 'styled-components';
 
 //-----< Component Imports -----\\
 import DetailsFilterRow from './DetailsFilterRow';
+
+const Container = styled.div`
+  position: relative;
+  height: 126px;
+  grid-area: filters;
+  margin-left: 8px;
+`;
+
+const FilterBox = styled.div`
+  height: 108px;
+  overflow-y: scroll;
+  background-color: var(--color-bkg-main);
+  border-radius: 8px;
+`;
+
+const FilterTable = styled.table`
+  width: 100%;
+`;
 
 
 class DetailsLayerFilter extends Component {
@@ -48,19 +67,19 @@ class DetailsLayerFilter extends Component {
 
   render() {
     return (
-      <div id="details-layer-filters">
+      <Container>
         <label>Filters</label>
-        <div id="details-layer-filter-box">
-          <table id="details-layer-filters-table">
+        <FilterBox>
+          <FilterTable>
             <tbody>
               {this.renderFilters()}
             </tbody>
-          </table>
-        </div>
+          </FilterTable>
+        </FilterBox>
         <div className="addFilter-bar">
-          <button className="btn-addFilter" onClick={this.addFilter}>Add Filter</button>
+          <button className="btn-addFilter button-confirm" onClick={this.addFilter}>Add Filter</button>
         </div>
-      </div>
+      </Container>
     )
   }
 }

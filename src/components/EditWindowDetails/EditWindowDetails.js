@@ -1,27 +1,34 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import { useSelector } from 'react-redux';
+import styled from 'styled-components';
 
 //-----< Component Imports -----\\
 import DetailsFrame from '../DetailsFrame/DetailsFrame';
 import DetailsLayer from '../DetailsLayer/DetailsLayer';
 
-class EditWindowDetails extends Component {
+//-----< Styling >-----\\
+const Container = styled.div`
+  grid-area: details;
+  background-color: ${props=>(props.select===-1? 'var(--color-shadow-main)' : 'var(--color-primary)')};
+  padding: 4px;
+`;
 
-  renderDetails = ()=> {
-    if (this.props.frame.select===-1) {
+//-----< Component Function >-----\\
+export default function EditWindowDetails() {
+
+  const frame = useSelector(state=>state.edit);
+
+  function renderDetails() {
+    if (frame.select===-1) {
       return <DetailsFrame />
     } else {
-      return <DetailsLayer key={this.props.frame.select}/>
+      return <DetailsLayer key={frame.select}/>
     }
   }
 
-  render() {
-    return (
-      <div id="edit-window-details">
-        {this.renderDetails()}
-      </div>
-    )
-  }
+  return (
+    <Container select={frame.select}>
+      {renderDetails()}
+    </Container>
+  )
 }
-
-export default connect(state=>({frame: state.edit}))(EditWindowDetails);

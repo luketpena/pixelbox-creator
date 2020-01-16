@@ -77,7 +77,14 @@ class DetailsFilterRow extends Component {
         <td>
           {this.renderFilterValue()}
         </td>
-        <td><button onClick={()=>this.removeFilter(this.props.index)}>Remove</button></td>
+        <td>
+          <button 
+            className="button-reject"
+            onClick={()=>this.removeFilter(this.props.index)}
+          >
+            Remove
+          </button>
+        </td>
       </tr>
     )
   }

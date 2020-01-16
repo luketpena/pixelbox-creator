@@ -12,7 +12,7 @@ const ExtendPreview = styled.div`
   position: absolute;
 `;
 const PreviewArea = styled.div`
-  background-color: white;
+  background-color: var(--color-bkg-main);
   box-shadow: inset 0 0 100px 50px var(--color-shadow-faded);
   
   grid-area: preview;

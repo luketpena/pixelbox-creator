@@ -20,7 +20,7 @@ const BarContainer = styled.div`
   width: 100%;
   padding: 8px;
   box-sizing: border-box;
-  background-color: rgba(255,255,255,.25);
+  background-color: rgba(0,0,0,.1);
   box-shadow: 0 0 16px 0 var(--color-shadow-main);
   position: absolute;
   left: 0;
@@ -75,6 +75,10 @@ export default function PreviewBar() {
     }
   }
 
+  function returnToControlPanel() {
+    
+  }
+
   //>> Render
   return (
     <BarContainer>
@@ -90,7 +94,7 @@ export default function PreviewBar() {
       </BarSecMain>
       
       <BarSecReturn>
-        <BarButton>Return to Control Panel</BarButton>
+        <BarButton onClick={returnToControlPanel}>Return to Control Panel</BarButton>
       </BarSecReturn> 
     </BarContainer>
   )

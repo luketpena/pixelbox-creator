@@ -9,10 +9,10 @@ position: relative;
   border-radius: 8px;
   padding: 8px;
   margin-bottom: 8px;
-  box-shadow: ${props=> (props.isDragging ? '0 2px 4px -2px var(--color-shadow-faded)' : '0 2px 4px 2px var(--color-shadow-main)' )};
+  box-shadow: ${props=> (props.isDragging ? '0 2px 4px -2px var(--color-shadow-faded)' : '0 2px 4px 0 var(--color-shadow-main)' )};
   display: flex;
   align-content: center;
-  background-color: ${props=> (props.isDragging ? 'var(--color-primary)' : (props.select===props.index? 'var(--color-primary)' : 'white') )};
+  background-color: ${props=> (props.isDragging ? 'var(--color-primary)' : (props.select===props.index? 'var(--color-primary)' : 'var(--color-bkg-bright)') )};
   color: ${props=> (props.isDragging ? 'white' : (props.select===props.index? 'var(--color-shadow-main)' : 'var(--color-text-dark)') )};
   &:hover {
     cursor: pointer;

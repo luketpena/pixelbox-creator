@@ -84,6 +84,7 @@ class DetailsLayerMain extends Component {
                 <td>
                   <input 
                     value={this.state.layer_name} 
+                    className="details-input"
                     onChange={(event)=>this.handleChange(event,'layer_name')}  
                     onBlur={()=>this.handleBlur('layer_name')}
                     onKeyPress={this.handleKeyPress}
@@ -97,6 +98,7 @@ class DetailsLayerMain extends Component {
                 <td>
                   <input 
                     value={this.state.layer_url} 
+                    className="details-input"
                     onChange={(event)=>this.handleChange(event,'layer_url')} 
                     onBlur={()=>this.handleBlur('layer_url')}
                     onKeyPress={this.handleKeyPress}
@@ -125,9 +127,12 @@ class DetailsLayerMain extends Component {
                   <input 
                     value={this.state.layer_str} 
                     onChange={(event)=>this.handleChange(event,'layer_str')}  
-                    onBlur={()=>this.handleBlur('layer_str')}
+                    onMouseUp={()=>this.handleBlur('layer_str')}
                     onKeyPress={this.handleKeyPress}
-                    type="number"
+                    type="range"
+                    min="0"
+                    max="1"
+                    step=".05"
                   />
                 </td>
               </tr>

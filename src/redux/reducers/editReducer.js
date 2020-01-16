@@ -1,6 +1,6 @@
 const demoFrame = {
   saved: true,
-  select: -1,
+  select: 1,
   id: -1,
   frame_name: 'Untitled Frame',
   bkg_url: 'https://i.ibb.co/BB16CGL/layer1.png',

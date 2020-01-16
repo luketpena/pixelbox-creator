@@ -11,7 +11,7 @@ import LayerColumn from './LayerColumn';
 //-----< Stylings >-----\\
 const Container = styled.div`
   z-index: 10;
-  background-color: white;
+  background-color: var(--color-bkg-light);
   grid-area: layers;
 `;
 
