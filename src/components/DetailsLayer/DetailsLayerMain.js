@@ -43,14 +43,14 @@ class DetailsLayerMain extends Component {
       prop: prop,
       value: this.state[prop]
     }
-    this.props.dispatch({type: 'SET_LAYER_DATA', payload: myPayload});
+    this.props.dispatch({type: 'SET_LAYER_PROP', payload: myPayload});
   }
 
   //Uses the event value to both dispatch to the reducer AND update the state
   triggerChangeEvent = (event,prop)=> {
     this.setState({[prop]: event.target.value});
     this.props.dispatch({
-      type: 'SET_LAYER_DATA', 
+      type: 'SET_LAYER_PROP', 
       payload: {
         index: this.props.select,
         prop: prop,

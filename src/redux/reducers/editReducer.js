@@ -68,9 +68,10 @@ const editReducer = (state = demoFrame, action) => {
     //-----< Layer Setters >-----\\
     case 'SET_LAYER_SELECT': return {...state, select: action.payload};
 
-    case 'SET_LAYER_DATA':
+    case 'SET_LAYER_PROP':
       layerDataCopy[action.payload.index][action.payload.prop] = action.payload.value;
       return {...state, layerData: layerDataCopy};
+    case 'SET_LAYER_DATA': return {...state, layerData: action.payload};
     case 'ADD_NEW_FILTER':
       layerDataCopy[action.payload].filter.push(
         {name: 'none', value: ''}

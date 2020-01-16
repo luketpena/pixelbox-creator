@@ -6,6 +6,7 @@
   --color-shadow-faded: rgba(216,225,234,.5);
   --color-background: #FFFFFF;
   --color-primary: rgba(0,167,194,1);
+  --color-primary-dark: rgb(0,120,175);
   --color-primary-faded: rgba(0,167,194,.25);
   --color-confirm: rgb(32,221,149);
   --color-confirm-dark: rgb(20,186,155);
@@ -17,6 +18,10 @@
 
   --font-header: 'Mukta', sans-serif;
   --font-button: 'Karla', sans-serif;
+}
+
+.layer-drag-path {
+  fill: var(--color-shadow-main);
 }
 
 
@@ -62,10 +67,6 @@ button:hover {
   grid-template-rows: 1fr 150px;
 }
 
-#edit-window-layers {
-  background-color: #777;
-  grid-area: layers;
-}
 
 #edit-window-details {
   background-color: #888;

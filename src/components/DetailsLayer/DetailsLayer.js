@@ -12,7 +12,7 @@ import DetailsLayerFilter from './DetailsLayerFilter';
 class DetailsLayer extends Component {
 
   
-
+  /*
   handleChange = (event,prop)=> {
     this.setState({[prop]: event.target.value})
   }
@@ -32,7 +32,7 @@ class DetailsLayer extends Component {
   handleReducerChange = (event,prop)=> {
     this.setState({[prop]: event.target.value})    
     this.props.dispatch({
-      type: 'SET_LAYER_DATA', 
+      type: 'SET_LAYER_PROP', 
       payload: {
         index: this.props.select,
         prop: prop,
@@ -50,7 +50,7 @@ class DetailsLayer extends Component {
       }
     });
   }  
-
+  */
   render() {
     
 
