@@ -12,11 +12,13 @@ const Sidebar = styled.div`
   grid-template-areas:
     "user"
     "links";
-  grid-template-rows: 256px 1fr;
+  grid-template-rows: auto 1fr;
   background-color: gray;
   height: 100vh;
   width: 256px;
   position: fixed;
+  box-shadow: 0 0 16px 0 var(--color-shadow-main);
+  overflow: hidden;
 `;
 
 export default function ManageSidebar() {

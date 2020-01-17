@@ -12,10 +12,10 @@ const NameInput = styled.input`
   max-width: 512px;
   width: 100%;
   border: none;
-  border-bottom: 2px solid var(--color-text-light);
+  border-bottom: 2px solid var(--color-bkg-main);
   font-family: var(--font-header);
   font-size: 32px;
-  color: var(--color-text-dark);
+  color: var(--color-text-light);
 `;
 
 const BarContainer = styled.div`
@@ -31,6 +31,7 @@ const BarContainer = styled.div`
   grid-template-areas: "main return";
   grid-template-columns: 1fr auto;
   align-items: center;
+  backdrop-filter: blur(8px);
 `;
 
 const BarSecMain = styled.div`

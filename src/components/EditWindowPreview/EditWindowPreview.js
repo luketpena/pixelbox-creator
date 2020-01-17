@@ -7,18 +7,38 @@ import PreviewBar from './PreviewBar';
 import PreviewFrame from './PreviewFrame';
 
 const ExtendPreview = styled.div`
-  background-color: var(--color-primary-faded);
-  border-radius: 16px;
+  background-color: var(--color-shadow-faded);
+  border: 2px dashed var(--color-primary-faded);
   position: absolute;
+  box-shadow: 0 0 32px 0 var(--color-bkg-light);
 `;
 const PreviewArea = styled.div`
-  background-color: var(--color-bkg-main);
-  box-shadow: inset 0 0 100px 50px var(--color-shadow-faded);
+  position: relative;
   grid-area: preview;
   position: relative;
+  
+`;
+const PreviewItems = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: -50;
+  overflow: scroll;
+`;
+const PreviewBkg = styled.div`
+  position: absolute;
+  background-color: var(--color-bkg-main);
+  box-shadow: inset 0 0 100px 50px var(--color-shadow-faded);
+  width: 100%;
+  height: 100%;
+  left:0;
+  top: 0;
+  z-index: -100;
 `;
 
 export default function EditWindowPreview() {
@@ -43,9 +63,14 @@ export default function EditWindowPreview() {
   //>> Render
   return (
     <PreviewArea>
+
+      <PreviewBkg />
       <PreviewBar />
-      <ExtendPreview style={style_extend} key={generateKey()} />
-      <PreviewFrame key={generateKey()}/>
+
+      <PreviewItems>
+        <ExtendPreview style={style_extend} key={generateKey()} />
+        <PreviewFrame key={generateKey()}/>
+      </PreviewItems>
     </PreviewArea>
   )
 }

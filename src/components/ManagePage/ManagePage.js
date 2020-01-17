@@ -9,15 +9,21 @@ import ManageSidebar from '../ManageSidebar/ManageSidebar';
 const ManageContainer = styled.div`
   display: grid;
   grid-template-areas: "sidebar main";
-  grid-template-columns: 256px 1fr;
+  grid-template-columns: 256px 1fr; 
+`;
+const ManageBkg = styled.div`
+  min-height: 100vh;
+  
 `;
 
 export default function ManagePage() {
 
   return (
-    <ManageContainer>
-      <ManageMain />
-      <ManageSidebar />
-    </ManageContainer>
+    <ManageBkg className="scroll-bkg">
+      <ManageContainer>
+        <ManageMain />
+        <ManageSidebar />
+      </ManageContainer>
+    </ManageBkg>
   )
 }

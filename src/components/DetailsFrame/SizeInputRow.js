@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 //-----< Styling >-----\\
 const RowTitle = styled.td`
-  font-family: monospace;
+  font-family: var(--font-input);
   text-align: right;
 `;
 const RowInput = styled.input`

@@ -2,24 +2,27 @@
 @import url('https://fonts.googleapis.com/css?family=Karla|Mukta&display=swap');
 
 :root {
-  --color-bkg-main: rgb(69,77,84);
-  --color-bkg-light: #737D82;
-  --color-bkg-bright: #ACBDBF;
+  --color-bkg-main: #22262b;
+  --color-bkg-light: #2F383D;
+  --color-bkg-bright: #5E6970;
   --color-bkg-highlight: #D8E1EA;
-  --color-shadow-main: rgba(16,25,34,.75);
-  --color-shadow-faded: rgba(16,25,34,.1);
+  --color-shadow-main: rgba(0,10,15,.75);
+  --color-shadow-faded: rgba(0,10,15,.1);
   --color-background: #FFFFFF;
   --color-primary: rgba(0,167,194,1);
   --color-primary-dark: rgb(0,120,175);
   --color-primary-faded: rgba(0,167,194,.25);
   --color-confirm: rgb(32,221,149);
-  --color-confirm-dark: rgb(20,186,155);
+  --color-confirm-faded: rgba(32,221,149,.25);
+  --color-confirm-dark: rgb(14,135,114);
   --color-reject: #F25266;
-  --color-reject-dark: #CC2C32;
+  --color-reject-faded: #F2526655;
+  --color-reject-dark: #932024;
 
-  --color-text-dark: #6C667A;
-  --color-text-mid: #B1A9C9;
-  --color-text-light: #D8D0EF;
+  --color-text-dark: #4C4744;
+  --color-text-mid: #BAB4AE;
+  --color-text-light-faded: #d8d2cb55;
+  --color-text-light: #d8d2cb;
 
   --font-header: 'Mukta', sans-serif;
   --font-button: 'Karla', sans-serif;
@@ -29,6 +32,17 @@
 
 .layer-drag-path {
   fill: var(--color-shadow-main);
+}
+
+.scroll-bkg {
+  background-color: #14161A;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 20 20'%3E%3Cg %3E%3Cpolygon fill='%231a1d21' points='20 10 10 0 0 0 20 20'/%3E%3Cpolygon fill='%231a1d21' points='0 10 0 20 10 20'/%3E%3C/g%3E%3C/svg%3E");
+  animation: 5s scroll infinite linear;
+}
+@keyframes scroll{
+  100%{
+    background-position:0px 160px;
+  }
 }
 
 
@@ -46,30 +60,50 @@ button {
   font-family: var(--font-button);
   font-size: 16px;
   font-weight: lighter;
-  color: var(--color-text-dark);
-  background-color: var(--color-bkg-bright);
+
+  color: var(--color-text-light);
+  background-color: var(--color-text-light-faded);
+  border: 1px solid var(--color-text-light);
 }
 
 button:hover {
   cursor: pointer;
-  background-color: var(--color-bkg-highlight);
+  background-color: var(--color-text-light);
+  color: var(--color-text-dark);
   box-shadow: 0 6px 8px -4px var(--color-shadow-main);
 }
 
 .button-confirm {
-  background-color: var(--color-confirm-dark);
-  color: white;
+  background-color: var(--color-confirm-faded);
+  color: var(--color-confirm);
+  border: 1px solid var(--color-confirm-dark);
 }
 .button-confirm:hover {
   background-color: var(--color-confirm);
+  color: var(--color-confirm-dark);
+  border: 1px solid var(--color-confirm);
+}
+
+.button-primary {
+  background-color: var(--color-primary-faded);
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary-dark);
+}
+.button-primary:hover {
+  background-color: var(--color-primary);
+  color: var(--color-primary-dark);
+  border: 1px solid var(--color-primary);
 }
 
 .button-reject {
-  background-color: var(--color-reject-dark);
-  color: white;
+  background-color: var(--color-reject-faded);
+  color: var(--color-reject);
+  border: 1px solid var(--color-reject-dark);
 }
 .button-reject:hover {
   background-color: var(--color-reject);
+  color: var(--color-reject-dark);
+  border: 1px solid var(--color-reject);
 }
 
 
@@ -84,9 +118,8 @@ button:hover {
   grid-template-rows: 1fr 150px;
 }
 
-
 .details-widget {
-  background-color: var(--color-bkg-light);
+  background-color: var(--color-bkg-bright);
   border-radius: 16px;
   height: 100%;
   padding: 8px;

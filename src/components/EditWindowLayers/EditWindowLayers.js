@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {DragDropContext} from 'react-beautiful-dnd';
 import styled from 'styled-components';
+import { SvgIcon } from '@material-ui/core';
 
 
 //-----< Component Imports -----\\
@@ -13,6 +14,26 @@ const Container = styled.div`
   z-index: 10;
   background-color: var(--color-bkg-light);
   grid-area: layers;
+`;
+const AddIcon = styled.button`
+  transition: all .25s;
+  transition-timing-function: cubic-bezier(0, 0.96, .48, 2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  path {
+    transition: fill .2s;
+    fill: white;
+  }
+  &:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+  }
+  
 `;
 
 const initialData = {
@@ -99,7 +120,12 @@ export default function EditWindowLayers() {
       <DragDropContext onDragEnd={onDragEnd}>
         {renderDndColumns()}
       </DragDropContext>
-      <button className="button-confirm" onClick={addLayer}>+</button>
+      <AddIcon className="button-confirm">
+
+        <SvgIcon onClick={addLayer}>
+          <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+        </SvgIcon>
+      </AddIcon>
     </Container>
   )
 }

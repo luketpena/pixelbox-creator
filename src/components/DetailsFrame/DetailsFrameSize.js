@@ -8,6 +8,10 @@ import SizeInputRow from './SizeInputRow';
 const Table = styled.table`
   grid-area: size;
   margin-right: 8px;
+  thead {
+    font-family: var(--font-input);
+    color: var(--color-text-dark);
+  }
 `;
 
 //-----< Component Function >-----\\

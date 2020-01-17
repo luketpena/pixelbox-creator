@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import useReactRouter from 'use-react-router';
 
 //-----< Styling >-----\\
 const Container = styled.div`
@@ -22,9 +23,11 @@ const CreateButton = styled.button`
 export default function MainHeader() {
 
   const dispatch = useDispatch();
+  const {history} = useReactRouter();
 
   function clickNew() {
     dispatch({type: 'MAKE_NEW_FRAME'});
+    history.push('/edit')
   }
 
   return(

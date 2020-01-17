@@ -14,7 +14,6 @@ const Main = styled.div`
     "header"
     "gallery";
   grid-template-rows: 128px 1fr;
-  background-color: #333;
 `;
 
 export default function ManageMain() {

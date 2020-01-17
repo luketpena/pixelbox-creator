@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 
 const Container = styled.div`
-  z-index: 100;
+  z-index: 1000;
   position: absolute;
   width: 100vw;
   height: 100vh;
@@ -21,6 +21,7 @@ const AlertCard = styled.div`
   min-width: 256px;
   min-height: 128px;
   background-color: var(--color-bkg-main);
+  box-shadow: 0 0 64px 0 var(--color-bkg-bright);
   border-radius: 4px;
   overflow: hidden;
   padding: 8px;

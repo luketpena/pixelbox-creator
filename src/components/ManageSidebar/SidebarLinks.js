@@ -4,9 +4,10 @@ import styled from 'styled-components';
 //-----< Styling >-----\\
 const Container = styled.div`
   grid-area: links;
-  background-color: purple;
+  background-color: var(--color-bkg-main);
   position: relative;
   padding-top: 8px;
+  padding-top: 32px;
 `;
 const LinkButton = styled.button`
   width: 100%;
@@ -23,9 +24,9 @@ export default function ManageSidebar() {
 
   return (
     <Container>
-      <LinkButton>Download pixelbox.js</LinkButton>
+      <LinkButton className="button-confirm">Download pixelbox.js</LinkButton>
       <LinkButton>Documentation</LinkButton>
-      <HomeButton>Back to Home</HomeButton>
+      <HomeButton className="button-reject">Back to Home</HomeButton>
     </Container>
   )
 }
