@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import {useDispatch, useSelector} from 'react-redux';
+import LogOutButton from '../LogOutButton/LogOutButton';
 
 const avatarUrl = 'https://w5insight.com/wp-content/uploads/2014/07/placeholder-user-400x400.png';
 
@@ -9,6 +10,11 @@ const Container = styled.div`
   grid-area: user;
   background-color: var(--color-bkg-light);
   padding: 8px;
+  button {
+    display: block;
+    margin: 8px auto;
+    width: 150px;
+  }
 `;
 const Avatar = styled.img`
   margin-top: 16px;
@@ -28,7 +34,7 @@ const FrameNumber = styled.p`
   margin: 0;
 `;
 const DetailsButton = styled.button`
-  margin: 24px 0;
+  
 `;
 
 //-----< Component Function >-----\\
@@ -43,6 +49,7 @@ export default function ManageSidebar() {
       <Username>{user.username}</Username>
       <FrameNumber>{frame.length} {(frame.length===1)? 'frame' : 'frames'}</FrameNumber>
       <DetailsButton className="button-primary">Account Details</DetailsButton>
+      <LogOutButton/>
     </Container>
   )
 }

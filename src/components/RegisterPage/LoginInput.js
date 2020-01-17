@@ -1,0 +1,99 @@
+import React, {useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import styled from 'styled-components';
+
+const Label = styled.label`
+  display: block;
+  color: var(--color-text-light);
+  margin-bottom: 8px;
+  font-family: var(--font-input);
+  input {
+    display: block;
+    margin: 4px auto;
+    width: 128px;
+    border: none;
+    outline: none;
+    border-radius: 4px;
+    text-align: center;
+  }
+`;
+
+const Submit = styled.button`
+  width: 128px;
+`;
+
+export default function LoginInput() {
+
+  const dispatch = useDispatch();
+  let loginMode = useSelector(state=>state.loginMode);
+
+  function registerUser(event) {
+    event.preventDefault();
+
+    if (username && password) {
+      dispatch({
+        type: 'REGISTER',
+        payload: {
+          username: username,
+          password: password,
+        },
+      });
+    } else {
+      dispatch({type: 'REGISTRATION_INPUT_ERROR'});
+    }
+  } // end registerUser
+
+  function login(event) {
+    event.preventDefault();
+
+    if (username && password) {
+      dispatch({
+        type: 'LOGIN',
+        payload: {
+          username: username,
+          password: password,
+        },
+      });
+    } else {
+      dispatch({ type: 'LOGIN_INPUT_ERROR' });
+    }
+  } // end login
+
+  let [username, setUsername] = useState('');
+  let [password, setPassword] = useState('');
+
+  function handleSubmit(event) {
+    switch(loginMode) {
+      case 'login': login(event); break;
+      case 'register': registerUser(event); break;
+    }
+  }
+
+  return (
+    <form onSubmit={(event)=>handleSubmit(event)}>  
+
+        <Label htmlFor="username">
+          Username:
+          <input
+            type="text"
+            name="username"
+            value={username}
+            onChange={(event)=>setUsername(event.target.value)}
+          />
+        </Label>
+
+        <Label htmlFor="password">
+          Password:
+          <input
+            type="password"
+            name="password"
+            value={password}
+            onChange={(event)=>setPassword(event.target.value)}
+          />
+        </Label>
+
+        <Submit className="button-confirm">Submit</Submit>
+        
+    </form>
+  )
+}

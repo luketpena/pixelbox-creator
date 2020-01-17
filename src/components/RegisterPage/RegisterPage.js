@@ -1,98 +1,101 @@
-import React, { Component } from 'react';
-import {connect} from 'react-redux';
+import React, {useState} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
+import styled from 'styled-components';
 
-class RegisterPage extends Component {
-  state = {
-    username: '',
-    password: '',
-  };
+import AvatarSelect from '../AvatarSelect/AvatarSelect';
+import LoginErrorBar from './LoginErrorBar';
+import LoginInput from './LoginInput';
 
-  registerUser = (event) => {
-    event.preventDefault();
+const InputBox = styled.div`
+  background-color: var(--color-bkg-light);
+  grid-area: main;
+  width: 100%;
+  max-width: 512px;
+  margin: 0 auto;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 32px 16px -2px var(--color-shadow-main);
+`;
 
-    if (this.state.username && this.state.password) {
-      this.props.dispatch({
-        type: 'REGISTER',
-        payload: {
-          username: this.state.username,
-          password: this.state.password,
-        },
-      });
-    } else {
-      this.props.dispatch({type: 'REGISTRATION_INPUT_ERROR'});
+const Container = styled.div`
+  background-color: var(--color-bkg-main);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 20 20'%3E%3Cg %3E%3Cpolygon fill='%231c2024' points='20 10 10 0 0 0 20 20'/%3E%3Cpolygon fill='%231c2024' points='0 10 0 20 10 20'/%3E%3C/g%3E%3C/svg%3E");
+
+  
+  width: 100vw;
+  height: 100vh;
+  padding: 64px;
+  /* animation: scroll 5s infinite linear; */
+  box-sizing: border-box;
+  @keyframes scroll{
+  100%{
+    background-position:0px 160px;
+  }
+`;
+
+const Box = styled.div`
+  display: grid;
+  width: 80%;
+  margin: 0 auto;
+  grid-template-areas: ${props=>(props.loginMode==='login'? '"main"' : '"avatar main"')};
+  grid-template-columns: ${props=>(props.loginMode==='login'? '1fr' : '256px 1fr')};
+`;
+
+const SwitchButton = styled.button`
+  width: 128px;
+  margin-top: 64px;
+`;
+
+export default function RegisterPage() {
+
+  const dispatch = useDispatch();
+  let errors = useSelector(state=>state.errors);
+  let loginMode = useSelector(state=>state.loginMode);
+  
+
+  
+
+  function renderAvatarSelect() {
+    if (loginMode==='register') {
+      return <AvatarSelect />
     }
-  } // end registerUser
-
-  handleInputChangeFor = propertyName => (event) => {
-    this.setState({
-      [propertyName]: event.target.value,
-    });
   }
 
-  render() {
-    return (
-      <div>
-        {this.props.errors.registrationMessage && (
-          <h2
-            className="alert"
-            role="alert"
-          >
-            {this.props.errors.registrationMessage}
-          </h2>
-        )}
-        <form onSubmit={this.registerUser}>
-          <h1>Register User</h1>
-          <div>
-            <label htmlFor="username">
-              Username:
-              <input
-                type="text"
-                name="username"
-                value={this.state.username}
-                onChange={this.handleInputChangeFor('username')}
-              />
-            </label>
-          </div>
-          <div>
-            <label htmlFor="password">
-              Password:
-              <input
-                type="password"
-                name="password"
-                value={this.state.password}
-                onChange={this.handleInputChangeFor('password')}
-              />
-            </label>
-          </div>
-          <div>
-            <input
-              className="register"
-              type="submit"
-              name="submit"
-              value="Register"
-            />
-          </div>
-        </form>
-        <center>
-          <button
-            type="button"
-            className="link-button"
-            onClick={() => {this.props.dispatch({type: 'SET_TO_LOGIN_MODE'})}}
-          >
-            Login
-          </button>
-        </center>
-      </div>
-    );
+  function renderSwitchButton() {
+    if (loginMode==='login') {
+      return <SwitchButton
+      type="button"
+      className="link-button"
+      onClick={() => {dispatch({type: 'SET_TO_REGISTER_MODE'})}}
+    >
+      Register
+    </SwitchButton>
+    } else {
+      return <SwitchButton
+      type="button"
+      className="link-button"
+      onClick={() => {dispatch({type: 'SET_TO_LOGIN_MODE'})}}
+    >
+      Login
+    </SwitchButton>
+    }
   }
+
+  return (
+    <Container>
+      
+      <Box loginMode={loginMode}>
+        {renderAvatarSelect()}
+
+        <InputBox>
+          <LoginErrorBar />
+
+          <h1 className="logReg-title">{loginMode}</h1>
+          <LoginInput />
+            
+          {renderSwitchButton()}
+        </InputBox>
+      </Box>
+    </Container>
+  );
 }
-
-// Instead of taking everything from state, we just want the error messages.
-// if you wanted you could write this code like this:
-// const mapStateToProps = ({errors}) => ({ errors });
-const mapStateToProps = state => ({
-  errors: state.errors,
-});
-
-export default connect(mapStateToProps)(RegisterPage);
-
