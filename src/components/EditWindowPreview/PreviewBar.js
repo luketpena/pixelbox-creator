@@ -51,6 +51,7 @@ const BarButton = styled.button`
 `;
 
 export default function PreviewBar() {
+  
 
   //>> Setup hooks
   let dispatch = useDispatch();
@@ -111,6 +112,7 @@ export default function PreviewBar() {
   }
 
   function goToControlPanel() {
+    dispatch({type: 'SET_EDIT_READY', payload: false})
     history.push('/manage');
   }
 

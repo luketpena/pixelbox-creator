@@ -13,13 +13,21 @@ const ManageContainer = styled.div`
 `;
 const ManageBkg = styled.div`
   min-height: 100vh;
-  
+  background-color: var(--color-bkg-main);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 20 20'%3E%3Cg %3E%3Cpolygon fill='%231c2024' points='20 10 10 0 0 0 20 20'/%3E%3Cpolygon fill='%231c2024' points='0 10 0 20 10 20'/%3E%3C/g%3E%3C/svg%3E");
+  animation: scroll 5s infinite linear;
+
+  @keyframes scroll{
+    100%{
+      background-position:0px 160px;
+    }
+  }
 `;
 
 export default function ManagePage() {
 
   return (
-    <ManageBkg className="scroll-bkg">
+    <ManageBkg>
       <ManageContainer>
         <ManageMain />
         <ManageSidebar />

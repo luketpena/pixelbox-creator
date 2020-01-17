@@ -32,7 +32,6 @@ const PreviewItems = styled.div`
 `;
 const PreviewBkg = styled.div`
   position: absolute;
-  background-color: var(--color-bkg-main);
   box-shadow: inset 0 0 100px 50px var(--color-shadow-faded);
   width: 100%;
   height: 100%;
@@ -64,7 +63,7 @@ export default function EditWindowPreview() {
   return (
     <PreviewArea>
 
-      <PreviewBkg />
+      <PreviewBkg className="scroll-bkg"/>
       <PreviewBar />
 
       <PreviewItems>

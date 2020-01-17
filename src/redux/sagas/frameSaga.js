@@ -25,6 +25,8 @@ function * saveFrame(action) {
 
 function * getSavedFrame(action) {
   const response = yield axios.get('/api/frame/edit/'+action.payload);
+  console.log('Incoming frame:', response.data);
+  
   yield put({type: 'SET_EDIT_FRAME', payload: response.data});
 }
 

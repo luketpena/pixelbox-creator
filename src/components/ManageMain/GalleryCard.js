@@ -1,9 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import useReactRouter from 'use-react-router';
-
-const testImage = 'https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto/gigs/116770670/original/281f85ad141b056fc82fa8058134a86421c61817/paint-you-a-beautiful-pixel-art-landscape.png';
 
 const Card = styled.div`
   background-color: var(--color-bkg-light);
@@ -38,19 +36,31 @@ export default function GalleryCard(props) {
 
   const dispatch = useDispatch();
   const {history} = useReactRouter();
+  let [myReady, setMyReady] = useState(false)
+  let ready = useSelector(state=>state.edit.ready);
 
   function deleteFrame() {
     dispatch({type: 'DELETE_FRAME', payload: props.frame.id});
   }
   function editFrame() {
     dispatch({type: 'GET_SAVED_FRAME', payload: props.frame.id});
-    history.push('/edit')
+    setMyReady(true);
   }
+
+  function goToEdit() {
+    if (ready && myReady) {
+      setMyReady(false);
+      dispatch({type: 'SET_EDIT_READY', payload: false})
+      history.push('/edit');
+    }
+  }
+  
 
   return(
     <Card>
       <CardImg src={props.frame.bkg_url} />
       <Title>{props.frame.frame_name}</Title>
+      {goToEdit()}
       <CardButton className="button-primary" onClick={editFrame}>Edit</CardButton>
       <CardButton>Duplicate</CardButton>
       <CardButton className="button-confirm">Export</CardButton>

@@ -1,4 +1,5 @@
 const demoFrame = {
+  ready: false,
   saved: true,
   select: 1,
   id: -1,
@@ -24,6 +25,7 @@ const demoFrame = {
 };
 
 const emptyFrame = {
+  ready: false,
   saved: true,
   frame_name: 'Untitled',
   select: -1,
@@ -35,6 +37,7 @@ const emptyFrame = {
   size: [256,128],
   extend: [32,8],
   display: [512,256],
+  smoothing: 1,
   framerate: 15,
   pixelsnap: false,
 }
@@ -44,8 +47,10 @@ const editReducer = (state = emptyFrame, action) => {
   const layerDataCopy = [...state.layerData];
   switch (action.type) {
     case 'CONFIRM_SAVE': return {...state, saved: true};
+    case 'SET_EDIT_READY': return {...state, ready: action.payload};
     case 'SET_EDIT_FRAME':
     return {
+      ready: true,
       saved: true,
       select: -1,
       layerData: action.payload.layerData,
@@ -56,6 +61,7 @@ const editReducer = (state = emptyFrame, action) => {
       extend: [action.payload.extend_x,action.payload.extend_y],
       display: [action.payload.display_x,action.payload.display_y],
       framerate: action.payload.framerate,
+      smoothing: Number(action.payload.smoothing),
       pixelsnap: action.payload.pixelsnap,
     }
 

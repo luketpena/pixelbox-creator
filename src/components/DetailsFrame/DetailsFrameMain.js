@@ -14,6 +14,9 @@ export default function DetailsFrameMain() {
   const dispatch = useDispatch();
   const frame = useSelector(state=>state.edit);
 
+  console.log('Rendered frame:',frame);
+  
+
   //>> Set up state
   const [bkg_url, setBkg_url] = useState(frame.bkg_url);
   const [framerate, setFramerate] = useState(frame.framerate);
@@ -49,6 +52,7 @@ export default function DetailsFrameMain() {
   //>> Render
   return (
     <div id="details-frame-main">
+      {JSON.stringify(frame.smoothing)}
       <label>
         Background url: 
         <InBkg 
