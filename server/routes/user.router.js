@@ -12,17 +12,40 @@ router.get('/', rejectUnauthenticated, (req, res) => {
   res.send(req.user);
 });
 
+router.get('/info', rejectUnauthenticated, (req,res)=> {
+  pool.query('SELECT * FROM user_info WHERE user_id = $1', [req.user.id]).then(result=>{
+    res.send(result.rows);
+  }).catch(error=>{
+    console.log('Could not get user data',error);
+    res.sendStatus(400);
+  })
+});
+
 // Handles POST request with new user data
 // The only thing different from this and every other post we've seen
 // is that the password gets encrypted before being inserted
-router.post('/register', (req, res, next) => {  
+router.post('/register', async (req, res) => {  
   const username = req.body.username;
   const password = encryptLib.encryptPassword(req.body.password);
+  const avatar = req.body.avatar
 
-  const queryText = 'INSERT INTO "user" (username, password) VALUES ($1, $2) RETURNING id';
-  pool.query(queryText, [username, password])
-    .then(() => res.sendStatus(201))
-    .catch(() => res.sendStatus(500));
+  const client = await pool.connect();
+  try {
+    await client.query(`BEGIN`);
+    const queryText = 'INSERT INTO "user" (username, password) VALUES ($1, $2) RETURNING id';
+    const result = await pool.query(queryText, [username, password]);
+    await pool.query('INSERT INTO user_info (user_id, avatar) VALUES ($1, $2)', [result.rows[0].id, avatar]);
+
+    await client.query('COMMIT');
+    res.sendStatus(201);
+    
+  } catch (error) {
+    client.query('ROLLBACK');
+    res.sendStatus(400);
+  } finally {
+    client.release();
+  }
+  
 });
 
 // Handles login form authenticate/login POST

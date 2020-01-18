@@ -8,6 +8,8 @@ import LoginInput from './LoginInput';
 
 const InputBox = styled.div`
   background-color: var(--color-bkg-light);
+  position: relative;
+  overflow: hidden;
   grid-area: main;
   width: 100%;
   max-width: 512px;
@@ -66,7 +68,10 @@ export default function RegisterPage() {
       return <SwitchButton
       type="button"
       className="link-button"
-      onClick={() => {dispatch({type: 'SET_TO_REGISTER_MODE'})}}
+      onClick={() => {
+        dispatch({type: 'SET_TO_REGISTER_MODE'});
+        dispatch({type: 'CLEAR_LOGIN_ERROR'});
+      }}
     >
       Register
     </SwitchButton>
@@ -74,10 +79,19 @@ export default function RegisterPage() {
       return <SwitchButton
       type="button"
       className="link-button"
-      onClick={() => {dispatch({type: 'SET_TO_LOGIN_MODE'})}}
+      onClick={() => {
+        dispatch({type: 'SET_TO_LOGIN_MODE'})
+        dispatch({type: 'CLEAR_REGISTRATION_ERROR'})
+      }}
     >
       Login
     </SwitchButton>
+    }
+  }
+
+  function renderErrorBar() {
+    if (errors.registrationMessage || errors.loginMessage) {
+      return <LoginErrorBar />
     }
   }
 
@@ -88,7 +102,7 @@ export default function RegisterPage() {
         {renderAvatarSelect()}
 
         <InputBox>
-          <LoginErrorBar />
+          {renderErrorBar()}
 
           <h1 className="logReg-title">{loginMode}</h1>
           <LoginInput />

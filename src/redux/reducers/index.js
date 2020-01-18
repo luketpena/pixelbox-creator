@@ -4,6 +4,8 @@ import loginMode from './loginModeReducer';
 import user from './userReducer';
 import edit from './editReducer';
 import frame from './frameReducer';
+import register from './registerReducer';
+import info from './userInfoReducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -17,6 +19,8 @@ const rootReducer = combineReducers({
   user, // will have an id and username if someone is logged in
   edit, // stores the information about a currently editable frame
   frame, 
+  register,
+  info
 });
 
 export default rootReducer;

@@ -18,6 +18,13 @@ const Label = styled.label`
   }
 `;
 
+const Container = styled.div`
+  border: 2px dashed var(--color-confirm-dark);
+  max-width: 256px;
+  padding: 16px;
+  margin: 0 auto;
+`;
+
 const Submit = styled.button`
   width: 128px;
 `;
@@ -26,16 +33,18 @@ export default function LoginInput() {
 
   const dispatch = useDispatch();
   let loginMode = useSelector(state=>state.loginMode);
+  let avatar = useSelector(state=>state.register.avatar)
 
   function registerUser(event) {
     event.preventDefault();
 
-    if (username && password) {
+    if (username && password && avatar) {
       dispatch({
         type: 'REGISTER',
         payload: {
           username: username,
           password: password,
+          avatar: avatar
         },
       });
     } else {
@@ -69,31 +78,35 @@ export default function LoginInput() {
     }
   }
 
+  
+
   return (
-    <form onSubmit={(event)=>handleSubmit(event)}>  
+    <Container>
+      <form onSubmit={(event)=>handleSubmit(event)}>  
 
-        <Label htmlFor="username">
-          Username:
-          <input
-            type="text"
-            name="username"
-            value={username}
-            onChange={(event)=>setUsername(event.target.value)}
-          />
-        </Label>
+          <Label htmlFor="username">
+            Username:
+            <input
+              type="text"
+              name="username"
+              value={username}
+              onChange={(event)=>setUsername(event.target.value)}
+            />
+          </Label>
 
-        <Label htmlFor="password">
-          Password:
-          <input
-            type="password"
-            name="password"
-            value={password}
-            onChange={(event)=>setPassword(event.target.value)}
-          />
-        </Label>
+          <Label htmlFor="password">
+            Password:
+            <input
+              type="password"
+              name="password"
+              value={password}
+              onChange={(event)=>setPassword(event.target.value)}
+            />
+          </Label>
 
-        <Submit className="button-confirm">Submit</Submit>
-        
-    </form>
+          <Submit className="button-confirm">Submit</Submit>
+          
+      </form>
+    </Container>
   )
 }

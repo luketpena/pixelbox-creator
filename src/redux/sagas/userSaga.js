@@ -24,8 +24,18 @@ function* fetchUser() {
   }
 }
 
+function * fetchUserInfo() {
+  try {
+    const response = yield axios.get('/api/user/info');
+    yield put({ type: 'SET_USER_INFO', payload: response.data[0]})
+  } catch {
+    console.log('Unable to get user Info');
+  }
+}
+
 function* userSaga() {
   yield takeLatest('FETCH_USER', fetchUser);
+  yield takeLatest('FETCH_USER_INFO',fetchUserInfo);
 }
 
 export default userSaga;
