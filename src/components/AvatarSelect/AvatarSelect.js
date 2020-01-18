@@ -87,7 +87,7 @@ export default function AvatarSelect() {
 
   function renderSelect() {
     if (avatarId!=='') {
-      return <SelectedAvatar src={avatars[avatarId]} />
+      return <SelectedAvatar src={avatars.getAvatars()[avatarId]} />
     }
   }
 

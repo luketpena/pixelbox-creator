@@ -48,7 +48,12 @@ export default function LoginInput() {
         },
       });
     } else {
-      dispatch({type: 'REGISTRATION_INPUT_ERROR'});
+      if (!avatar) {
+        dispatch({type: 'REGISTRATION_AVATAR_ERROR'});
+      } else {
+        dispatch({type: 'REGISTRATION_INPUT_ERROR'});
+      }
+      
     }
   } // end registerUser
 
