@@ -2,8 +2,10 @@ import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import styled from 'styled-components';
 
+//Bring in the list of avatars to be displayed / chosen from
 import avatars from '../avatars/avatars';
 
+//-----< Styling >-----\\
 const Container = styled.div`
   background-color: var(--color-bkg-light);
   border-radius: 16px;
@@ -67,16 +69,14 @@ export default function AvatarSelect() {
   let [select, setSelect] = useState(-1);
   let [avatarId, setAvatarId] = useState('');
 
-  console.log(avatars);
-  
-
+  //Chooses and avatar and sends it to the reducer.
   function selectAvatar(index,key) {
     setSelect(index);
     setAvatarId(key);
     dispatch({type: 'SET_AVATAR', payload: key});
   }
 
-
+  //Draws all available avatars imported from the avatars.js file
   function renderAvatars() {
     return Object.entries(avatars.getAvatars()).map( ([key,value],i)=> {
       return <AvatarBox key={i} index={i} select={select} onClick={()=>selectAvatar(i,key)}>
@@ -85,12 +85,14 @@ export default function AvatarSelect() {
     })
   }
 
+  //Renders the avatar selected by selectAvatar
   function renderSelect() {
     if (avatarId!=='') {
       return <SelectedAvatar src={avatars.getAvatars()[avatarId]} />
     }
   }
 
+  //Component render
   return (
     <Container>
       {renderSelect()}

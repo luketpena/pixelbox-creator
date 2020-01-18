@@ -2,7 +2,6 @@ import React from 'react';
 import {Route} from 'react-router-dom'
 import {connect} from 'react-redux';
 import LoginPage from '../LoginPage/LoginPage';
-import RegisterPage from '../RegisterPage/RegisterPage';
 
 // A Custom Wrapper Component -- This will keep our code DRY.
 // Responsible for watching redux state, and returning an appropriate component
@@ -32,7 +31,7 @@ const ProtectedRoute = (props) => {
     // show the component that is protected
     ComponentToShow = ComponentToProtect;
   } else {
-    ComponentToShow = RegisterPage;
+    ComponentToShow = LoginPage;
   }
   // We return a Route component that gets added to our list of routes
   return (
