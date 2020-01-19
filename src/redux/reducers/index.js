@@ -6,6 +6,7 @@ import edit from './editReducer';
 import frame from './frameReducer';
 import register from './registerReducer';
 import info from './userInfoReducer';
+import exporter from './exportReducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
   edit, // stores the information about a currently editable frame
   frame, 
   register,
-  info
+  info,
+  exporter
 });
 
 export default rootReducer;
