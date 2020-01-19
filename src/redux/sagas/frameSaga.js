@@ -25,9 +25,14 @@ function * saveFrame(action) {
 
 function * getSavedFrame(action) {
   const response = yield axios.get('/api/frame/edit/'+action.payload);
-  console.log('Incoming frame:', response.data);
-  
   yield put({type: 'SET_EDIT_FRAME', payload: response.data});
+}
+
+function * exportFrame(action) {
+  const response = yield axios.get('/api/frame/edit/'+action.payload);
+  yield put({type: 'EXPORT_SET_FRAME', payload: response.data});
+  yield put({type: 'EXPORT_SET_CONTENT'});
+  yield put({type: 'EXPORT_SET_ACTIVE', payload: true})
 }
 
 function * frameSaga() {
@@ -36,6 +41,7 @@ function * frameSaga() {
   yield takeLatest('DELETE_FRAME', deleteFrame);
   yield takeLatest('SAVE_FRAME', saveFrame);
   yield takeLatest('GET_SAVED_FRAME', getSavedFrame);
+  yield takeLatest('EXPORT_FRAME',exportFrame);
 }
 
 export default frameSaga;

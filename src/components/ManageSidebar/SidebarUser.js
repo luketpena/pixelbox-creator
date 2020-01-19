@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {useDispatch, useSelector} from 'react-redux';
 import LogOutButton from '../LogOutButton/LogOutButton';
@@ -49,15 +49,30 @@ const DetailsButton = styled.button`
 //-----< Component Function >-----\\
 export default function ManageSidebar() {
 
+  let [mount, setMount] = useState(false);
+
   const dispatch = useDispatch();
 
   useEffect(()=> {
-    dispatch({type: 'FETCH_USER_INFO'});
+    if (!mount) {
+      setMount(true);
+      dispatch({type: 'FETCH_USER_INFO'});
+    }
+    
   })
 
   let user = useSelector(state=>state.user);
   let userInfo = useSelector(state=>state.info);
   let frame = useSelector(state=>state.frame);
+
+  const copyToClipboard = str => {
+  const el = document.createElement('textarea');
+  el.value = str;
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand('copy');
+  document.body.removeChild(el);
+};
 
   return (
     <Container>

@@ -54,6 +54,10 @@ export default function GalleryCard(props) {
       history.push('/edit');
     }
   }
+
+  function exportFrame() {
+    dispatch({type: 'EXPORT_FRAME', payload: props.frame.id});
+  }
   
 
   return(
@@ -63,7 +67,7 @@ export default function GalleryCard(props) {
       {goToEdit()}
       <CardButton className="button-primary" onClick={editFrame}>Edit</CardButton>
       <CardButton>Duplicate</CardButton>
-      <CardButton className="button-confirm">Export</CardButton>
+      <CardButton className="button-confirm" onClick={exportFrame}>Export</CardButton>
       <CardButton className="button-reject" onClick={deleteFrame}>Delete</CardButton>
     </Card>
   )
