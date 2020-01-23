@@ -50,6 +50,7 @@ const editReducer = (state = demoFrame, action) => {
   switch (action.type) {
     case 'CONFIRM_SAVE': return {...state, saved: true};
     case 'SET_EDIT_READY': return {...state, ready: action.payload};
+    case 'SET_FRAME_SAVE': return {...state, saved: action.payload}
     case 'SET_EDIT_FRAME':
     return {
       ready: true,

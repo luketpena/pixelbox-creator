@@ -33,6 +33,15 @@ function * getSavedFrame(action) {
   yield put({type: 'SET_EDIT_FRAME', payload: response.data});
 }
 
+function * duplicateFrame(action) {
+  const response = yield axios.get('/api/frame/edit/'+action.payload);
+  let duplicate = {...response.data};
+  duplicate.id = -1;
+  duplicate.frame_name = 'Copy of ' + duplicate.frame_name;
+  yield put({type: 'SET_EDIT_FRAME', payload: duplicate});
+  yield put({type: 'SET_FRAME_SAVE', payload: false});
+}
+
 function * exportFrame(action) {
   const response = yield axios.get('/api/frame/edit/'+action.payload);
   yield put({type: 'EXPORT_SET_FRAME', payload: response.data});
@@ -52,6 +61,7 @@ function * frameSaga() {
   yield takeLatest('DELETE_FRAME', deleteFrame);
   yield takeLatest('SAVE_FRAME', saveFrame);
   yield takeLatest('GET_SAVED_FRAME', getSavedFrame);
+  yield takeLatest('DUPLICATE_FRAME', duplicateFrame);
   yield takeLatest('EXPORT_FRAME',exportFrame);
   yield takeLatest('EXPORT_EDIT_FRAME', exportEditFrame);
 }

@@ -60,13 +60,17 @@ export default function GalleryCard(props) {
     dispatch({type: 'EXPORT_FRAME', payload: props.frame.id});
   }
   
+  function duplicateFrame() {
+    dispatch({type: 'DUPLICATE_FRAME', payload: props.frame.id});
+    setMyReady(true);
+  }
 
   return(
     <Card>
       <CardImg src={(props.frame.bkg_url? props.frame.bkg_url : FramePlaceholder)} alt="Frame preview image."/>
       <Title>{props.frame.frame_name}</Title>
       <CardButton className="button-primary" onClick={editFrame}>Edit</CardButton>
-      <CardButton>Duplicate</CardButton>
+      <CardButton onClick={duplicateFrame}>Duplicate</CardButton>
       <CardButton className="button-confirm" onClick={exportFrame}>Export</CardButton>
       <CardButton className="button-reject" onClick={deleteFrame}>Delete</CardButton>
     </Card>
