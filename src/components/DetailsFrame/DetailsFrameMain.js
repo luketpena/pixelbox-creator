@@ -2,9 +2,52 @@ import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSquare, faCheckSquare } from '@fortawesome/free-solid-svg-icons';
+
 const InBkg = styled.input`
   width: 100%;
   box-sizing : border-box;
+`;
+
+const InputList = styled.ul`
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  label {
+    margin-right: 8px;
+  }
+  li {
+    display: flex;
+    align-items: center;
+    margin: 4px 0;
+    label {
+      width: 128px;
+      text-align: right;
+    }
+  }
+`;
+
+const Container = styled.div`
+  padding-left: 16px;
+  label {
+    color: var(--color-text-darkest);
+    font-family: var(--font-input);
+  }
+`;
+
+const Checkbox = styled.div`
+  color: #CCC;
+  transition: color .2s;
+  &:hover {
+    cursor: pointer;
+    color: white;
+  }
+`;
+
+const ListBox = styled.div`
+  display: flex;
+  flex-wrap: wrap;
 `;
 
 //-----< Component Function >-----\\
@@ -51,77 +94,66 @@ export default function DetailsFrameMain() {
 
   //>> Render
   return (
-    <div id="details-frame-main">
-      {JSON.stringify(frame.smoothing)}
-      <label>
-        Background url: 
+    <Container>
+      <label for="in-background">Background url:</label>
         <InBkg 
           className="details-input"
+          id="in-background"
           type="text" 
           value={bkg_url}
           onChange={(event)=>setBkg_url(event.target.value)}
           onBlur={()=>handleBlur('bkg_url')}
           onKeyPress={handleKeyPress}
         />
-      </label>
+      
           
-      <div id="details-frame-main-inputs">
-        <table>
-          <tbody>
-            <tr>
-              <td>Framerate:</td>
-              <td>
-                <input 
-                  type="number" 
-                  className="input-with-unit details-input"
-                  value={framerate}
-                  onChange={(event)=>setFramerate(event.target.value)}
-                  onBlur={()=>handleBlur('framerate')}
-                  onKeyPress={handleKeyPress}
-                />
-                <span className="input-unit">fps</span>
-                </td>
-            </tr>
-            
-            <tr>
-              <td>Smoothing:</td>
-              <td>
-                <input 
-                  type="number" 
-                  className="input-with-unit details-input"
-                  value={smoothing}
-                  onChange={(event)=>setSmoothing(event.target.value)}
-                  onBlur={()=>handleBlur('smoothing')}
-                  onKeyPress={handleKeyPress}
-                />
-              </td>
-            </tr>
-            
-            <tr>
-              <td>Pixelsnap:</td>
-              <td>
-                <input 
-                  type="checkbox"
-                  checked={pixelsnap}
-                  onChange={togglePixelsnap}
-                />
-              </td>
-            </tr>
-            
-            <tr>
-              <td>Hide overflow:</td>
-              <td>
-                <input 
-                  type="checkbox"
-                  checked={pixelsnap}
-                  onChange={togglePixelsnap}
-                />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+      <ListBox>
+        <InputList>
+          <li>
+            <label for="in-framerate">Framerate:</label>
+            <input 
+              type="number" 
+              id="in-framerate"
+              className="input-with-unit details-input"
+              value={framerate}
+              onChange={(event)=>setFramerate(event.target.value)}
+              onBlur={()=>handleBlur('framerate')}
+              onKeyPress={handleKeyPress}
+            />
+            <span className="input-unit">ms</span>
+          </li>
+
+          <li>
+            <label for="in-smoothing">Smoothing:</label>
+            <input 
+              type="number" 
+              id="in-smoothing"
+              className="input-with-unit details-input"
+              value={smoothing}
+              onChange={(event)=>setSmoothing(event.target.value)}
+              onBlur={()=>handleBlur('smoothing')}
+              onKeyPress={handleKeyPress}
+            />
+          </li>
+        </InputList>
+        <InputList>
+          <li>
+            <label for="in-pixelsnap">Pixelsnap:</label>
+            <Checkbox>
+              <FontAwesomeIcon icon={(pixelsnap? faCheckSquare : faSquare)} onClick={togglePixelsnap}/>
+            </Checkbox>
+          </li>
+
+          <li>
+            <label for="in-hide">Hide overflow:</label>
+            <Checkbox>
+              <FontAwesomeIcon icon={(pixelsnap? faCheckSquare : faSquare)} onClick={togglePixelsnap}/>
+            </Checkbox>
+          </li>
+        </InputList>
+      </ListBox>
+
+    </Container>
   )
 }
 

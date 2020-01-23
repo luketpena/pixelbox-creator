@@ -19,6 +19,7 @@
   --color-reject-faded: #F2526655;
   --color-reject-dark: #932024;
 
+  --color-text-darkest: #1C1A18;
   --color-text-dark: #4C4744;
   --color-text-mid: #BAB4AE;
   --color-text-light-faded: #d8d2cb55;
@@ -32,10 +33,6 @@
 
 .layer-drag-path {
   fill: var(--color-shadow-main);
-}
-
-.logReg-page {
-  
 }
 
 .logReg-title {
@@ -140,22 +137,7 @@ button:hover {
   border-bottom: 1px solid white;
 }
 
-#details-frame-main {
-  grid-area: main;
-  margin-left: 8px;
-}
 
-#details-frame-main table {
-  width: 100%;
-}
-#details-frame-main table tr td:first-child {
-  width: 100px;
-  text-align: right;
-}
-#details-frame-main table input {
-  width: 64px;
-  box-sizing : border-box;
-}
 
 
 
@@ -193,12 +175,14 @@ button:hover {
 .input-with-unit {
   padding-right: 25px;
   text-align: right;
+  box-sizing: border-box;
 }
 .input-unit {
   color: var(--color-text-mid);
   margin-left: -25px;
   font-family: var(--font-input);
   font-size: 12px;
+  box-sizing: border-box;
 }
 
 input {

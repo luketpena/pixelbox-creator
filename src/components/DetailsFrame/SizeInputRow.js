@@ -2,16 +2,27 @@ import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+
 //-----< Styling >-----\\
 const RowTitle = styled.td`
   font-family: var(--font-input);
   text-align: right;
+  color: var(--color-text-darkest);
 `;
 const RowInput = styled.input`
-  width: 48px;
+  width: 64px;
+
+`;
+const TableData = styled.td`
+  width: 88px;
+
 `;
 const RowX = styled.td`
   font-family: monospace;
+  padding-left: 12px;
+  color: var(--color-text-dark);
 `;
 
 //-----< Component Function >-----\\
@@ -50,7 +61,8 @@ export default function SizeInputRow(props) {
     <tr>
       <RowTitle>{props.title}:</RowTitle>
 
-      <td>
+      <TableData>
+      
         <RowInput 
           type="number" 
           className="input-with-unit details-input" 
@@ -60,11 +72,11 @@ export default function SizeInputRow(props) {
           onKeyPress={handleKeyPress}
         />
         <span className="input-unit">px</span>
-        </td>
+      </TableData>
 
-      <RowX>X</RowX>
+      <RowX><FontAwesomeIcon icon={faTimes}/></RowX>
 
-      <td>
+      <TableData>
         <RowInput 
           type="number" 
           className="input-with-unit details-input" 
@@ -74,7 +86,7 @@ export default function SizeInputRow(props) {
           onKeyPress={handleKeyPress}
         />
         <span className="input-unit">px</span>
-      </td>
+      </TableData>
     </tr>
   )
 }

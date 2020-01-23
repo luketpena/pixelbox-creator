@@ -5,24 +5,34 @@ import styled from 'styled-components';
 import SizeInputRow from './SizeInputRow';
 
 //-----< Styling >-----\\
+const Container = styled.div`
+margin: 0 auto;
+`;
 const Table = styled.table`
   grid-area: size;
   margin-right: 8px;
+  border-collapse: collapse;
+  table-layout: fixed;
   thead {
     font-family: var(--font-input);
-    color: var(--color-text-dark);
+    color: var(--color-text-darkest);
   }
+`;
+
+const TitleColumn = styled.th`
+  width: 80px;
 `;
 
 //-----< Component Function >-----\\
 export default function DetailsFrameSize() {
   //>> Render
   return (
-    <Table>
+    <Container>
+      <Table>
       
         <thead>
           <tr>
-            <th>&nbsp;</th>
+            <TitleColumn>&nbsp;</TitleColumn>
             <th>Width</th>
             <th>&nbsp;</th>
             <th>Height</th>
@@ -36,5 +46,6 @@ export default function DetailsFrameSize() {
         </tbody>
 
       </Table>
+    </Container>
   )
 }

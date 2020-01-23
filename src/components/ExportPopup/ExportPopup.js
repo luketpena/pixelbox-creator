@@ -39,6 +39,7 @@ const CodeBlock = styled.div`
   box-shadow: inset 0 2px 4px 0 var(--color-shadow-main);
   padding: 16px;
   box-sizing: border-box;
+  overflow-y: scroll;
 `;
 
 const ActionBar = styled.div`

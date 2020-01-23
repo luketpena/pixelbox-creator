@@ -39,6 +39,7 @@ router.get('/edit/:id', rejectUnauthenticated, async (req,res)=> {
     await client.query('COMMIT');
     res.send(result);
   } catch(error){
+    await client.query('ROLLBACK');
     res.sendStatus(500);
     console.log('Error getting complete frame:',error);
   } finally {
@@ -111,7 +112,7 @@ router.delete('/:id', rejectUnauthenticated, async (req,res)=> {
         await client.query(`DELETE FROM frame WHERE id = $1`, [req.params.id]);
       await client.query('COMMIT');
       res.sendStatus(200);
-    }  
+    }
     res.sendStatus(403);
   } catch (error) {
     client.query('ROLLBACK');
