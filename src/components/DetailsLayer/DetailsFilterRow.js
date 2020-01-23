@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import styled from 'styled-components';
 
 const filterNameList = [
   'blur',
@@ -7,90 +8,88 @@ const filterNameList = [
   'contrast'
 ]
 
-class DetailsFilterRow extends Component {
+export default function DetailsFilterRow(props) {
 
-  renderFilterValue = ()=> {
+  const dispatch = useDispatch();
+  const select = useSelector(state=>state.edit.select);
+  const edit = useSelector(state=>state.edit);
+
+  function renderFilterValue() {
     return (
       <>
         <input 
           type="number" 
           className="input-with-unit" 
-          value={this.props.filter.value}
-          onChange={(event)=>this.updateFilterValue(event,this.props.index)}
+          value={props.filter.value}
+          onChange={(event)=>updateFilterValue(event,props.index)}
         />
-        <span className="input-unit" >{this.props.filter.unit}</span>
+        <span className="input-unit" >{(props.filter.unit? props.filter.unit : 'xx')}</span>
       </>
     )
   }
 
-  updateFilterValue = (event,prop)=> {
-    this.props.dispatch({
+  function updateFilterValue(event,prop) {
+    dispatch({
       type: 'SET_FILTER_VALUE',
       payload: {
         value: event.target.value,
-        select: this.props.select,
-        index: this.props.index
+        select: props.select,
+        index: props.index
       }
     })
   }
 
-  selectFilter = (event)=> {
-    this.props.dispatch({
+  function selectFilter(event) {
+    dispatch({
       type: 'SET_FILTER_TYPE',
       payload: {
-        select: this.props.select,
-        index: this.props.index,
+        select: props.select,
+        index: props.index,
         value: event.target.value
       }
     })
   }
 
-  removeFilter = (index)=> {
-    this.props.dispatch({
+  function removeFilter(index) {
+    dispatch({
       type: 'REMOVE_FILTER',
       payload: {
         index: index,
-        select: this.props.select
+        select: props.select
       }
     })
   }
 
-  render() {
-    return (
-      <tr>
-        <td>
-          <select value={this.props.filter.name} onChange={(event)=>this.selectFilter(event)}>
-            <option disabled value={'none'}>none</option>
-            {filterNameList.map( (filter,i)=> {
-            let find = (this.props.currentFilters.indexOf(filter.name)!==-1);
-            return (
-              <option 
-                disabled={find} 
-                key={i} 
-                value={filter}
-              >{filter}
-              </option>
-            )
-            })}
-          </select>
-        </td>
-        <td>
-          {this.renderFilterValue()}
-        </td>
-        <td>
-          <button 
-            className="button-reject"
-            onClick={()=>this.removeFilter(this.props.index)}
-          >
-            Remove
-          </button>
-        </td>
-      </tr>
-    )
-  }
-}
+  return (
+    <tr>
+      <td>
+        <select value={props.filter.name} onChange={(event)=>selectFilter(event)}>
+          <option disabled value={'none'}>none</option>
+          {filterNameList.map( (filter,i)=> {
+          let find = (props.currentFilters.indexOf(filter.name)!==-1);
+          return (
+            <option 
+              disabled={find} 
+              key={i} 
+              value={filter}
+            >{filter}
+            </option>
+          )
+          })}
+        </select>
+      </td>
+      <td>
+        {renderFilterValue()}
+      </td>
+      <td>
+        <button 
+          className="button-reject"
+          onClick={()=>removeFilter(props.index)}
+        >
+          Remove
+        </button>
+      </td>
+    </tr>
+  )
 
-export default connect(state=>({
-  select: state.edit.select,
-  frame: state.edit
-}))(DetailsFilterRow);
+}

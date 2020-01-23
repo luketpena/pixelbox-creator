@@ -125,7 +125,8 @@ button:hover {
 .details-input {
   height: 16px;
   text-align: center;
-  font-family: monospace;
+  font-family: var(--font-input);
+  color: var(--color-text-darkest);
   background-color: white;
   border-radius: 16px;
   outline: none;
@@ -138,32 +139,6 @@ button:hover {
 }
 
 
-
-
-
-
-#details-layer-main {
-  grid-area: main;
-  margin-right: 8px;
-}
-#details-layer-main table {
-  width: 100%;
-}
-#details-layer-main table input,
-#details-layer-main table select {
-  width: 100%;
-}
-#details-layer-main tr td:first-child {
-  width: 96px;
-}
-
-#details-layer-filters {
-  
-}
-
-#details-layer-filter-box {
-  
-}
 
 .addFilter-bar {
   position: absolute;

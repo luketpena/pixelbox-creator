@@ -6,7 +6,6 @@ import { SvgIcon } from '@material-ui/core';
 
 
 //-----< Component Imports -----\\
-import LayerWidget from './LayerWidget';
 import LayerColumn from './LayerColumn';
 
 //-----< Stylings >-----\\
@@ -64,12 +63,6 @@ export default function EditWindowLayers() {
     return <LayerColumn key={columnData.id} column={columnData} layerData={layerData}/>
   }
 
-  function renderLayerWidgets() {    
-    return layerData.map( (layer,i)=> {
-      return <LayerWidget key={i} index={i}/>
-    })
-  }
-
   function addLayer() {
     dispatch({type: 'ADD_NEW_LAYER'})
   }
@@ -113,10 +106,7 @@ export default function EditWindowLayers() {
 
   return (
     <Container>
-      {/* {this.renderLayerWidgets()}
-      <div>
-        <button onClick={this.addLayer}>Add Layer</button>
-      </div> */}
+      
       <DragDropContext onDragEnd={onDragEnd}>
         {renderDndColumns()}
       </DragDropContext>

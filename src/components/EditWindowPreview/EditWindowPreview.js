@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
 //-----< Component Imports -----\\
@@ -45,6 +45,8 @@ const PreviewBkg = styled.div`
 
 export default function EditWindowPreview() {
 
+  const dispatch = useDispatch();
+
   //>> Access reducer
   const frame = useSelector(state=>state.edit);
 
@@ -61,10 +63,14 @@ export default function EditWindowPreview() {
     width: frame.display[0]+(frame.extend[0]*ratio[0])*2,
     height: frame.display[1]+(frame.extend[1]*ratio[1]),
   }
+
+  function deselectLayer() {
+    dispatch({type: 'SET_LAYER_SELECT', payload: -1})
+  }
   
   //>> Render
   return (
-    <PreviewArea>
+    <PreviewArea onClick={deselectLayer}>
 
       <PreviewBkg />
       <PreviewBar />

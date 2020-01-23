@@ -28,7 +28,7 @@ const emptyFrame = {
   ready: false,
   saved: true,
   frame_name: 'Untitled',
-  select: -1,
+  select: 0,
   id: -1,
   bkg_url: '',
   layerData: [

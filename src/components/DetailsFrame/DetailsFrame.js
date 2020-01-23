@@ -9,7 +9,7 @@ import DetailsFrameMain from './DetailsFrameMain';
 const Container = styled.div`
   display: grid;
   grid-template-areas: "size main";
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: auto 1fr;
   align-items: flex-start;  
 `;
 

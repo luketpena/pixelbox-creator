@@ -1,5 +1,25 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import styled from 'styled-components';
+
+const Container = styled.div`
+
+  grid-area: main;
+  margin-right: 8px;
+  font-family: var(--font-input);
+  color: var(--color-text-darkest);
+  table {
+    width: 100%;
+    input, select {
+      width: 100%;
+    }
+    tr td:first-child {
+      width: 96px;
+      text-align: right;
+      padding-right: 8px;
+    }
+  }
+`;
 
 //A list of all available blendmodes
 const blendmodes = [
@@ -75,7 +95,7 @@ class DetailsLayerMain extends Component {
 
   render() {
     return (
-      <div id="details-layer-main">
+      <Container>
         <table >
             <tbody>
               {/* -----< Layer Name Input >----- */}
@@ -139,7 +159,7 @@ class DetailsLayerMain extends Component {
             </tbody>
           </table>
           <button onClick={this.clickClose}>Close</button>
-        </div>
+        </Container>
     )
   }
 }

@@ -10,17 +10,32 @@ const Container = styled.div`
   height: 126px;
   grid-area: filters;
   margin-left: 8px;
+  border-radius: 8px;
+  color: var(--color-text-darkest);
+  font-family: var(--font-input);
+  overflow: hidden;
 `;
 
 const FilterBox = styled.div`
   height: 108px;
   overflow-y: scroll;
-  background-color: var(--color-bkg-main);
+  background-color: var(--color-bkg-light);
   border-radius: 8px;
 `;
 
 const FilterTable = styled.table`
   width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  tr td:last-child {
+    width: 100px;
+  }
+  tr td:first-child {
+    width: 100px;
+  }
+  input {
+    width: 100%;
+  }
 `;
 
 
