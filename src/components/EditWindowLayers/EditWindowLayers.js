@@ -55,7 +55,6 @@ export default function EditWindowLayers() {
   const layerData = useSelector(state=>state.edit.layerData);
 
   const [columnData, setColumnData] = useState(initialData.columnData);
-  const [taskList, setTasks] = useState(layerData);
 
   function renderDndColumns() {
     console.log('Rendering DND columns');
@@ -68,7 +67,7 @@ export default function EditWindowLayers() {
   }
 
   function onDragEnd(result) {
-    const {destination, source, draggableId} = result;
+    const {destination, source} = result;
 
     //If not dropped in a viable place, exit function and do nothing
     if (!destination) { return; }
@@ -98,10 +97,6 @@ export default function EditWindowLayers() {
       ...columnData,
     };
     setColumnData(newColumn)
-  }
-
-  function addLayer() {
-    dispatch({type: 'ADD_NEW_LAYER'});
   }
 
   return (

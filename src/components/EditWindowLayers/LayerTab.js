@@ -65,8 +65,6 @@ const GrabArea = styled.div`
   }
 `;
 
-const DeleteButton = styled.button``;
-
 export default function Task(props) {
 
   const dispatch = useDispatch();

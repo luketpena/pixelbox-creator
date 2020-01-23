@@ -32,8 +32,6 @@ const PreviewItems = styled.div`
 `;
 const PreviewBkg = styled.div`
   background-color: var(--color-bkg-main);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 20 20'%3E%3Cg %3E%3Cpolygon fill='%231c2024' points='20 10 10 0 0 0 20 20'/%3E%3Cpolygon fill='%231c2024' points='0 10 0 20 10 20'/%3E%3C/g%3E%3C/svg%3E");
-
   position: absolute;
   box-shadow: inset 0 0 100px 50px var(--color-shadow-faded);
   width: 100%;

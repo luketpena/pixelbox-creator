@@ -1,5 +1,5 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React, {useState, useEffect} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import useReactRouter from 'use-react-router';
 
@@ -25,9 +25,20 @@ export default function MainHeader() {
   const dispatch = useDispatch();
   const {history} = useReactRouter();
 
+  let [myReady, setMyReady] = useState(false)
+  let ready = useSelector(state=>state.edit.ready);
+
+  useEffect(()=>{
+    if (ready && myReady) {
+      setMyReady(false);
+      dispatch({type: 'SET_EDIT_READY', payload: false})
+      history.push('/edit');
+    }
+  },[dispatch,myReady,history,ready])
+
   function clickNew() {
     dispatch({type: 'MAKE_NEW_FRAME'});
-    history.push('/edit')
+    setMyReady(true);
   }
 
   return(

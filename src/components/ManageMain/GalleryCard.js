@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import useReactRouter from 'use-react-router';
@@ -47,13 +47,13 @@ export default function GalleryCard(props) {
     setMyReady(true);
   }
 
-  function goToEdit() {
+  useEffect(()=>{
     if (ready && myReady) {
       setMyReady(false);
       dispatch({type: 'SET_EDIT_READY', payload: false})
       history.push('/edit');
     }
-  }
+  },[dispatch,myReady,history,ready])
 
   function exportFrame() {
     dispatch({type: 'EXPORT_FRAME', payload: props.frame.id});
@@ -64,7 +64,6 @@ export default function GalleryCard(props) {
     <Card>
       <CardImg src={props.frame.bkg_url} />
       <Title>{props.frame.frame_name}</Title>
-      {goToEdit()}
       <CardButton className="button-primary" onClick={editFrame}>Edit</CardButton>
       <CardButton>Duplicate</CardButton>
       <CardButton className="button-confirm" onClick={exportFrame}>Export</CardButton>

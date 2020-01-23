@@ -50,23 +50,22 @@ router.get('/edit/:id', rejectUnauthenticated, async (req,res)=> {
 //Adding a single frame for a user to the database
 router.post('/', async (req, res) => {
   //>> Destructuring the req.body, stored in array for query data
-  const {frame_name,bkg_url,size,extend,display,smoothing,framerate,pixelsnap,layerData} = req.body;
-  const frameData = [req.user.id,frame_name,bkg_url,size[0],size[1],extend[0],extend[1],display[0],display[1],smoothing,framerate,pixelsnap];
-  console.log('Query data:',frameData);
+  const {frame_name,bkg_url,size,extend,display,smoothing,framerate,pixelsnap,hideoverflow,layerData} = req.body;
+  const frameData = [req.user.id,frame_name,bkg_url,size[0],size[1],extend[0],extend[1],display[0],display[1],smoothing,framerate,pixelsnap,hideoverflow];
 
   //>> Handshake with database
   const client = await pool.connect();
   try {
     const frameQuery = `
-      INSERT INTO frame (user_id, frame_name, bkg_url, size_x, size_y, extend_x, extend_y, display_x, display_y, smoothing, framerate, pixelsnap)
-      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)
+      INSERT INTO frame (user_id, frame_name, bkg_url, size_x, size_y, extend_x, extend_y, display_x, display_y, smoothing, framerate, pixelsnap, hideoverflow)
+      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
       RETURNING id;
     `;
     
     await client.query(`BEGIN`);
 
       const result = await client.query(frameQuery,frameData);
-      console.log('Frame ID:',result.rows[0].id);
+      const frameId = result.rows[0].id.toString();
 
       const layerQuery = `
         INSERT INTO layer (frame_id, layer_name, layer_url, layer_str, blendmode, filter)
@@ -84,13 +83,13 @@ router.post('/', async (req, res) => {
             return [item.name, item.value, item.unit];
           })
         ]
-        console.log('Layer query:',layerArray);
         
         await client.query(layerQuery, layerArray);
       }
 
     await client.query('COMMIT');
-    res.sendStatus(200);
+   
+    res.send(frameId);
     
   } catch (error) {
     client.query('ROLLBACK');
@@ -112,8 +111,11 @@ router.delete('/:id', rejectUnauthenticated, async (req,res)=> {
         await client.query(`DELETE FROM frame WHERE id = $1`, [req.params.id]);
       await client.query('COMMIT');
       res.sendStatus(200);
+    } else {
+      res.sendStatus(403);
+      client.query('ROLLBACK');
     }
-    res.sendStatus(403);
+
   } catch (error) {
     client.query('ROLLBACK');
     console.log('Error deleting frame and layers.', error)

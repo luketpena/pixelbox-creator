@@ -10,7 +10,7 @@ const Container = styled.div`
   color: var(--color-text-darkest);
   table {
     width: 100%;
-    input, select {
+    select {
       width: 100%;
     }
     tr td:first-child {
@@ -19,6 +19,57 @@ const Container = styled.div`
       padding-right: 8px;
     }
   }
+`;
+
+const Slider = styled.input`
+  grid-area: slider;
+  width: 100%;
+  -webkit-appearance: none;  /* Override default CSS styles */
+  appearance: none;
+  width: 100%; /* Full-width */
+  height: 2px; /* Specified height */
+  background-color: var(--color-bkg-main);
+  outline: none; /* Remove outline */
+  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+  transition: opacity .2s;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 8px; /* Set a specific slider handle width */
+    height: 8px; /* Slider handle height */
+    background: var(--color-bkg-main);
+    cursor: pointer; /* Cursor on hover */
+    box-shadow: 0 0 8px 4px var(--color-primary);
+  }
+
+  &::-moz-range-thumb {
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #4CAF50; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+  }
+`;
+
+const SliderValue = styled.p`
+  grid-area: value;
+  font-family: var(--font-input);
+  color: var(--color-primary);
+  margin: 0;
+  margin-right: 8px;
+`;
+
+const SliderData = styled.td`
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: "value slider";
+  align-items: center;
+`;
+
+
+const Input = styled.input`
+  width: 100%;
 `;
 
 //A list of all available blendmodes
@@ -102,7 +153,7 @@ class DetailsLayerMain extends Component {
               <tr>
                 <td>Layer Name:</td>
                 <td>
-                  <input 
+                  <Input 
                     value={this.state.layer_name} 
                     className="details-input"
                     onChange={(event)=>this.handleChange(event,'layer_name')}  
@@ -116,7 +167,7 @@ class DetailsLayerMain extends Component {
               <tr>
                 <td>Image url:</td>
                 <td>
-                  <input 
+                  <Input 
                     value={this.state.layer_url} 
                     className="details-input"
                     onChange={(event)=>this.handleChange(event,'layer_url')} 
@@ -143,8 +194,9 @@ class DetailsLayerMain extends Component {
               {/* -----< Strength Input >----- */}
               <tr>
                 <td>Strength:</td>
-                <td>
-                  <input 
+                <SliderData>
+                  <SliderValue>{Number(this.state.layer_str).toFixed(2)}</SliderValue>
+                  <Slider 
                     value={this.state.layer_str} 
                     onChange={(event)=>this.handleChange(event,'layer_str')}  
                     onMouseUp={()=>this.handleBlur('layer_str')}
@@ -154,7 +206,7 @@ class DetailsLayerMain extends Component {
                     max="1"
                     step=".05"
                   />
-                </td>
+                </SliderData>
               </tr>
             </tbody>
           </table>

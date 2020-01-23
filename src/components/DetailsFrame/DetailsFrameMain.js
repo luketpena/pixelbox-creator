@@ -95,7 +95,7 @@ export default function DetailsFrameMain() {
   //>> Render
   return (
     <Container>
-      <label for="in-background">Background url:</label>
+      <label htmlFor="in-background">Background url:</label>
         <InBkg 
           className="details-input"
           id="in-background"
@@ -110,7 +110,7 @@ export default function DetailsFrameMain() {
       <ListBox>
         <InputList>
           <li>
-            <label for="in-framerate">Framerate:</label>
+            <label htmlFor="in-framerate">Framerate:</label>
             <input 
               type="number" 
               id="in-framerate"
@@ -124,7 +124,7 @@ export default function DetailsFrameMain() {
           </li>
 
           <li>
-            <label for="in-smoothing">Smoothing:</label>
+            <label htmlFor="in-smoothing">Smoothing:</label>
             <input 
               type="number" 
               id="in-smoothing"
@@ -138,14 +138,14 @@ export default function DetailsFrameMain() {
         </InputList>
         <InputList>
           <li>
-            <label for="in-pixelsnap">Pixelsnap:</label>
+            <label htmlFor="in-pixelsnap">Pixelsnap:</label>
             <Checkbox>
               <FontAwesomeIcon icon={(pixelsnap? faCheckSquare : faSquare)} onClick={togglePixelsnap}/>
             </Checkbox>
           </li>
 
           <li>
-            <label for="in-hide">Hide overflow:</label>
+            <label htmlFor="in-hide">Hide overflow:</label>
             <Checkbox>
               <FontAwesomeIcon icon={(pixelsnap? faCheckSquare : faSquare)} onClick={togglePixelsnap}/>
             </Checkbox>

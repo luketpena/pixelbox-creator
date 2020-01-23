@@ -24,7 +24,6 @@ export default function ManageMain() {
   const exporter = useSelector(state=>state.exporter);
 
   useEffect(()=>{
-    console.log('Manager mounted.');
     dispatch({type: 'GET_USER_FRAMES', payload: user.id})
   });
 

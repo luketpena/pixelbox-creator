@@ -6,38 +6,38 @@ import styled from 'styled-components';
 import DetailsFilterRow from './DetailsFilterRow';
 
 const Container = styled.div`
-  position: relative;
   height: 126px;
+  position: relative;
   grid-area: filters;
   margin-left: 8px;
   border-radius: 8px;
+  overflow: hidden;
   color: var(--color-text-darkest);
   font-family: var(--font-input);
-  overflow: hidden;
+  display: grid;
+  grid-template-areas: "title" "filterList";
+  grid-template-rows: auto 1fr;
 `;
 
 const FilterBox = styled.div`
-  height: 108px;
+  grid-area: filterList;
   overflow-y: scroll;
-  background-color: var(--color-bkg-light);
   border-radius: 8px;
+  background-color: var(--color-bkg-light);
+  padding-bottom: 32px;
 `;
 
-const FilterTable = styled.table`
+const TitleBox = styled.div`
+  grid-area: title;
+`;
+
+const AddBar = styled.div`
+  position: absolute;
+  bottom: 0;
   width: 100%;
-  border-collapse: collapse;
-  table-layout: fixed;
-  tr td:last-child {
-    width: 100px;
-  }
-  tr td:first-child {
-    width: 100px;
-  }
-  input {
-    width: 100%;
-  }
+  background-color: rgba(0,0,0,.8);
+  padding: 4px 0;
 `;
-
 
 class DetailsLayerFilter extends Component {
 
@@ -83,17 +83,16 @@ class DetailsLayerFilter extends Component {
   render() {
     return (
       <Container>
-        <label>Filters</label>
+        <TitleBox>
+          <label>Filters</label>
+        </TitleBox>
         <FilterBox>
-          <FilterTable>
-            <tbody>
-              {this.renderFilters()}
-            </tbody>
-          </FilterTable>
+
+          {this.renderFilters()}
         </FilterBox>
-        <div className="addFilter-bar">
+        <AddBar>
           <button className="btn-addFilter button-confirm" onClick={this.addFilter}>Add Filter</button>
-        </div>
+        </AddBar>
       </Container>
     )
   }

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import {Component} from 'react';
 
 import av_peter from '../../images/avatars/av_peter.png';
 import av_captain from '../../images/avatars/av_captain.png';

@@ -80,6 +80,7 @@ export default function LoginInput() {
     switch(loginMode) {
       case 'login': login(event); break;
       case 'register': registerUser(event); break;
+      default: break;
     }
   }
 

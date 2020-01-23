@@ -31,7 +31,15 @@ const BarContainer = styled.div`
   grid-template-areas: "main return";
   grid-template-columns: 1fr auto;
   align-items: center;
-  backdrop-filter: blur(8px);
+
+  
+`;
+
+const ReturnButton = styled.button`
+  height: 24px;
+  padding: 0 24px;
+  margin: 0 8px;
+  white-space: nowrap;
 `;
 
 const BarSecMain = styled.div`
@@ -48,6 +56,7 @@ const BarButton = styled.button`
   height: 24px;
   padding: 0 24px;
   margin: 0 8px;
+  
 `;
 
 export default function PreviewBar() {
@@ -116,6 +125,25 @@ export default function PreviewBar() {
     history.push('/manage');
   }
 
+  function exportFrame() {
+    const exportFrame = {
+      frame_name: frame.frame_name,
+      id: frame.id,
+      bkg_url: frame.bkg_url,
+      layerData: frame.layerData,
+      size_x: frame.size[0],
+      size_y: frame.size[1],
+      extend_x: frame.extend[0],
+      extend_y: frame.extend[1],
+      display_x: frame.display[0],
+      display_y: frame.display[1],
+      smoothing: frame.smoothing,
+      framerate: frame.framerate,
+      pixelsnap: frame.pixelsnap,
+    }
+    dispatch({type: 'EXPORT_EDIT_FRAME', payload: exportFrame})
+  }
+
   //>> Render
   return (
     <BarContainer>
@@ -128,11 +156,11 @@ export default function PreviewBar() {
           onChange={(event)=>handleChange(event)}
         />
         <BarButton onClick={saveFrame} className={(!frame.saved)? "button-confirm" : "button-default"}>Save</BarButton>
-        <BarButton>Export</BarButton>
+        <BarButton onClick={exportFrame}>Export</BarButton>
       </BarSecMain>
       
       <BarSecReturn>
-        <BarButton onClick={returnToControlPanel}>Return to Control Panel</BarButton>
+        <ReturnButton onClick={returnToControlPanel}>Return to Control Panel</ReturnButton>
       </BarSecReturn> 
     </BarContainer>
   )

@@ -19,8 +19,8 @@ const exportReducer = (state = {
 let layerData = [${state.frame.layerData.map(layer=>{
   return `
   {
-    layer_name: ${layer.layer_name},
-    layer_url: ${layer.layer_url},
+    layer_name: '${layer.layer_name}',
+    layer_url: '${layer.layer_url}',
     layer_str: ${layer.layer_str},
     blendmode: ${layer.blendmode},
     filter: [${layer.filter.map(filter=>`name: '${filter.name}', value: ${filter.value}, unit: '${filter.unit}'`)}]
@@ -31,7 +31,7 @@ let layerData = [${state.frame.layerData.map(layer=>{
 
 createFrame(
   '#frame-div-id',
-  '${state.frame.bkg_url},
+  bkg_url: '${state.frame.bkg_url}',
   layerData,
   size: [${state.frame.size_x},${state.frame.size_y}],
   extend: [${state.frame.extend_x},${state.frame.extend_y}],

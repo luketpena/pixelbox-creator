@@ -1,26 +1,30 @@
-import React, {Component} from 'react';
+import React from 'react';
+import {useSelector} from 'react-redux';
+import ExportPopup from '../ExportPopup/ExportPopup';
 
 //-----< Component Imports >-----\\
 import EditWindowLayers from '../EditWindowLayers/EditWindowLayers';
 import EditWindowDetails from '../EditWindowDetails/EditWindowDetails'
 import EditWindowPreview from '../EditWindowPreview/EditWindowPreview';
 
-class EditorPage extends Component {
+export default function EditorPage() {
 
-  state = {
-    select: -1
+  const exporter = useSelector(state=>state.exporter);
+
+  function renderExport() {
+    if (exporter.active) {
+      return <ExportPopup />
+    }
   }
 
-  render() {
-    return (
-      <div id="edit-page">
+  return (
+    <div id="edit-page">
 
-        <EditWindowPreview />
-        <EditWindowLayers />
-        <EditWindowDetails select={this.state.select}/>
-      </div>
-    )
-  }
+      <EditWindowPreview />
+      <EditWindowLayers />
+      <EditWindowDetails />
+
+      {renderExport()}
+    </div>
+  )
 }
-
-export default EditorPage;

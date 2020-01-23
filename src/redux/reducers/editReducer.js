@@ -21,7 +21,8 @@ const demoFrame = {
   display: [512,256],
   framerate: 5,
   smoothing: .2,
-  pixelsnap: true
+  pixelsnap: true,
+  hideoverflow: false
 };
 
 const emptyFrame = {
@@ -40,9 +41,10 @@ const emptyFrame = {
   smoothing: 1,
   framerate: 15,
   pixelsnap: false,
+  hideoverflow: true
 }
 
-const editReducer = (state = emptyFrame, action) => {
+const editReducer = (state = demoFrame, action) => {
   
   const layerDataCopy = [...state.layerData];
   switch (action.type) {
@@ -65,7 +67,10 @@ const editReducer = (state = emptyFrame, action) => {
       pixelsnap: action.payload.pixelsnap,
     }
 
+    case 'MAKE_NEW_FRAME': return {...emptyFrame, ready: true}
+
     //-----< Frame Setters >-----\\
+    case 'SET_FRAME_ID': return {...state, saved: true, id: action.payload}
     case 'SET_FRAME_NAME': return {...state, saved: false, frame_name: action.payload};
     case 'SET_FRAME_SIZE': return {...state, saved: false, size: action.payload};
     case 'SET_FRAME_EXTEND': return {...state, saved: false, extend: action.payload};

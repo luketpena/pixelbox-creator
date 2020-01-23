@@ -138,15 +138,6 @@ button:hover {
   border-bottom: 1px solid white;
 }
 
-
-
-.addFilter-bar {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  background-color: rgba(0,0,0,.25);
-}
-
 .input-with-unit {
   padding-right: 25px;
   text-align: right;
@@ -168,4 +159,12 @@ input {
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
   -webkit-appearance: none; 
+}
+
+select {
+  text-align: center;
+  border: none;
+  outline: none;
+  color: var(--color-text-darkest);
+  font-family: var(--font-input);
 }

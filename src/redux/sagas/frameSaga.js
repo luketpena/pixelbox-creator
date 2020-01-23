@@ -7,7 +7,12 @@ function * getFrames(action) {
 }
 
 function * newFrame(action) {
-  yield axios.post('/api/frame',action.payload);
+  console.log('------< Posting new frame.');
+  
+  const frameId = yield axios.post('/api/frame',action.payload);
+  console.log('------< Got a new ID:',frameId.data);
+  
+  yield put({type: 'SET_FRAME_ID', payload: frameId.data})
   yield put({type: 'GET_USER_FRAMES'});
 }
 
@@ -35,6 +40,12 @@ function * exportFrame(action) {
   yield put({type: 'EXPORT_SET_ACTIVE', payload: true})
 }
 
+function * exportEditFrame(action) {
+  yield put({type: 'EXPORT_SET_FRAME', payload: action.payload});
+  yield put({type: 'EXPORT_SET_CONTENT'});
+  yield put({type: 'EXPORT_SET_ACTIVE', payload: true})
+}
+
 function * frameSaga() {
   yield takeLatest('POST_NEW_FRAME', newFrame);
   yield takeLatest('GET_USER_FRAMES', getFrames);
@@ -42,6 +53,7 @@ function * frameSaga() {
   yield takeLatest('SAVE_FRAME', saveFrame);
   yield takeLatest('GET_SAVED_FRAME', getSavedFrame);
   yield takeLatest('EXPORT_FRAME',exportFrame);
+  yield takeLatest('EXPORT_EDIT_FRAME', exportEditFrame);
 }
 
 export default frameSaga;

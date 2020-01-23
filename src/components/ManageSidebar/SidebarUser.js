@@ -4,8 +4,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import avatars from '../avatars/avatars';
 
-const avatarUrl = 'https://w5insight.com/wp-content/uploads/2014/07/placeholder-user-400x400.png';
-
 //-----< Styling >-----\\
 const Container = styled.div`
   grid-area: user;
@@ -59,20 +57,11 @@ export default function ManageSidebar() {
       dispatch({type: 'FETCH_USER_INFO'});
     }
     
-  })
+  },[mount, dispatch])
 
   let user = useSelector(state=>state.user);
   let userInfo = useSelector(state=>state.info);
   let frame = useSelector(state=>state.frame);
-
-  const copyToClipboard = str => {
-  const el = document.createElement('textarea');
-  el.value = str;
-  document.body.appendChild(el);
-  el.select();
-  document.execCommand('copy');
-  document.body.removeChild(el);
-};
 
   return (
     <Container>
