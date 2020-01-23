@@ -10,7 +10,6 @@ body {
 .pb-frame {
   background-size: cover;
   margin: 0 auto;
-  overflow: hidden;
   transform: scale(1);
   image-rendering: pixelated;
   position: relative;

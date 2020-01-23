@@ -21,6 +21,7 @@ export default function PreviewFrame() {
       frame.size,
       frame.extend,
       frame.display,
+      frame.hideoverflow,
     );
   }
 

@@ -1,7 +1,7 @@
 const demoFrame = {
   ready: false,
   saved: true,
-  select: 1,
+  select: -1,
   id: -1,
   frame_name: 'Untitled Frame',
   bkg_url: 'https://i.ibb.co/BB16CGL/layer1.png',
@@ -65,6 +65,7 @@ const editReducer = (state = demoFrame, action) => {
       framerate: action.payload.framerate,
       smoothing: Number(action.payload.smoothing),
       pixelsnap: action.payload.pixelsnap,
+      hideoverflow: action.payload.hideoverflow
     }
 
     case 'MAKE_NEW_FRAME': return {...emptyFrame, ready: true}
@@ -79,6 +80,7 @@ const editReducer = (state = demoFrame, action) => {
     case 'SET_FRAME_FRAMERATE': return {...state, saved: false, framerate: action.payload};
     case 'SET_FRAME_SMOOTHING': return {...state, saved: false, smoothing: action.payload};
     case 'SET_FRAME_PIXELSNAP': return {...state, saved: false, pixelsnap: action.payload};
+    case 'SET_FRAME_HIDEOVERFLOW': return {...state, saved: false, hideoverflow: action.payload};
 
     //-----< Layer Setters >-----\\
     case 'SET_LAYER_SELECT': return {...state, select: action.payload};

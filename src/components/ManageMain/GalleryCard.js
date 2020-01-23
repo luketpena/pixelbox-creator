@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import useReactRouter from 'use-react-router';
+import FramePlaceholder from '../../images/frame-placeholder.png';
 
 const Card = styled.div`
   background-color: var(--color-bkg-light);
@@ -23,7 +24,7 @@ const CardImg = styled.img`
   width: 100%;
   height 128px;
   object-fit: cover;
-
+  image-rendering: pixelated;
 `;
 
 const Title = styled.h3`
@@ -62,7 +63,7 @@ export default function GalleryCard(props) {
 
   return(
     <Card>
-      <CardImg src={props.frame.bkg_url} />
+      <CardImg src={(props.frame.bkg_url? props.frame.bkg_url : FramePlaceholder)} alt="Frame preview image."/>
       <Title>{props.frame.frame_name}</Title>
       <CardButton className="button-primary" onClick={editFrame}>Edit</CardButton>
       <CardButton>Duplicate</CardButton>

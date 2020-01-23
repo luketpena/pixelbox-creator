@@ -127,8 +127,8 @@ router.delete('/:id', rejectUnauthenticated, async (req,res)=> {
 
 router.put('/', rejectUnauthenticated, async (req,res)=> {
   //>> Deconstruct the req.body and prep into array
-  const {id, frame_name,bkg_url,size,extend,display,smoothing,framerate,pixelsnap,layerData} = req.body;
-  const frameData = [id, frame_name,bkg_url,size[0],size[1],extend[0],extend[1],display[0],display[1],smoothing,framerate,pixelsnap];
+  const {id, frame_name,bkg_url,size,extend,display,smoothing,framerate,pixelsnap,hideoverflow,layerData} = req.body;
+  const frameData = [id, frame_name,bkg_url,size[0],size[1],extend[0],extend[1],display[0],display[1],smoothing,framerate,pixelsnap,hideoverflow];
 
   console.log('Attempting to Edit...');
   
@@ -145,7 +145,7 @@ router.put('/', rejectUnauthenticated, async (req,res)=> {
     //>> Updates the frame of frame_id
     const frameQuery = `
       UPDATE frame 
-      SET frame_name=$2, bkg_url=$3, size_x=$4, size_y=$5, extend_x=$6, extend_y=$7, display_x=$8, display_y=$9, smoothing=$10, framerate=$11, pixelsnap=$12
+      SET frame_name=$2, bkg_url=$3, size_x=$4, size_y=$5, extend_x=$6, extend_y=$7, display_x=$8, display_y=$9, smoothing=$10, framerate=$11, pixelsnap=$12, hideoverflow=$13
       WHERE id = $1;
     `;
     

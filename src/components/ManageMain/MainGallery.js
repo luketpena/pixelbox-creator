@@ -10,7 +10,8 @@ const Container = styled.div`
   grid-area: gallery;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: center
+ 
 `;
 export default function MainGallery() {
 

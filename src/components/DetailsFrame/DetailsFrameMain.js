@@ -65,6 +65,7 @@ export default function DetailsFrameMain() {
   const [framerate, setFramerate] = useState(frame.framerate);
   const [smoothing, setSmoothing] = useState(frame.smoothing);
   const [pixelsnap, setPixelsnap] = useState(frame.pixelsnap);
+  const [hideoverflow, setHideoverflow] = useState(frame.hideoverflow);
 
   //>> Pushes input changes to reducer on blur
   function handleBlur(prop) {
@@ -90,6 +91,12 @@ export default function DetailsFrameMain() {
   function togglePixelsnap() {
     setPixelsnap(!pixelsnap)
     dispatch({type: 'SET_FRAME_PIXELSNAP', payload: !pixelsnap });
+  }
+
+  //>> Toggles hideoverflow and sends it to both state and the reducer
+  function toggleHideoverflow() {
+    setHideoverflow(!hideoverflow)
+    dispatch({type: 'SET_FRAME_HIDEOVERFLOW', payload: !hideoverflow });
   }
 
   //>> Render
@@ -147,7 +154,7 @@ export default function DetailsFrameMain() {
           <li>
             <label htmlFor="in-hide">Hide overflow:</label>
             <Checkbox>
-              <FontAwesomeIcon icon={(pixelsnap? faCheckSquare : faSquare)} onClick={togglePixelsnap}/>
+              <FontAwesomeIcon icon={(hideoverflow? faCheckSquare : faSquare)} onClick={toggleHideoverflow}/>
             </Checkbox>
           </li>
         </InputList>

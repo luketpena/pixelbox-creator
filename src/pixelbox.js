@@ -123,7 +123,7 @@ class pixelbox extends Component {
     pixelSnap = setPixelSnap;
   }
 
-  static createFrame (target,bkg,layerData,size,extend,display) {
+  static createFrame (target,bkg,layerData,size,extend,display,overflow) {
     if (verbose) console.log('Creating Pixelbox frame...');
     
     //Find the number of layers based on the arguments provided
@@ -137,6 +137,7 @@ class pixelbox extends Component {
     $(target).css('background-size',`${display[0]}px ${display[1]}px`);
     $(target).css('width',display[0]);
     $(target).css('height',display[1]);
+    $(target).css('overflow',(overflow? 'hidden' : 'visible'));
   
     let layerSize = [(size[0]+(extend[0]*2))*ratio[0],(size[1]+(extend[1]*2))*ratio[1]];
   
