@@ -40,10 +40,22 @@ function * changeAvatar(action) {
   yield put({type: 'FETCH_USER_INFO'});
 }
 
+function * changeUsername(action) {
+  yield axios.put('/api/user/username', action.payload);
+  yield put({type: 'FETCH_USER'});
+}
+
+function * changePassword(action) {
+  yield axios.put('/api/user/password', action.payload);
+  yield put({type: 'FETCH_USER'});
+}
+
 function* userSaga() {
   yield takeLatest('FETCH_USER', fetchUser);
   yield takeLatest('FETCH_USER_INFO',fetchUserInfo);
   yield takeLatest('CHANGE_AVATAR', changeAvatar);
+  yield takeLatest('CHANGE_USERNAME', changeUsername);
+  yield takeLatest('CHANGE_PASSWORD', changePassword);
 }
 
 export default userSaga;

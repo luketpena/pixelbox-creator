@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 //-----< Component Imports >-----\\
 import AvatarSelect from '../AvatarSelect/AvatarSelect';
+import Alert from '../Alert/Alert';
 
 const Container = styled.div`
   height: 100vh;
@@ -75,12 +76,16 @@ export default function AccountDetails() {
   const userInfo = useSelector(state=>state.info);
   const user = useSelector(state=>state.user);
   const avatar = useSelector(state=>state.register.avatar);
+  const alert = useSelector(state=>state.errors.appMessage);
 
   const history = useHistory();
   const dispatch = useDispatch();
   let [mount,setMount] = useState(false);
   let [mode,setMode] = useState('display');
   let [username,setUsername] = useState((user.username? user.username : ''));
+  let [password,setPassword] = useState('');
+  let [passwordCheck,setPasswordCheck] = useState('');
+  const [alertActive, setAlertActive] = useState(false);
 
   
 
@@ -88,10 +93,26 @@ export default function AccountDetails() {
     if (!mount) {
       setMount(true);
       dispatch({type: 'FETCH_USER_INFO'});
+      dispatch({type: 'SET_APP_ALERT_ACTIVE', payload: false});
     }
-  },[mount,dispatch]);
 
-  
+    if (alert.active && alertActive) {
+      switch(alert.response) {
+        case 'neutral': alertCancel(); break;
+      }
+    }
+  },[mount,dispatch,alert,user,userInfo,history,alertActive]);
+
+  function renderAlert() {
+    if (alert.active) {
+      return <Alert />
+    }
+  }
+
+  function alertCancel() {
+    setAlertActive(false);
+    dispatch({type: 'RESET_APP_ALERT'});
+  }
 
   function renderAvatarSelect() {
     if (userInfo.avatar) {
@@ -112,6 +133,41 @@ export default function AccountDetails() {
     setMode('display');
   }
 
+  function submitPassword(event) {
+    event.preventDefault();
+    if (password.length>3) {
+      if (password===passwordCheck) {
+        dispatch({type: 'CHANGE_PASSWORD', payload: {password}})
+        setPassword('');
+        setPasswordCheck('');
+        setMode('display');
+      } else {
+        setAlertActive(true);
+        dispatch({
+          type: 'SET_APP_ALERT',
+          payload: {
+            response: 'none',
+            title: `Whoopsie`,
+            message: 'The passwords you entered do not match.',
+            neutral: 'My bad...',
+          }
+        })
+      }
+    } else {
+      setAlertActive(true);
+        dispatch({
+          type: 'SET_APP_ALERT',
+          payload: {
+            response: 'none',
+            title: `Whoopsie`,
+            message: 'Your password has to be better than that.',
+            neutral: 'Try again...',
+          }
+        })
+    }
+    
+  }
+
   function renderAccountSettings() {
     switch(mode) {
       case 'display': return (
@@ -126,14 +182,14 @@ export default function AccountDetails() {
       case 'password': return (
         <>
           <h2>Change Password</h2>
-          <form>
+          <form onSubmit={submitPassword}>
             <InputRow>
               <label>New Password:</label>
-              <input className="details-input" type="password"/>
+              <input value={password} onChange={(event)=>setPassword(event.target.value)} className="details-input" type="password"/>
             </InputRow>
             <InputRow>
               <label>Confirm Password:</label>
-              <input className="details-input" type="password"/>
+              <input value={passwordCheck} onChange={(event)=>setPasswordCheck(event.target.value)} className="details-input" type="password"/>
             </InputRow>
             <button className="button-confirm">Submit</button>
           </form>
@@ -165,6 +221,7 @@ export default function AccountDetails() {
           {renderAccountSettings()}
         </Account>
       </Content>
+      {renderAlert()}
     </Container>
   )
 }

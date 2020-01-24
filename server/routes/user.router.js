@@ -25,6 +25,7 @@ router.get('/info', rejectUnauthenticated, (req,res)=> {
 // The only thing different from this and every other post we've seen
 // is that the password gets encrypted before being inserted
 router.post('/register', async (req, res) => {  
+
   const username = req.body.username;
   const password = encryptLib.encryptPassword(req.body.password);
   const avatar = req.body.avatar
@@ -35,7 +36,6 @@ router.post('/register', async (req, res) => {
     const queryText = 'INSERT INTO "user" (username, password) VALUES ($1, $2) RETURNING id';
     const result = await pool.query(queryText, [username, password]);
     await pool.query('INSERT INTO user_info (user_id, avatar) VALUES ($1, $2)', [result.rows[0].id, avatar]);
-
     await client.query('COMMIT');
     res.sendStatus(201);
     
@@ -47,18 +47,37 @@ router.post('/register', async (req, res) => {
   }
 });
 
-router.put('/avatar', rejectUnauthenticated, (req,res)=>{
-  console.log('User:',req.user.id,'Avatar:',req.body.avatar);
-  
-  pool.query(`UPDATE user_info SET avatar=$1 WHERE user_id=$2`,[req.body.avatar,req.user.id]).then(result=>{
-    console.log(result);
-    
+router.put('/password', rejectUnauthenticated, (req,res)=>{
+  const password = encryptLib.encryptPassword(req.body.password);
+  pool.query(`UPDATE "user" SET password=$1 WHERE id=$2`,[password,req.user.id]).then(result=>{
     res.sendStatus(200);
   }).catch(error=>{
     console.log('Error changing user avatar:',error);
     res.sendStatus(400);
   })
 });
+
+router.put('/avatar', rejectUnauthenticated, (req,res)=>{  
+  pool.query(`UPDATE user_info SET avatar=$1 WHERE user_id=$2`,[req.body.avatar,req.user.id]).then(result=>{
+    res.sendStatus(200);
+  }).catch(error=>{
+    console.log('Error changing user avatar:',error);
+    res.sendStatus(400);
+  })
+});
+
+router.put('/username', rejectUnauthenticated, (req,res)=>{
+  console.log('User:',req.user.id,"Username:",req.body.username);
+  
+  pool.query(`UPDATE "user" SET username=$1 WHERE id=$2`,[req.body.username,req.user.id]).then(result=>{
+    res.sendStatus(200);
+  }).catch(error=>{
+    console.log('Error changing user avatar:',error);
+    res.sendStatus(400);
+  })
+});
+
+
 
 // Handles login form authenticate/login POST
 // userStrategy.authenticate('local') is middleware that we run on this route

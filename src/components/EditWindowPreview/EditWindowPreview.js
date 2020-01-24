@@ -28,7 +28,7 @@ const PreviewItems = styled.div`
   align-items: center;
   justify-content: center;
   z-index: -50;
-  overflow: scroll;
+  overflow: hidden;
 `;
 const PreviewBkg = styled.div`
   background-color: var(--color-bkg-main);

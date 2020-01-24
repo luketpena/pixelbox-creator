@@ -41,7 +41,6 @@ export default function ManagePage() {
 
   function renderAlert() {
     if (alert.active) {
-      console.log('HELLO FROM RENDER ALERT');
       return <Alert />
     }
   }
