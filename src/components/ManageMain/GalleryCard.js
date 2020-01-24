@@ -13,6 +13,8 @@ const Card = styled.div`
   margin: 8px 8px 72px 8px;
   position: relative;
   user-select: none;
+  
+  
 `;
 const CardButton = styled.button`
   margin: 4px;
@@ -29,6 +31,13 @@ const CardContent = styled.div`
   overflow: hidden;
   position: relative;
   z-index: 1;
+  transition: background-color .2s;
+  color: var(--color-text-light-faded);
+  &:hover {
+    background-color: var(--color-bkg-bright);
+    cursor: pointer;
+    color: var(--color-text-light);
+  }
 `;
 
 const CardImg = styled.img`
@@ -70,13 +79,8 @@ const SlideButton = styled.div`
   display: flex;
   align-items: center;
   padding: 0 8px;
-  color: var(--color-text-light-faded);
+  
   transition: color .2s;
-  &:hover {
-    cursor: pointer;
-    color: var(--color-text-light);
-    
-  }
   .icon {
     transition: transform .3s;
     transition-timing-function: cubic-bezier(0, 0.96, .48, 1.3);
@@ -153,12 +157,12 @@ export default function GalleryCard(props) {
   }
 
   return(
-    <Card>
+    <Card onClick={()=>setSlideActive(!slideActive)}>
       <CardContent>
         <CardImg src={(props.frame.bkg_url? props.frame.bkg_url : FramePlaceholder)} alt="Frame preview image."/>
         <TitleBar>
           <Title>{props.frame.frame_name}</Title>
-          <SlideButton active={slideActive} onClick={()=>setSlideActive(!slideActive)}>
+          <SlideButton active={slideActive} >
             <FontAwesomeIcon className="icon" icon={faEllipsisH}/>
           </SlideButton>
         </TitleBar>
