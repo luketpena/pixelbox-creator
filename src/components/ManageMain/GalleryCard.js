@@ -39,11 +39,14 @@ export default function GalleryCard(props) {
 
   const dispatch = useDispatch();
   const {history} = useReactRouter();
-  let [myReady, setMyReady] = useState(false)
+  let [myReady, setMyReady] = useState(false);
+  const [alertActive, setAlertActive] = useState(false);
   let ready = useSelector(state=>state.edit.ready);
+  let alert = useSelector(state=>state.errors.appMessage);
 
   function deleteFrame() {
     dispatch({type: 'DELETE_FRAME', payload: props.frame.id});
+    alertCancel();
   }
   function editFrame() {
     dispatch({type: 'GET_SAVED_FRAME', payload: props.frame.id});
@@ -56,7 +59,19 @@ export default function GalleryCard(props) {
       dispatch({type: 'SET_EDIT_READY', payload: false})
       history.push('/edit');
     }
-  },[dispatch,myReady,history,ready])
+
+    if (alert.active && alertActive) {
+      switch(alert.response) {
+        case 'neutral': alertCancel(); break;
+        case 'reject': deleteFrame(); break;
+      }
+    }
+  },[dispatch,myReady,history,ready,alert]);
+
+  function alertCancel() {
+    setAlertActive(false);
+    dispatch({type: 'RESET_APP_ALERT'});
+  }
 
   function exportFrame() {
     dispatch({type: 'EXPORT_FRAME', payload: props.frame.id});
@@ -67,6 +82,20 @@ export default function GalleryCard(props) {
     setMyReady(true);
   }
 
+  function clickDelete() {
+    setAlertActive(true);
+    dispatch({
+      type: 'SET_APP_ALERT',
+      payload: {
+        response: 'none',
+        title: `Delete frame?`,
+        message: '',
+        neutral: 'Cancel',
+        reject: 'Delete'
+      }
+    })
+  }
+
   return(
     <Card>
       <CardImg src={(props.frame.bkg_url? props.frame.bkg_url : FramePlaceholder)} alt="Frame preview image."/>
@@ -74,7 +103,7 @@ export default function GalleryCard(props) {
       <CardButton className="button-primary" onClick={editFrame}>Edit</CardButton>
       <CardButton onClick={duplicateFrame}>Duplicate</CardButton>
       <CardButton className="button-confirm" onClick={exportFrame}>Export</CardButton>
-      <CardButton className="button-reject" onClick={deleteFrame}>Delete</CardButton>
+      <CardButton className="button-reject" onClick={clickDelete}>Delete</CardButton>
     </Card>
   )
 }

@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 
 //-----< Component Imports >-----\\
 import ManageMain from '../ManageMain/ManageMain';
 import ManageSidebar from '../ManageSidebar/ManageSidebar';
+import Alert from '../Alert/Alert';
 
 //-----< Styling >-----\\
 const ManageContainer = styled.div`
@@ -31,12 +32,22 @@ export default function ManagePage() {
 
   const dispatch = useDispatch();
   const [mount,setMount] = useState(false)
+  let alert = useSelector(state=>state.errors.appMessage);
+
   useEffect(()=>{
     if (!mount) {
       setMount(true);
-      dispatch({type: 'EXPORT_SET_ACTIVE', payload: false})
+      dispatch({type: 'EXPORT_SET_ACTIVE', payload: false});
+      dispatch({type: 'SET_APP_ALERT_ACTIVE', payload: false});
     }   
   },[mount,dispatch]);
+
+  function renderAlert() {
+    if (alert.active) {
+      console.log('HELLO FROM RENDER ALERT');
+      return <Alert />
+    }
+  }
 
   return (
     <ManageBkg>
@@ -44,6 +55,7 @@ export default function ManagePage() {
         <ManageMain />
         <ManageSidebar />
       </ManageContainer>
+      {renderAlert()}
     </ManageBkg>
   )
 }

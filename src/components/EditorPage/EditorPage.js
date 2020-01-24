@@ -21,7 +21,8 @@ export default function EditorPage() {
   useEffect(()=>{
     if (!mount) {
       setMount(true);
-      dispatch({type: 'EXPORT_SET_ACTIVE', payload: false})
+      dispatch({type: 'EXPORT_SET_ACTIVE', payload: false});
+      dispatch({type: 'SET_APP_ALERT_ACTIVE', payload: false});
     }   
   },[mount,dispatch]);
 

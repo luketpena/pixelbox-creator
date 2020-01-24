@@ -68,7 +68,6 @@ export default function PreviewBar() {
   let frame = useSelector(state=>state.edit);
   let alert = useSelector(state=>state.errors.appMessage);
 
-  const [alertActive, setAlertActive] = useState(false);
  
   //>> Handle input changes
   function handleChange (event) {
@@ -86,7 +85,7 @@ export default function PreviewBar() {
         case 'reject': goToControlPanel(); break;
       }
     }
-  },[alertActive, dispatch, history, frame, alert])
+  },[dispatch, history, frame, alert])
 
   function saveFrame() {
     if (frame.id===-1) {
@@ -106,7 +105,6 @@ export default function PreviewBar() {
     if (frame.saved) {
       goToControlPanel();
     } else {
-      setAlertActive(true);
       dispatch({
         type: 'SET_APP_ALERT',
         payload: {
@@ -119,9 +117,6 @@ export default function PreviewBar() {
       })
     }
   }
-
-  
-
 
   function alertCancel() {
     dispatch({type: 'RESET_APP_ALERT'});
