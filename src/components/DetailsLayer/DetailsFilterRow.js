@@ -33,7 +33,13 @@ const RemoveBox = styled.div`
 const filterNameList = [
   'blur',
   'brightness',
-  'contrast'
+  'contrast',
+  'grayscale',
+  'hue-rotate',
+  'invert',
+  'opacity',
+  'saturate',
+  'sepia'
 ]
 
 export default function DetailsFilterRow(props) {
@@ -92,7 +98,7 @@ export default function DetailsFilterRow(props) {
         <select value={props.filter.name} onChange={(event)=>selectFilter(event)}>
           <option disabled value={'none'}>none</option>
           {filterNameList.map( (filter,i)=> {
-          let find = (props.currentFilters.indexOf(filter.name)!==-1);
+          let find = (props.currentFilters.indexOf(filter)!==-1);        
           return (
             <option 
               disabled={find} 

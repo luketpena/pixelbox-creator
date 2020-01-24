@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import {useDispatch} from 'react-redux';
 import styled from 'styled-components';
 
 //-----< Component Imports >-----\\
@@ -27,6 +28,15 @@ const ManageBkg = styled.div`
 
 
 export default function ManagePage() {
+
+  const dispatch = useDispatch();
+  const [mount,setMount] = useState(false)
+  useEffect(()=>{
+    if (!mount) {
+      setMount(true);
+      dispatch({type: 'EXPORT_SET_ACTIVE', payload: false})
+    }   
+  },[mount,dispatch]);
 
   return (
     <ManageBkg>

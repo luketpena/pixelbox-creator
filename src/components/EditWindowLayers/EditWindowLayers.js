@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {DragDropContext} from 'react-beautiful-dnd';
 import styled from 'styled-components';
-import { SvgIcon } from '@material-ui/core';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 //-----< Component Imports -----\\
 import LayerColumn from './LayerColumn';
@@ -106,10 +107,7 @@ export default function EditWindowLayers() {
         {renderDndColumns()}
       </DragDropContext>
       <AddIcon className="button-confirm">
-
-        <SvgIcon onClick={addLayer}>
-          <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-        </SvgIcon>
+        <FontAwesomeIcon icon={faPlus}  onClick={addLayer}/>
       </AddIcon>
     </Container>
   )

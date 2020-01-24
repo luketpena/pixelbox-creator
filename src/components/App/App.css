@@ -139,7 +139,7 @@ button:hover {
 }
 
 .input-with-unit {
-  padding-right: 25px;
+  padding-right: 30px;
   text-align: right;
   box-sizing: border-box;
 }
@@ -159,6 +159,11 @@ input {
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
   -webkit-appearance: none; 
+  
+}
+
+input[type=number] {
+  -moz-appearance:textfield;
 }
 
 select {

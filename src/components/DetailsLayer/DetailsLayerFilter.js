@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 import styled from 'styled-components';
 
 //-----< Component Imports -----\\
@@ -39,66 +39,48 @@ const AddBar = styled.div`
   padding: 4px 0;
 `;
 
-class DetailsLayerFilter extends Component {
+export default function DetailsLayerFilter() {
 
+  const dispatch = useDispatch();
 
-  renderFilters = ()=> {
-    const filterList = this.props.frame.layerData[this.props.select].filter;
+  const frame = useSelector(state=>state.edit);
+
+  function renderFilters() {
+    const filterList = frame.layerData[frame.select].filter;
     //Loops through all filters and collect the names that are on the list
     const currentFilters = [];
     for (let i=0; i<filterList.length; i++) {
       currentFilters.push(filterList[i].name)
     }
+    console.log(currentFilters);
     
     return filterList.map( (item,i)=>{
-      return <DetailsFilterRow key={i} index={i} select={this.props.select} filter={item} currentFilters={currentFilters}/>
+      return <DetailsFilterRow key={i} index={i} select={frame.select} filter={item} currentFilters={currentFilters}/>
     })
   }
 
-  addFilter = ()=> {
-    this.props.dispatch({type: 'ADD_NEW_FILTER', payload: this.props.select});
+  function addFilter(){
+    dispatch({type: 'ADD_NEW_FILTER', payload: frame.select});
+  } 
+
+  function renderAddButton() {
+    if (frame.layerData[frame.select].filter.length<9) {
+      return <button className="btn-addFilter button-confirm" onClick={addFilter}>Add Filter</button>
+    }
   }
 
-  removeFilter = (index)=> {
-    let filterCopy = [...this.state.filter];
-    filterCopy.splice(index,1);
-    this.setState({
-      filter: filterCopy
-    })
-  }
-
-  selectFilter = (event, index)=> {
-    const selectedFilter = event.target.value;
-    let filterCopy = this.state.filter;
-    filterCopy[index].name = selectedFilter;
-    filterCopy[index].unit = this.state.filterList[selectedFilter].unit;
-    filterCopy[index].value = this.state.filterList[selectedFilter].default;
-    this.setState({
-      filters: filterCopy
-    })
-    console.log('New filter state:',filterCopy[index]);
-    
-  }
-
-  render() {
-    return (
-      <Container>
-        <TitleBox>
-          <label>Filters</label>
-        </TitleBox>
-        <FilterBox>
-
-          {this.renderFilters()}
-        </FilterBox>
-        <AddBar>
-          <button className="btn-addFilter button-confirm" onClick={this.addFilter}>Add Filter</button>
-        </AddBar>
-      </Container>
-    )
-  }
+  return (
+    <Container>
+      <TitleBox>
+        <label>Filters</label>
+      </TitleBox>
+      <FilterBox>
+        {renderFilters()}
+      </FilterBox>
+      <AddBar>
+        {renderAddButton()}
+      </AddBar>
+    </Container>
+  )
 }
 
-export default connect(state=>({
-  select: state.edit.select,
-  frame: state.edit
-}))(DetailsLayerFilter);

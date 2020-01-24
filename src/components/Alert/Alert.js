@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 const Container = styled.div`
   z-index: 1000;
@@ -63,21 +63,22 @@ const ActionButton = styled.button`
 
 export default function Alert(props) {
 
+  const dispatch = useDispatch();
   const alert = useSelector(state=>state.errors.appMessage);
 
   function renderConfirm() {
-    if (alert.confirm && props.confirm) {
-    return <ActionButton className="button-confirm" onClick={props.confirm}>{alert.confirm}</ActionButton>
+    if (alert.confirm) {
+    return <ActionButton className="button-confirm" onClick={()=>dispatch({type: 'SET_APP_ALERT_RESPONSE', payload: 'confirm'})}>{alert.confirm}</ActionButton>
     }
   }
   function renderReject() {
-    if (alert.reject && props.reject) {
-      return <ActionButton className="button-reject" onClick={props.reject}>{alert.reject}</ActionButton>
+    if (alert.reject) {
+      return <ActionButton className="button-reject" onClick={()=>dispatch({type: 'SET_APP_ALERT_RESPONSE', payload: 'reject'})}>{alert.reject}</ActionButton>
     }
   }
   function renderNeutral() {
-    if (alert.neutral && props.neutral) {
-      return <ActionButton onClick={props.neutral}>{alert.neutral}</ActionButton>
+    if (alert.neutral) {
+      return <ActionButton onClick={()=>dispatch({type: 'SET_APP_ALERT_RESPONSE', payload: 'neutral'})}>{alert.neutral}</ActionButton>
     }
   }
 

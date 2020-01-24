@@ -29,6 +29,8 @@ const Avatar = styled.img`
   height: 100%;
   bottom: 20%;
   image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
 `;
 const Username = styled.h2`
   font-family: var(--font-header);

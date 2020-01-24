@@ -77,7 +77,10 @@ export default function Task(props) {
     } else {
       dispatch({type: 'SET_LAYER_SELECT', payload: -1})
     }
-    
+  }
+
+  function removeLayer() {
+    dispatch({type: 'REMOVE_LAYER', payload: props.index});
   }
 
   return (
@@ -91,7 +94,6 @@ export default function Task(props) {
           // is smaller than the entire body of the element.
           ref={provided.innerRef}
           isDragging={snapshot.isDragging}
-          onClick={selectLayer}
           select={select}
           index={props.index}
         >
@@ -99,11 +101,11 @@ export default function Task(props) {
             <p><FontAwesomeIcon icon={faGripVertical}/></p>
           </GrabArea>
           
-          <SelectArea>
-            <Title isDragging={snapshot.isDragging} >{props.layer.layer_name}</Title>
+          <SelectArea onClick={selectLayer}>
+            <Title isDragging={snapshot.isDragging}>{props.layer.layer_name}</Title>
           </SelectArea>
 
-          <DeleteArea>
+          <DeleteArea onClick={removeLayer}>
             <p><FontAwesomeIcon icon={faTimes} /></p>
           </DeleteArea>
         </Container>

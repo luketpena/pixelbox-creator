@@ -1,8 +1,7 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import useReactRouter from 'use-react-router';
 import styled from 'styled-components';
-import Alert from '../Alert/Alert';
 
 const NameInput = styled.input`
   background: none;
@@ -67,6 +66,8 @@ export default function PreviewBar() {
   const {history} = useReactRouter();
 
   let frame = useSelector(state=>state.edit);
+  let alert = useSelector(state=>state.errors.appMessage);
+
   const [alertActive, setAlertActive] = useState(false);
  
   //>> Handle input changes
@@ -76,6 +77,16 @@ export default function PreviewBar() {
       payload: event.target.value
     })
   }
+
+  useEffect(()=>{
+   
+    if (alert.active) {
+      switch(alert.response) {
+        case 'neutral': alertCancel(); break;
+        case 'reject': goToControlPanel(); break;
+      }
+    }
+  },[alertActive, dispatch, history, frame, alert])
 
   function saveFrame() {
     if (frame.id===-1) {
@@ -99,6 +110,7 @@ export default function PreviewBar() {
       dispatch({
         type: 'SET_APP_ALERT',
         payload: {
+          response: 'none',
           title: `Exit with unsaved work?`,
           message: 'All unsaved changes will be discarded.',
           neutral: 'Back to Editor',
@@ -108,15 +120,10 @@ export default function PreviewBar() {
     }
   }
 
-  function renderAlert() {
-    if (alertActive) {
-      return <Alert neutral={alertCancel} reject={goToControlPanel}/>
-    }
-  }
+  
 
 
   function alertCancel() {
-    setAlertActive(false);
     dispatch({type: 'RESET_APP_ALERT'});
   }
 
@@ -147,7 +154,7 @@ export default function PreviewBar() {
   //>> Render
   return (
     <BarContainer>
-      {renderAlert()}
+      
       <BarSecMain>
         <NameInput 
           type="text" 

@@ -35,6 +35,8 @@ const registrationMessage = (state = '', action) => {
 };
 
 const emptyAlert = {
+  active: false,
+  response: 'none',
   title: '',
   message: '',
   confirm: '',
@@ -44,7 +46,9 @@ const emptyAlert = {
 
 const appMessage = (state = emptyAlert, action)=> {
   switch(action.type) {
-    case 'SET_APP_ALERT': return action.payload;
+    case 'SET_APP_ALERT': return {...action.payload, active: true};
+    case 'SET_APP_ALERT_RESPONSE': return {...state, response: action.payload};
+    case 'SET_APP_ALERT_ACTIVE': return {...state, active: false};
     case 'RESET_APP_ALERT': return emptyAlert;
     default: return state;
   }

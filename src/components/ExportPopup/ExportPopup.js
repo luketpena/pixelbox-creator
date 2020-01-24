@@ -13,7 +13,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  
+  backdrop-filter: blur(8px);
 `;
 
 const ExportWindow = styled.div`

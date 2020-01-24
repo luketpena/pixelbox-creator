@@ -25,6 +25,8 @@ const CardImg = styled.img`
   height 128px;
   object-fit: cover;
   image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
 `;
 
 const Title = styled.h3`

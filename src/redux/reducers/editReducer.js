@@ -88,66 +88,56 @@ const editReducer = (state = demoFrame, action) => {
 
     case 'SET_LAYER_PROP':
       layerDataCopy[action.payload.index][action.payload.prop] = action.payload.value;
-      return {...state, layerData: layerDataCopy};
-    case 'SET_LAYER_DATA': return {...state, layerData: action.payload};
+      return {...state, saved: false, layerData: layerDataCopy};
+    case 'SET_LAYER_DATA': return {...state, saved: false, layerData: action.payload};
     case 'ADD_NEW_FILTER':
       layerDataCopy[action.payload].filter.push(
         {name: 'none', value: ''}
       )
-      return {...state, layerData: layerDataCopy}
+      return {...state, saved: false, layerData: layerDataCopy}
     case 'SET_FILTER_VALUE':
       layerDataCopy[action.payload.select].filter[action.payload.index].value = action.payload.value;
-      return {...state, layerData: layerDataCopy};
+      return {...state, saved: false, layerData: layerDataCopy};
     case 'SET_FILTER_TYPE':
-      
-      let filterDefaultValue;
-      let filterUnit;
-      switch(action.payload.value) {
-        case 'blur': 
-          filterDefaultValue = 0; 
-          filterUnit = 'px';
-          break;
-        case 'brightness': 
-          filterDefaultValue = 100; 
-          filterUnit = '%';
-          break;
-        case 'contrast': 
-          filterDefaultValue = 100; 
-          filterUnit = '%';
-          break;
-        default: 
-          filterDefaultValue = 0; 
-          filterUnit = '';
-          break;
-      }
 
+      const filters = {
+        blur: {filterDefaultValue: 0, filterUnit: 'px'},
+        brightness: {filterDefaultValue: 100, filterUnit: '%'},
+        contrast: {filterDefaultValue: 100, filterUnit: '%'},
+        grayscale: {filterDefaultValue: 0, filterUnit: '%'},
+        "hue-rotate": {filterDefaultValue: 0, filterUnit: 'deg'},
+        invert: {filterDefaultValue: 0, filterUnit: '%'},
+        opacity: {filterDefaultValue: 100, filterUnit: '%'},
+        saturate: {filterDefaultValue: 100, filterUnit: '%'},
+        sepia: {filterDefaultValue: 0, filterUnit: '%'},
+      }
       //Set the name of the filter
       layerDataCopy[action.payload.select].filter[action.payload.index].name = action.payload.value;
-      layerDataCopy[action.payload.select].filter[action.payload.index].value = filterDefaultValue;
-      layerDataCopy[action.payload.select].filter[action.payload.index].unit = filterUnit;
+      layerDataCopy[action.payload.select].filter[action.payload.index].value = filters[action.payload.value].filterDefaultValue;
+      layerDataCopy[action.payload.select].filter[action.payload.index].unit = filters[action.payload.value].filterUnit;
 
-      return {...state, layerData: layerDataCopy};
+      return {...state, saved: false, layerData: layerDataCopy};
     case 'REMOVE_FILTER':
       layerDataCopy[action.payload.select].filter.splice(action.payload.index,1);
-      return {...state, layerData: layerDataCopy};
+      return {...state, saved: false, layerData: layerDataCopy};
 
     case 'SET_LAYER_DATA_PROP':
       let setLayerDataProp = [...state.layerData];
       setLayerDataProp[action.payload.index][action.payload.prop] = action.payload.value;
-      return {...state, layerData: setLayerDataProp}
+      return {...state, saved: false, layerData: setLayerDataProp}
     case 'ADD_NEW_LAYER':
       let newLayer = {layer_name: 'Untitled', layer_url: '', layer_str: 1, blendmode: 'normal', filter:[]};
-      return {...state, layerData: [...state.layerData, newLayer]}
+      return {...state, lsaved: false, ayerData: [...state.layerData, newLayer]}
     case 'REMOVE_LAYER':
       let removedLayerData = [...state.layerData];
       removedLayerData.splice(action.payload,1);
-      return {...state, layerData: removedLayerData}
+      return {...state, saved: false, layerData: removedLayerData}
     case 'MOVE_LAYER':
       const {index, newPos} = action.payload;
       let layerData_move = [...state.layerData];
       let movedLayer = layerData_move.splice(index,1)[0];
       layerData_move.splice(newPos,0,movedLayer);
-      return {...state, layerData: layerData_move}
+      return {...state, saved: false, layerData: layerData_move}
     default: return state;
   }
 };

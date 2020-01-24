@@ -43,12 +43,24 @@ const Slider = styled.input`
     cursor: pointer; /* Cursor on hover */
     box-shadow: 0 0 8px 4px var(--color-primary);
   }
-
   &::-moz-range-thumb {
-    width: 25px; /* Set a specific slider handle width */
-    height: 25px; /* Slider handle height */
-    background: #4CAF50; /* Green background */
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 8px; /* Set a specific slider handle width */
+    height: 8px; /* Slider handle height */
+    background: var(--color-bkg-main);
     cursor: pointer; /* Cursor on hover */
+    box-shadow: 0 0 8px 4px var(--color-primary);
+  }
+
+  &::-ms-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 8px; /* Set a specific slider handle width */
+    height: 8px; /* Slider handle height */
+    background: var(--color-bkg-main);
+    cursor: pointer; /* Cursor on hover */
+    box-shadow: 0 0 8px 4px var(--color-primary);
   }
 `;
 

@@ -58,12 +58,14 @@ export default function EditWindowPreview() {
   ]
   //>> Define size styles for the extend preview
   let style_extend = {
-    width: frame.display[0]+(frame.extend[0]*ratio[0])*2,
-    height: frame.display[1]+(frame.extend[1]*ratio[1]),
+    width: frame.display[0]+(frame.extend[0]*ratio[0])*4,
+    height: frame.display[1]+(frame.extend[1]*ratio[1])*4,
   }
 
   function deselectLayer() {
-    dispatch({type: 'SET_LAYER_SELECT', payload: -1})
+    if (frame.select!==-1) {
+      dispatch({type: 'SET_LAYER_SELECT', payload: -1})
+    }
   }
   
   //>> Render

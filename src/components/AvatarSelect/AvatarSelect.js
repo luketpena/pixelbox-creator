@@ -27,6 +27,8 @@ const Avatar = styled.img`
   bottom: 100%;
   right: 50%;
   image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
 `;
 
 const AvatarBox = styled.div`
