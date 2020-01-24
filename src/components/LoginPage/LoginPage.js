@@ -13,17 +13,21 @@ const InputBox = styled.div`
   grid-area: main;
   width: 100%;
   max-width: 512px;
-  margin: 0 auto;
+  margin: 0 16px;
   border-radius: 16px;
-  padding: 32px;
+  padding: 96px 16px 32px 16px;
   box-shadow: 0 32px 16px -2px var(--color-shadow-main);
+  h1 {
+    color: var(--color-confirm);
+    font-family: var(--font-header);
+  }
 `;
 
 const Container = styled.div`
   background-color: var(--color-bkg-main);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 20 20'%3E%3Cg %3E%3Cpolygon fill='%231c2024' points='20 10 10 0 0 0 20 20'/%3E%3Cpolygon fill='%231c2024' points='0 10 0 20 10 20'/%3E%3C/g%3E%3C/svg%3E");
 
-  
+  display: flex;
   width: 100vw;
   height: 100vh;
   padding: 64px;
@@ -39,8 +43,9 @@ const Box = styled.div`
   display: grid;
   width: 80%;
   margin: 0 auto;
+  justify-content: center;
   grid-template-areas: ${props=>(props.loginMode==='login'? '"main"' : '"avatar main"')};
-  grid-template-columns: ${props=>(props.loginMode==='login'? '1fr' : '256px 1fr')};
+  grid-template-columns: ${props=>(props.loginMode==='login'? 'auto' : '256px auto')};
 `;
 
 const SwitchButton = styled.button`
@@ -104,7 +109,7 @@ export default function RegisterPage() {
         <InputBox>
           {renderErrorBar()}
 
-          <h1 className="logReg-title">{loginMode}</h1>
+          <h1>{loginMode}</h1>
           <LoginInput />
             
           {renderSwitchButton()}

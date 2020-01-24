@@ -6,7 +6,7 @@ const Container = styled.div`
   border: 1px solid var(--color-reject);
   background-color: var(--color-reject-faded);
   color: var(--color-reject);
-  font-family: var(--font-header);
+  font-family: var(--font-input);
   position: absolute;
   width: 100%;
   left: -1px;
