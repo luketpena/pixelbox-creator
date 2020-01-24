@@ -45,7 +45,19 @@ router.post('/register', async (req, res) => {
   } finally {
     client.release();
   }
+});
+
+router.put('/avatar', rejectUnauthenticated, (req,res)=>{
+  console.log('User:',req.user.id,'Avatar:',req.body.avatar);
   
+  pool.query(`UPDATE user_info SET avatar=$1 WHERE user_id=$2`,[req.body.avatar,req.user.id]).then(result=>{
+    console.log(result);
+    
+    res.sendStatus(200);
+  }).catch(error=>{
+    console.log('Error changing user avatar:',error);
+    res.sendStatus(400);
+  })
 });
 
 // Handles login form authenticate/login POST

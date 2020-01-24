@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import styled from 'styled-components';
 
@@ -10,6 +10,7 @@ const Container = styled.div`
   background-color: var(--color-bkg-light);
   border-radius: 16px;
   display: flex;
+  grid-area: avatar;
   flex-wrap: wrap;
   justify-content: center;
   max-width: 256px;
@@ -64,12 +65,26 @@ const SelectedAvatar = styled.img`
   filter: drop-shadow(0 0 5px var(--color-confirm));
 `;
 
-export default function AvatarSelect() {
+export default function AvatarSelect(props) {
 
   const dispatch = useDispatch();
 
   let [select, setSelect] = useState(-1);
-  let [avatarId, setAvatarId] = useState('');
+  let [avatarId, setAvatarId] = useState((props.avatarStart? props.avatarStart : ''));
+  let [mount,setMount] = useState(false);
+
+  useEffect(()=>{
+    if (!mount) {
+      setMount(true);
+      
+      if (props.avatarStart) {
+        const index = Object.keys(avatars.getAvatars()).indexOf(props.avatarStart);
+        console.log('----------< Index of avatar:',index);
+        
+        setSelect(index);
+      }
+    }
+  },[mount,dispatch,select,avatarId])
 
   //Chooses and avatar and sends it to the reducer.
   function selectAvatar(index,key) {
@@ -97,6 +112,7 @@ export default function AvatarSelect() {
   //Component render
   return (
     <Container>
+      
       {renderSelect()}
       <Title>Choose Your Character</Title>
       {renderAvatars()}

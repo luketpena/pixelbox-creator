@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {useDispatch, useSelector} from 'react-redux';
+import {useHistory} from 'react-router-dom';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import avatars from '../avatars/avatars';
 
@@ -52,6 +53,7 @@ export default function ManageSidebar() {
   let [mount, setMount] = useState(false);
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(()=> {
     if (!mount) {
@@ -72,7 +74,7 @@ export default function ManageSidebar() {
       </AvatarBorder>
       <Username>{user.username}</Username>
       <FrameNumber>{frame.length} {(frame.length===1)? 'frame' : 'frames'}</FrameNumber>
-      <DetailsButton className="button-primary">Account Details</DetailsButton>
+      <DetailsButton onClick={()=>history.push('/account')} className="button-primary">Account Details</DetailsButton>
       <LogOutButton/>
     </Container>
   )

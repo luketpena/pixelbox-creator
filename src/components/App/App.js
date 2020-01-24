@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-
+import '../../fonts/manaspc.ttf';
 import './App.css';
 
 import {
@@ -19,6 +19,7 @@ import InfoPage from '../InfoPage/InfoPage';
 
 import ManagePage from '../ManagePage/ManagePage';
 import EditorPage from '../EditorPage/EditorPage';
+import AccountPage from '../AccountPage/AccountPage';
 
 import './App.css';
 
@@ -62,6 +63,7 @@ class App extends Component {
 
             <ProtectedRoute exact path="/edit" component={EditorPage} />
             <ProtectedRoute exact path="/manage" component={ManagePage} />
+            <ProtectedRoute exact path="/account" component={AccountPage} />
 
 
             {/* If none of the other routes matched, we will show a 404. */}

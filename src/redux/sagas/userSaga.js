@@ -33,9 +33,17 @@ function * fetchUserInfo() {
   }
 }
 
+function * changeAvatar(action) {
+  console.log('New avatar:',action.payload);
+  
+  yield axios.put('/api/user/avatar', {avatar: action.payload});
+  yield put({type: 'FETCH_USER_INFO'});
+}
+
 function* userSaga() {
   yield takeLatest('FETCH_USER', fetchUser);
   yield takeLatest('FETCH_USER_INFO',fetchUserInfo);
+  yield takeLatest('CHANGE_AVATAR', changeAvatar);
 }
 
 export default userSaga;
