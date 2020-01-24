@@ -12,6 +12,7 @@ const Card = styled.div`
   width: 256px;
   margin: 8px 8px 72px 8px;
   position: relative;
+  user-select: none;
 `;
 const CardButton = styled.button`
   margin: 4px;
@@ -74,6 +75,12 @@ const SlideButton = styled.div`
   &:hover {
     cursor: pointer;
     color: var(--color-text-light);
+    
+  }
+  .icon {
+    transition: transform .3s;
+    transition-timing-function: cubic-bezier(0, 0.96, .48, 1.3);
+    transform: rotate(${props=>(props.active? '90deg' : '0deg')});
   }
 `;
 
@@ -151,8 +158,8 @@ export default function GalleryCard(props) {
         <CardImg src={(props.frame.bkg_url? props.frame.bkg_url : FramePlaceholder)} alt="Frame preview image."/>
         <TitleBar>
           <Title>{props.frame.frame_name}</Title>
-          <SlideButton onClick={()=>setSlideActive(!slideActive)}>
-            <FontAwesomeIcon icon={faEllipsisH}/>
+          <SlideButton active={slideActive} onClick={()=>setSlideActive(!slideActive)}>
+            <FontAwesomeIcon className="icon" icon={faEllipsisH}/>
           </SlideButton>
         </TitleBar>
       </CardContent>

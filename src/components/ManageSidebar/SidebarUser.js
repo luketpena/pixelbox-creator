@@ -22,7 +22,8 @@ const AvatarBorder = styled.div`
   height: 128px;
   border-radius: 50%;
   border: 6px solid var(--color-primary);
-  background-color: var(--color-primary-dark);
+  background: rgb(2,0,36);
+  background: linear-gradient(180deg, rgba(2,0,36,1) 0%, var(--color-primary-dark) 100%);
 `;
 const Avatar = styled.img`
   position: relative;
