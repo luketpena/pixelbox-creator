@@ -71,6 +71,7 @@ const InputRow = styled.div`
 
 `;
 
+
 export default function AccountDetails() {
 
   const userInfo = useSelector(state=>state.info);

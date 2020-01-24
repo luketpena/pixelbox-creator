@@ -12,7 +12,7 @@ const NameInput = styled.input`
   width: 100%;
   border: none;
   border-bottom: 2px solid var(--color-bkg-main);
-  font-family: var(--font-header);
+  font-family: var(--font-input);
   font-size: 32px;
   color: var(--color-text-light);
 `;

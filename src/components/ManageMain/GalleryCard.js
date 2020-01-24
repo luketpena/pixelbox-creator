@@ -4,13 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import useReactRouter from 'use-react-router';
 import FramePlaceholder from '../../images/frame-placeholder.png';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEllipsisH } from '@fortawesome/free-solid-svg-icons';
+
 const Card = styled.div`
-  background-color: var(--color-bkg-light);
+  
   width: 256px;
-  margin: 8px;
-  border-radius: 16px 16px 4px 4px;
-  overflow: hidden;
-  box-shadow: 0 4px 16px 0px var(--color-shadow-main);
+  margin: 8px 8px 72px 8px;
+  position: relative;
 `;
 const CardButton = styled.button`
   margin: 4px;
@@ -20,19 +21,66 @@ const CardButton = styled.button`
   }
 `;
 
+const CardContent = styled.div`
+  background-color: var(--color-bkg-light);
+  box-shadow: 0 4px 4px 0px var(--color-shadow-main);
+  border-radius: 16px 16px 4px 4px;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+`;
+
 const CardImg = styled.img`
   width: 100%;
   height 128px;
   object-fit: cover;
+
   image-rendering: pixelated;
   image-rendering: -moz-crisp-edges;
   image-rendering: -webkit-crisp-edges;
+  z-index: 10;
 `;
 
 const Title = styled.h3`
   color: var(--color-text-light);
   font-family: var(--font-input);
-  margin: 0;
+  margin: 8px;
+  grid-area: title;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+`;
+
+const SlideBar = styled.div`
+  height: 64px;
+  padding-top: 32px;
+  position: absolute;
+  bottom: ${(props=>props.active? '-64px' : '0')};
+  background-color: var(--color-bkg-main);
+  border-radius: 0 0 8px 8px;
+  transition: all .3s;
+  transition-timing-function: cubic-bezier(0, 0.96, .48, 1.3);
+  box-shadow: ${(props=>props.active? '0 4px 4px -2px var(--color-shadow-main)' : 'none')};
+`;
+
+const SlideButton = styled.div`
+  grid-area: slide;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  color: var(--color-text-light-faded);
+  transition: color .2s;
+  &:hover {
+    cursor: pointer;
+    color: var(--color-text-light);
+  }
+`;
+
+const TitleBar = styled.div`
+  display: grid;
+  grid-template-areas: "title slide";
+  grid-template-columns: 1fr auto;
 `;
 
 export default function GalleryCard(props) {
@@ -41,6 +89,7 @@ export default function GalleryCard(props) {
   const {history} = useReactRouter();
   let [myReady, setMyReady] = useState(false);
   const [alertActive, setAlertActive] = useState(false);
+  const [slideActive, setSlideActive] = useState(false);
   let ready = useSelector(state=>state.edit.ready);
   let alert = useSelector(state=>state.errors.appMessage);
 
@@ -98,12 +147,21 @@ export default function GalleryCard(props) {
 
   return(
     <Card>
-      <CardImg src={(props.frame.bkg_url? props.frame.bkg_url : FramePlaceholder)} alt="Frame preview image."/>
-      <Title>{props.frame.frame_name}</Title>
-      <CardButton className="button-primary" onClick={editFrame}>Edit</CardButton>
-      <CardButton onClick={duplicateFrame}>Duplicate</CardButton>
-      <CardButton className="button-confirm" onClick={exportFrame}>Export</CardButton>
-      <CardButton className="button-reject" onClick={clickDelete}>Delete</CardButton>
+      <CardContent>
+        <CardImg src={(props.frame.bkg_url? props.frame.bkg_url : FramePlaceholder)} alt="Frame preview image."/>
+        <TitleBar>
+          <Title>{props.frame.frame_name}</Title>
+          <SlideButton onClick={()=>setSlideActive(!slideActive)}>
+            <FontAwesomeIcon icon={faEllipsisH}/>
+          </SlideButton>
+        </TitleBar>
+      </CardContent>
+      <SlideBar active={slideActive}>
+        <CardButton className="button-primary" onClick={editFrame}>Edit</CardButton>
+        <CardButton onClick={duplicateFrame}>Duplicate</CardButton>
+        <CardButton className="button-confirm" onClick={exportFrame}>Export</CardButton>
+        <CardButton className="button-reject" onClick={clickDelete}>Delete</CardButton>
+      </SlideBar>
     </Card>
   )
 }
