@@ -14,6 +14,29 @@ const Container = styled.div`
   z-index: 10;
   background-color: var(--color-bkg-light);
   grid-area: layers;
+  overflow-y: scroll;
+  height: 100vh;
+
+  /* width */
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: var(--color-bkg-main);
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background: var(--color-primary-dark);
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-primary);
+  }
 `;
 const AddIcon = styled.button`
   transition: all .25s;
@@ -64,6 +87,8 @@ export default function EditWindowLayers() {
   }
 
   function addLayer() {
+    console.log('ADD NEW LAYER');
+    
     dispatch({type: 'ADD_NEW_LAYER'})
   }
 
@@ -106,8 +131,8 @@ export default function EditWindowLayers() {
       <DragDropContext onDragEnd={onDragEnd}>
         {renderDndColumns()}
       </DragDropContext>
-      <AddIcon className="button-confirm">
-        <FontAwesomeIcon icon={faPlus}  onClick={addLayer}/>
+      <AddIcon className="button-confirm" onClick={addLayer}>
+        <FontAwesomeIcon icon={faPlus}  />
       </AddIcon>
     </Container>
   )
